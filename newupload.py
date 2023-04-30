@@ -8,6 +8,7 @@ import pandas as pd
 import time
 
 
+input('새친구 엑셀 업로드가 맞는가?')
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',

@@ -50,9 +50,11 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
         tempdf = pd.read_excel('{}.xlsx'.format(groupname), sheet_name=None) #기록된 출석부에서 정보 가져오기
         tempdf = tempdf['Sheet1']
         tempdf.set_index('날짜\이름', inplace=True)
-        tempdf = tempdf[name]
+        # print(tempdf)
+        if name in tempdf.columns.tolist(): #가져올게 있어야지만 가져오기
+            tempdf = tempdf[name]
 
-        df[name] = pd.concat([df[name].iloc[:5], tempdf]) #첫 4행까지는 기본정보이므로 그 이후부터 복사함.
+            df[name] = pd.concat([df[name].iloc[:5], tempdf]) #첫 4행까지는 기본정보이므로 그 이후부터 복사함.
         # print(df[name])
 
 # 통계 작성
@@ -73,9 +75,12 @@ for i in range(len(df.columns.tolist())): #애들 이름 순대로 하기
     # print(type(df.loc[df.index[2], df.columns.tolist()[i]]))
 
     if df.loc[df.index[2], df.columns.tolist()[i]]!= "X" and i!=0 :#날짜 값이 있는경우 즉 등반날짜가 있는경우.
-        date = df.loc[df.index[2], df.columns.tolist()[i]]
+        date = datetime.datetime.strptime(df.loc[df.index[2], df.columns.tolist()[i]], "%Y-%m-%d")
+        # print(date)
+
         # date = datetime.datetime.strptime(df.loc[df.index[2], df.columns.tolist()[i]], "%Y-%m-%d")
         target_date=  date + datetime.timedelta(weeks=12) #12주후 출석율
+        # print(target_date)
 
         for j in range(len(df.index)-1): #출석율 계산, 마지막은 비고이므로 생략
             # print((df.index[j]))
