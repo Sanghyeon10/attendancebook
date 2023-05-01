@@ -57,13 +57,17 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
             df[name] = pd.concat([df[name].iloc[:5], tempdf]) #첫 4행까지는 기본정보이므로 그 이후부터 복사함.
         # print(df[name])
 
+
+
+
 # 통계 작성
+total =len(df.columns)-1 # 전체인원수 구하기
+failnumber = df.iloc[2].value_counts()["X"] #등반 미달자 수
+up = total - failnumber #등반 성공자 수
 
+df.loc['등록날짜','통계']= total
 
-
-df.loc['등록날짜','통계']= len(df.columns)-1 # 전체인원수 구하기
-# print(df.iloc[3].value_counts() )
-df.loc['등반날짜','통계']= str(100- round(df.iloc[2].value_counts()["X"] / (len(df.columns) -1),2)*100)+'%'
+df.loc['등반날짜','통계']= str(round(up/total*100))+'%' # 등반 인원수/ 전체 인원
 #등반율 구하기
 
 numrberofO=0

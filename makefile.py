@@ -1,6 +1,7 @@
 import pandas as pd
 import datetime
 import indexmaking
+import re
 
 
 print('초등부 출석표 파일 맞음?')
@@ -18,14 +19,12 @@ attendance_dict = {}
 # 출석 정보 파일을 읽어서 딕셔너리에 저장합니다.
 with open(attendance_file_path, 'r', encoding='utf-8') as f:
     for line in f:
-        # 한 줄씩 읽어서 공백을 기준으로 분리합니다.
-        fields = line.strip().split()
+        # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
+        # fields = line.strip().split()
+        fields = [line for line in re.split('\s|,|\.', line) if line]
 
         # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
-        # print(fields)
         farm_name, *attendees = fields
-        # if attendees ==[]:
-        #     print('???')
 
         # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
         attendance_dict[farm_name] = attendees
