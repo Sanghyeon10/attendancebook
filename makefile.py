@@ -35,21 +35,13 @@ for farm_name, attendees in attendance_dict.items():
 
 
 
-test=[]
-for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용)
-    df = tempdf[all_group[i]]
-    df.set_index('날짜\이름', inplace=True)
-    test.append(len(df.index))
 
-
-print(test.count(54))
-print('13이면 인덱스에 문제없음')
 
 now =datetime.datetime.now()
 
 N = int(now.strftime("%U"))-1 #오늘은 몇번째 주일?
 print(df.index[N])
-input('파일, 인덱스, 일자 맞는가?')
+input('파일, 일자 맞는가?')
 
 
 #for문 돌리기
@@ -69,15 +61,15 @@ for i in range(len(all_group)):
                 check.append(j) #확인된건 넣어두기
 
 
-            else: #에러가능성 고치기 A2에서 시작하는게 좋음
+            else: 
                 df.loc[df.index[N],j]='X' #없다면 x표시
 
         #이름다 체크했다면,
         if len(check) !=len(attendance_dict[all_group[i]]):
-            print('누락존재목장')
+
             diff1= list(set(attendance_dict[all_group[i]]) -set(check)  ) # check(출석인원중) 명부인원을 빼면 누락된 사람 찾아내기 가능
-            print(all_group[i], diff1)
-            # print(all_group[i], check, attendance_dict[all_group[i]] ) #실제 0입력한 사람수와 아날로그 출석수가 같아야함.,ex. 4-3....
+            print('누락존재 목장',all_group[i], diff1)
+            
 
     else:
         for j in namelist:  # 출석정보가 없으므로 ?표시
@@ -89,19 +81,9 @@ for i in range(len(all_group)):
 
 
 
-#여기서는 4-1부터 6-4파일을 가져와 출석율을 계산해줌 문제 생기면 아래건 다 날리기
+#여기서는 4-1부터 6-4파일을 가져와 출석율을 계산해줌
 name=0
 all_group=['4-1','4-2','4-3','4-4','4-5','5-1','5-2','5-3','5-4','6-1','6-2','6-3','6-4']
-
-for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용)
-    name=all_group[i]
-    df = pd.read_excel('{}.xlsx'.format(name), sheet_name=None)
-    df=df['Sheet1']
-    # print(df)
-    # df.set_index('날짜\이름', inplace=True)
-    # print(df)
-
-
 
 
 numberofO= 0
@@ -109,10 +91,7 @@ numberofX= 0
 for l in range(len(all_group)):
     df = pd.read_excel('{}.xlsx'.format(all_group[l]), sheet_name=None)
     df=df['Sheet1']
-    # print(all_group[l])
 
-    # df.set_index('날짜\이름', inplace=True)
-    # print(type(df))
     # print(df)
     df.set_index('날짜\이름',inplace=True)
     # print(df)
