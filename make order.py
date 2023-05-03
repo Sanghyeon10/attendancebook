@@ -17,8 +17,6 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     # print(all_group[i], namelist.tolist()) #정렬하기 않고 기존꺼 포현할때 쓰는것
 
     for j in namelist:  # 기존 엑셀시트에 있는 이름중
-        # print(df[j][(df[j] == 'O') | (df[j] == 'X')])
-        # print(df[j][(df[j] == 'O') | (df[j] == 'X')].count())
         if df[j][(df[j] == 'O') | (df[j] == 'X')].count() >5: # X든 O든 총개수가 5를 넘어야
             a.append( (j,float(df.loc[df.index[-1], j])) )
             # print(all_group[i],j,df.loc[df.index[-1], j])
@@ -28,7 +26,6 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
     a.sort(key=lambda x: x[1], reverse=True)   #전부 정보획득했으면 정렬하기
     b.sort(key=lambda x: x[1], reverse=True)
-    # print('a:',a,'b:',b)
     a= a+b #출석 정보가 작은 애들은 뒤로 빼준 것임.
     a.remove(('기타',0)) #기타는 첫번째로 넣어야되서 일단 삭제
 
