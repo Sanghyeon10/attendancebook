@@ -1,6 +1,6 @@
 import pandas as pd
 import datetime
-import indexmaking
+import making
 import re
 
 
@@ -8,7 +8,7 @@ print('초등부 출석표 파일 맞음?')
 tempdf = pd.read_excel(r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
 
-all_group=['4-1','4-2','4-3','4-4','4-5','5-1','5-2','5-3','5-4','6-1','6-2','6-3','6-4']
+all_group= making.all_group()
 
 # 출석 정보가 저장된 파일 경로를 입력합니다.
 attendance_file_path = 'attendance.txt'
@@ -39,17 +39,19 @@ for farm_name, attendees in attendance_dict.items():
 
 now =datetime.datetime.now()
 
+dff=tempdf[all_group[0]]
+# print(dff)
 N = int(now.strftime("%U"))-1 #오늘은 몇번째 주일?
-print(df.index[N])
-input('파일, 일자 맞는가?')
+print(dff.iloc[N,0])
 
 
 #for문 돌리기
 for i in range(len(all_group)):
     df=tempdf[all_group[i]] #해당하는 목장 정보 불러오기
     # print(df)
-    # df.set_index('날짜\이름',inplace=True)
+    df.set_index('날짜\이름',inplace=True)
     namelist = df.columns
+
 
     check=[]
 
@@ -82,17 +84,12 @@ for i in range(len(all_group)):
 
 
 #여기서는 4-1부터 6-4파일을 가져와 출석율을 계산해줌
-name=0
-all_group=['4-1','4-2','4-3','4-4','4-5','5-1','5-2','5-3','5-4','6-1','6-2','6-3','6-4']
-
 
 numberofO= 0
 numberofX= 0
 for l in range(len(all_group)):
     df = pd.read_excel('{}.xlsx'.format(all_group[l]), sheet_name=None)
     df=df['Sheet1']
-
-    # print(df)
     df.set_index('날짜\이름',inplace=True)
     # print(df)
 
@@ -123,7 +120,7 @@ for l in range(len(all_group)):
 
 
     # print(df)
-    tempindex= indexmaking.make()
+    tempindex= making.index()
     tempindex.append('비고')
 
     # print(len(tempindex),len(df.index))
