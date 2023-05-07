@@ -1,7 +1,8 @@
 import pandas as pd
+import making
 
 
-all_group=['4-1','4-2','4-3','4-4','4-5','5-1','5-2','5-3','5-4','6-1','6-2','6-3','6-4']
+all_group = making.all_group()
 tempdf = pd.read_excel(r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
 a=[]
@@ -44,7 +45,6 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
     df.to_excel("{}.xlsx".format(all_group[i]))
 
-# input('목장별로만?')
 print("")
 for i in all_group:
     print(i)

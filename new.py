@@ -4,28 +4,17 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import time
-import indexmaking
+import making
 
 
 
-"""
-초등부 양식과 매크로
-엑셀파일 읽기, o
-df으로 저장 o
-출석파일에서 자료 가져와서 저장o
-이번주 출석율, 등반율, 등반후 3개월 생존율 (통계란 계산) o
-엑셀파일 pc에저장하기 o
-등반후 출석good, 등반, x 로 정렬하기. -> 손으로 하기
 
-input으로 api로 올리기 묻기.
-"""
-
-print('초등부 출석표 파일 맞음?')
+print('초등부 새친구 출석표 파일 맞음?')
 tempdf = pd.read_excel(r'C:\Users\A\Downloads\새친구 관리엑셀표.xlsx', sheet_name=None)
 df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
 df.set_index('날짜\이름', inplace=True)
 
-indexlist = indexmaking.make()
+indexlist = making.index()
 indexlist.append('비고')
 for l in range(5): #0~4번까지 돌리기
     indexlist.insert(l,df.index[l]) #앞의 정보는 유지해야함
@@ -33,7 +22,7 @@ for l in range(5): #0~4번까지 돌리기
 df.index = indexlist
 df.index.name= '날짜\이름'
 
-all_group=['4-1','4-2','4-3','4-4','4-5','5-1','5-2','5-3','5-4','6-1','6-2','6-3','6-4']
+all_group= making.all_group()
 
 # print(tempdf)
 # print(df)
