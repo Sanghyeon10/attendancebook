@@ -9,6 +9,24 @@ a=[]
 b=[]
 temp=[]
 
+def make_5line(groupname,my_list):
+    print(groupname, end=' ')
+    for i, x in enumerate(my_list):
+        if i % 5 == 0 and i != 0:
+            print()
+        elif i >= 5 and i % 10 == 5:
+            print()
+        else:
+            pass
+
+
+        if i == len(my_list)-1: #마지막
+            print(x)
+        else: #평상시
+            print(x, end=' ')
+
+    return False
+
 
 for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용)
     df = tempdf[all_group[i]]
@@ -38,7 +56,9 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
     temp.insert(0,'기타') #기타 첫번째로 다시 넣어주기
     df=df.loc[:,temp]
-    print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분.
+    # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분.
+    make_5line(all_group[i],temp) #5명씩 잘라서 표현할때
+
     temp=[]
     a=[]
     b=[]

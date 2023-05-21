@@ -33,6 +33,24 @@ with open(attendance_file_path, 'r', encoding='utf-8') as f:
 for farm_name, attendees in attendance_dict.items():
     print(f'{farm_name} 목장 출석자: {attendees}', '인원수:' ,len(attendees))
 
+#결석정보 추가 코드
+nocome_file_path = 'nocome.txt'
+
+# 결석 사유 정보를 저장할 딕셔너리를 생성합니다.
+nocome_dict = {}
+
+# 딕셔너리에 저장합니다.
+with open(nocome_file_path, 'r', encoding='utf-8') as f:
+    for line in f:
+        # fields = line.strip().split()
+        field = line.split(" ")
+
+        # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
+        farm_name, reason = field
+
+        # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
+        nocome_dict[farm_name] = reason
+
 
 
 
@@ -71,7 +89,13 @@ for i in range(len(all_group)):
 
             diff1= list(set(attendance_dict[all_group[i]]) -set(check)  ) # check(출석인원중) 명부인원을 빼면 누락된 사람 찾아내기 가능
             print('누락존재 목장',all_group[i], diff1)
-            
+
+
+        #결석사유칸이 존재한다면
+        if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
+            df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]] #입력해주기
+
+
 
     else:
         for j in namelist:  # 출석정보가 없으므로 ?표시

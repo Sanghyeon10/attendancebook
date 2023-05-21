@@ -90,8 +90,11 @@ for i in range(len(df.columns.tolist())): #애들 이름 순대로 하기
                     else:
                         pass
 
-                if (numrberofO + numrberofX) == 0:
-                    result='X'
+                if (numrberofO) == 0:
+                    result = 'X'
+                elif (numrberofO+numrberofX) == 0:
+                    result = "X"
+
                 else:
                     result= round(numrberofO / (numrberofO+ numrberofX)*100)
 
@@ -107,7 +110,8 @@ counts = df.iloc[3].value_counts()["X"]
 
 under=(len(df.columns)-1 - df.iloc[2].value_counts()["X"]) # 전체인원수 -등반실패인원 = 등반인원 수
 
-positive_counts =  str(round((under- df.iloc[3].value_counts()["X"])/ under *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
+# print( df.iloc[3].value_counts()[100])
+positive_counts =  str(round((under- df.iloc[3].value_counts()["X"] )/ under *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
 
 df.iat[3,0]= positive_counts
 
