@@ -28,15 +28,18 @@ if len(worksheet_list)!= len(all_group): #에러상황일수도? 워크 시트 �
     # time.sleep(600)
 
 for i in range(len(all_group)):
-    sheet= sh.worksheet(all_group[i]) #구글 스프레드기준 찾기
+    if all_group[i] == '7-7': #일부분만 올릴때 쓰기
+        sheet= sh.worksheet(all_group[i]) #구글 스프레드기준 찾기
 
-    tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i])) #해당파일찾고 데이터 옮겨오기
-    tempdf = tempdf.fillna('')
+        tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i])) #해당파일찾고 데이터 옮겨오기
+        tempdf = tempdf.fillna('')
 
-    sheet.update([tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
+        sheet.update([tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
 
-    time.sleep(2)
-    print(all_group[i])
+        time.sleep(2)
+        print(all_group[i])
+    else:
+        pass
 
 
 # print(dataframe.columns.values.tolist())

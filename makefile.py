@@ -4,6 +4,7 @@ import making
 import re
 
 
+
 print('초등부 출석표 파일 맞음?')
 tempdf = pd.read_excel(r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
@@ -43,7 +44,7 @@ nocome_dict = {}
 with open(nocome_file_path, 'r', encoding='utf-8') as f:
     for line in f:
         # fields = line.strip().split()
-        field = line.split(" ")
+        field = line.split(" ",1)
 
         # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
         farm_name, reason = field
@@ -81,7 +82,7 @@ for i in range(len(all_group)):
                 check.append(j) #확인된건 넣어두기
 
 
-            else: 
+            else:
                 df.loc[df.index[N],j]='X' #없다면 x표시
 
         #이름다 체크했다면,
@@ -94,12 +95,12 @@ for i in range(len(all_group)):
         #결석사유칸이 존재한다면
         if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]] #입력해주기
-
+            print(all_group[i] , nocome_dict[all_group[i]] )
 
 
     else:
         for j in namelist:  # 출석정보가 없으므로 ?표시
-            df.loc[df.index[N], j] = '?'
+            df.loc[df.index[N], j] = ''
 
     #파일로 만들기
     df.to_excel("{}.xlsx".format(all_group[i])) #5-1식으로 출력

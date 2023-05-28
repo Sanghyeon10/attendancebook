@@ -7,8 +7,6 @@ import time
 import making
 
 
-
-
 print('초등부 새친구 출석표 파일 맞음?')
 tempdf = pd.read_excel(r'C:\Users\A\Downloads\새친구 관리엑셀표.xlsx', sheet_name=None)
 df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
