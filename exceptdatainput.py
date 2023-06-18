@@ -9,7 +9,7 @@ print('초등부 출석표 파일 맞음?')
 tempdf = pd.read_excel(r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
 
-all_group= making.all_group()
+all_group= ['6-3']
 
 # 출석 정보가 저장된 파일 경로를 입력합니다.
 attendance_file_path = 'attendance.txt'
@@ -60,12 +60,16 @@ now =datetime.datetime.now()
 
 dff=tempdf[all_group[0]]
 # print(dff)
-N = int(now.strftime("%U"))-1 #오늘은 몇번째 주일?
+# N = int(now.strftime("%U"))-1 #오늘은 몇번째 주일?\
+print(int(now.strftime("%U"))-1)
+N = int(input("오늘은 몇번째 주일?"))
 print(dff.iloc[N,0])
+
 
 
 #for문 돌리기
 for i in range(len(all_group)):
+    print(all_group[i])
     df=tempdf[all_group[i]] #해당하는 목장 정보 불러오기
     # print(df)
     df.set_index('날짜\이름',inplace=True)

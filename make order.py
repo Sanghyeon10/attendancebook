@@ -5,6 +5,8 @@ import making
 all_group = making.all_group()
 tempdf = pd.read_excel(r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
+printing= 'yes'#input('명단 프린트할꺼라면 yes라고 치기')
+
 a=[]
 b=[]
 temp=[]
@@ -56,16 +58,21 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
     temp.insert(0,'기타') #기타 첫번째로 다시 넣어주기
     df=df.loc[:,temp]
-    # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분.
-    make_5line(all_group[i],temp) #5명씩 잘라서 표현할때
+    # df=df[[temp]]
+
+    # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용
+    if printing == 'yes': #프린트 하는게 맞으면
+        make_5line(all_group[i],temp) #5명씩 잘라서 표현할때
+
+
 
     temp=[]
     a=[]
     b=[]
 
     df.to_excel("{}.xlsx".format(all_group[i]))
-
-print("")
-for i in all_group:
-    print(i)
+if printing =='yes':
+    print("")
+    for m in all_group:
+        print(m)
 
