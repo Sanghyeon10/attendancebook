@@ -28,16 +28,16 @@ all_group= making.all_group()
 
 # 혹시나 문자열이 아니라 datetime형태의 정보로 저장하고 있으면 에러나므로 검사하고 만일 맞으면 강제종료
 my_list = df.iloc[2].value_counts().index.tolist() + df.iloc[1].value_counts().index.tolist()
-print(my_list)
+# print(my_list)
 
 for item in my_list:
     # datetime 객체인지 확인
     if isinstance(item, datetime.datetime):
         print("리스트에 datetime 객체가 포함되어 있습니다.")
+        print(my_list)
         exit()
 
 
-time.sleep(100)
 
 
 #엑셀에서 출석정보 가져오기
