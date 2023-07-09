@@ -76,7 +76,7 @@ numrberofO=0
 numrberofX=0
 
 for i in range(len(df.columns.tolist())): #애들 이름 순대로 하기
-    print(df.columns.tolist()[i])
+    # print(df.columns.tolist()[i])
     numrberofO = 0
     numrberofX = 0 #변수 초기화
     # print(type(df.loc[df.index[2], df.columns.tolist()[i]]))

@@ -34,3 +34,13 @@ def all_group(): #그룹리스트 가져오기
     A = ['4-1', '4-2', '4-3', '4-4', '4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4']
 
     return A
+
+def get_name(): #정보 부존재 목장의 선생님 이름 구하기
+    B={}  # 빈 딕셔너리 생성
+
+    with open("namebook.txt", "r" , encoding="utf-8") as file:
+        for line in file:
+            name, number = line.strip().split(" ")  # 빈칸으로 구분된 이름과 전화번호 추출
+            B[name] = number  # 딕셔너리에 추가
+
+    return B

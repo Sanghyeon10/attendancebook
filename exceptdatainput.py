@@ -62,7 +62,7 @@ dff=tempdf[all_group[0]]
 # print(dff)
 # N = int(now.strftime("%U"))-1 #오늘은 몇번째 주일?\
 print(int(now.strftime("%U"))-1)
-N = int(input("오늘은 몇번째 주일?"))
+N = int(input("오늘은 몇번째 주일꺼 입력?"))
 print(dff.iloc[N,0])
 
 

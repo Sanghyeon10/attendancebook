@@ -56,6 +56,9 @@ with open(nocome_file_path, 'r', encoding='utf-8') as f:
 
 
 
+print()
+print()
+
 now =datetime.datetime.now()
 
 dff=tempdf[all_group[0]]
@@ -63,6 +66,8 @@ dff=tempdf[all_group[0]]
 N = int(now.strftime("%U"))-1 #오늘은 몇번째 주일?
 print(dff.iloc[N,0])
 
+
+getnamelist=[] #정보없는 목장 선생님 이름 구하기
 
 #for문 돌리기
 for i in range(len(all_group)):
@@ -101,12 +106,20 @@ for i in range(len(all_group)):
     else:
         for j in namelist:  # 출석정보가 없으므로 ?표시
             df.loc[df.index[N], j] = '?'
+        getnamelist.append(all_group[i]) #정보 없는 목장 리스트 구하기
 
     #파일로 만들기
     df.to_excel("{}.xlsx".format(all_group[i])) #5-1식으로 출력
 
 
+getname= making.get_name()
+print('정보부재목장')
+for l in getnamelist: #목장 별로 하나씩 꺼내서 이름프린트
+    print(getname[l])
 
+print()
+print()
+print()
 
 #여기서는 4-1부터 6-4파일을 가져와 출석율을 계산해줌
 

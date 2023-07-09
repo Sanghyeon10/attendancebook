@@ -15,8 +15,9 @@ def removingexcel(file_path):
 
 print('최신껄로 다운로드 후 진행할것')
 subprocess.run(["python", "makefile.py"])
+# subprocess.run(["python",'exceptdatainput']) #이번주 아닌거 작성시 사용.
 subprocess.run(["python", "new.py"])
-# subprocess.run(["python", "make order.py"])
+# subprocess.run(["python", "make order.py"]) #출석율순으로 정렬+ 명단 프린트해주기
 
 
 subprocess.run(["python", "upload.py"])
@@ -29,5 +30,4 @@ removingexcel(file_path)
 file_path = r"C:\Users\A\Downloads/새친구 관리엑셀표.xlsx"
 removingexcel(file_path)
 
-print('사본 만들기')
-
+input('사본 만들기?')
