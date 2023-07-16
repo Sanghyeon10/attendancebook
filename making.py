@@ -28,6 +28,7 @@ def index():
             # print(day.strftime("%Y-%m-%d"))
         day += datetime.timedelta(days=7)
 
+    df.append('비고')
     return df
 
 def all_group(): #그룹리스트 가져오기

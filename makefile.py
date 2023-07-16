@@ -184,7 +184,6 @@ for l in range(len(all_group)):
 
     # print(df)
     tempindex= making.index()
-    tempindex.append('비고')
 
     # print(len(tempindex),len(df.index))
 

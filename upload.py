@@ -13,6 +13,7 @@ scopes = [
 creds = ServiceAccountCredentials.from_json_keyfile_name("C:\\Users\\A\\PycharmProjects\\pythonProject3\\abiding-honor-375915-c16db88a8008.json")
 
 file = gspread.authorize(creds)
+# sh = file.open("오류 테스트용")
 sh = file.open('2023 초등부 출석표') #woorbook = sh
 # print(type(sh.worksheets()[1]))
 

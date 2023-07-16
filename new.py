@@ -13,7 +13,7 @@ df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
 df.set_index('날짜\이름', inplace=True)
 
 indexlist = making.index()
-indexlist.append('비고')
+
 for l in range(5): #0~4번까지 돌리기
     indexlist.insert(l,df.index[l]) #앞의 정보는 유지해야함
 
@@ -47,16 +47,44 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
     name= df.columns.tolist()[i]
     # print(groupname)
 
-    if groupname in all_group: #특정 아이의 목장 출석 정보를 가져와야 한다면
+    if groupname in all_group or groupname=='새신자': #특정 아이의 목장 출석 정보를 가져와야 한다면 or 새신자문자열을 쓰는경우
 
         tempdf = pd.read_excel('{}.xlsx'.format(groupname), sheet_name=None) #기록된 출석부에서 정보 가져오기
         tempdf = tempdf['Sheet1']
         tempdf.set_index('날짜\이름', inplace=True)
         # print(tempdf)
-        if name in tempdf.columns.tolist(): #가져올게 있어야지만 가져오기
+
+        olddata =  pd.read_excel('{}.xlsx'.format("새신자"), sheet_name=None) #새신자 출석부에서 정보 가져오기
+        olddata = olddata['Sheet1']
+        olddata.set_index('날짜\이름', inplace=True)
+
+
+        if name in tempdf.columns.tolist() and name in olddata.columns.tolist(): #가져올게 있으면, 데이터프레임형태로 가져오기
+            tempdf = tempdf[name]
+            olddata = olddata[name]
+
+            for p in range(len(tempdf)):
+                # print(olddata.loc[olddata.index[p]])
+                if pd.notnull(olddata.loc[olddata.index[p]]):  # 결측치가 아니다. 즉 값이 있다면
+                    tempdf.loc[tempdf.index[p]] = olddata.loc[olddata.index[p]]  # tempdf에 값 넣어주기
+
+            df[name] = pd.concat([df[name].iloc[:5], tempdf]) #합친 것을  데이터로 넣어주기
+
+        elif name in tempdf.columns.tolist() and name not in olddata.columns.tolist(): #새신자 출석부에 명단이 없는경우
             tempdf = tempdf[name]
 
-            df[name] = pd.concat([df[name].iloc[:5], tempdf]) #첫 4행까지는 기본정보이므로 그 이후부터 복사함.
+            df[name] = pd.concat([df[name].iloc[:5], tempdf])  # 첫 4행까지는 기본정보이므로 그 이후부터 복사함.
+
+
+        elif name not in tempdf.columns.tolist() and name in olddata.columns.tolist(): #새신자 출석부에만 명단이 있는경우
+            olddata = olddata[name]
+
+            df[name] = pd.concat([df[name].iloc[:5], olddata])  # 첫 4행까지는 기본정보이므로 그 이후부터 복사함.
+
+        else:
+            print('오류가능성!')
+
+        # df[name] = pd.concat([df[name].iloc[:5], tempdf]) #첫 4행까지는 기본정보이므로 그 이후부터 복사함.
         # print(df[name])
 
 
