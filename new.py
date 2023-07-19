@@ -112,6 +112,7 @@ for i in range(len(df.columns.tolist())): #애들 이름 순대로 하기
     if df.loc[df.index[2], df.columns.tolist()[i]]!= "X" and i!=0 :#날짜 값이 있는경우 즉 등반날짜가 있는경우.
         # print(df.loc[df.index[2], df.columns.tolist()[i]])
         # print(type(df.loc[df.index[2], df.columns.tolist()[i]]))
+
         date = datetime.datetime.strptime(df.loc[df.index[2], df.columns.tolist()[i]], "%Y-%m-%d")
         # print(date)
 
