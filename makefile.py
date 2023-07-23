@@ -6,7 +6,7 @@ import re
 
 
 print('초등부 출석표 파일 맞음?')
-tempdf = pd.read_excel(r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
+tempdf = pd.read_excel(r'C:\Users\User\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
 
 all_group= making.all_group()
@@ -18,6 +18,7 @@ attendance_file_path = 'attendance.txt'
 attendance_dict = {}
 
 # 출석 정보 파일을 읽어서 딕셔너리에 저장합니다.
+# 주의사항, 목장 내용인데 사이가 space바여야지, tab(\t)으로 구분되어있으면 오류남
 with open(attendance_file_path, 'r', encoding='utf-8') as f:
     for line in f:
         # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
@@ -61,9 +62,11 @@ print()
 
 now =datetime.datetime.now()
 
+
 dff=tempdf[all_group[0]]
-# print(dff)
-N = int(now.strftime("%U"))-1 #오늘은 몇번째 주일?
+print(int(now.strftime("%U"))-1) #오늘은 몇번째 주일?\
+N = int(now.strftime("%U"))-1
+# N = int(input("오늘은 몇번째 주일꺼 입력?+ upload시 목장if문 체크 input")) #특정 일자 입력할때 쓰는것
 print(dff.iloc[N,0])
 
 
@@ -116,7 +119,8 @@ for i in range(len(all_group)):
 
         #이름다 체크했다면,
 
-        diff1= list(set(attendance_dict[all_group[i]]) -set(check)  ) # 오늘 출석 정보에 있는 명단에서 check(출석인원중)을 빼면 누락된 사람 찾아내기 가능
+        diff1= list(set(attendance_dict[all_group[i]]+(attendance_dict['불출석'])) -set(check))
+        # 오늘 출석 정보에 있는 명단에서 check(출석인원중)을 빼면 누락된 사람 찾아내기 가능
         if diff1 !=[]: # 빈 리스트가 아니라면 누락존재
             print('새신자 이름 누락',all_group[i], diff1)
 
@@ -148,49 +152,12 @@ print()
 
 #여기서는 4-1부터 6-4파일을 가져와 출석율을 계산해줌
 
-numberofO= 0
-numberofX= 0
 for l in range(len(all_group)):
     df = pd.read_excel('{}.xlsx'.format(all_group[l]), sheet_name=None)
     df=df['Sheet1']
     df.set_index('날짜\이름',inplace=True)
-    # print(df)
 
-
-    namelist = df.columns
-    for i in range(len(namelist)): #이름 뽑기
-        for j in range(len(df.index)): #인덱스아래로 가면서 처리하기
-            if df.index[j] =='비고':
-                pass
-            else:
-                if df.iat[j,i] =='O':
-                    numberofO += 1
-                elif df.iat[j,i] =='X': #숫자 카운팅
-                    numberofX += 1
-                else: #공란이면 무시
-                    pass
-
-
-
-        if (numberofO + numberofX)==0: #값 정의 안됨
-            df.iat[-1, i] = 0 #맨아래에 적기
-            # print(namelist[i],0)
-        else:
-            df.iat[-1, i] = str(round(numberofO /(numberofO+numberofX)*100))
-            # print(namelist[i], numberofO /(numberofO+numberofX))
-        numberofO=0
-        numberofX=0 #값초기화 겸 값작성
-
-
-    # print(df)
-    tempindex= making.index()
-
-    # print(len(tempindex),len(df.index))
-
-    df.index = tempindex
-    df.index.name= '날짜\이름'
-    # df.index = pd.to_datetime(df.index)
-
+    df = making.calculate_o_ratio(df)
 
 
 

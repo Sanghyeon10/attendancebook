@@ -45,3 +45,36 @@ def get_name(): #정보 부존재 목장의 선생님 이름 구하기
             B[name] = number  # 딕셔너리에 추가
 
     return B
+
+
+def calculate_o_ratio(df):
+
+
+    # 날짜 열들에 대해 반복하여 'o'의 개수를 세서 리스트에 추가
+    for column in df.columns :
+        o_count = df[column].eq('O').sum() #0도아니고 o도 아니고 O일것.
+        x_count = df[column].eq('X').sum()
+        total_count = o_count + x_count
+        df.loc[df.index[-1],column] = round(o_count / total_count*100)  if total_count > 0 else 0.0
+        #맨 아래에 값에 o/(o+x)값 넣어주기
+
+
+
+    return df
+
+def calculate_o_ratio_for_series(series):
+
+    start_index = 5 #6번째 칸까지의 것은 세지 않는다
+    end_index = len(series)  # 시리즈의 길이
+    selected_data = series[start_index:end_index]
+
+    # 'O'와 'X'의 개수 세기
+    o_count = selected_data.str.count('O').sum()
+    x_count = selected_data.str.count('X').sum()
+
+    # 'o'의 비율 계산
+    total_count = o_count + x_count
+    o_ratio = o_count / total_count if total_count > 0 else 0.0
+    series.iloc[-1] = o_ratio
+
+    return series

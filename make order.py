@@ -3,7 +3,7 @@ import making
 
 
 all_group = making.all_group()
-tempdf = pd.read_excel(r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
+tempdf = pd.read_excel(r'C:\Users\User\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
 printing= 'yes'#input('명단 프린트할꺼라면 yes라고 치기')
 
@@ -70,9 +70,10 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     a=[]
     b=[]
 
-    df.to_excel("{}.xlsx".format(all_group[i]))
+    if all_group[i] != '새신자':
+        df.to_excel("{}.xlsx".format(all_group[i]))
 if printing =='yes':
     print("")
     for m in all_group:
         print(m)
-
+    print('불출석')

@@ -8,7 +8,7 @@ import making
 
 
 print('초등부 새친구 출석표 파일 맞음?')
-tempdf = pd.read_excel(r'C:\Users\A\Downloads\새친구 관리엑셀표.xlsx', sheet_name=None)
+tempdf = pd.read_excel(r'C:\Users\User\Downloads\새친구 관리엑셀표.xlsx', sheet_name=None)
 df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
 df.set_index('날짜\이름', inplace=True)
 
@@ -69,12 +69,12 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
                     tempdf.loc[tempdf.index[p]] = olddata.loc[olddata.index[p]]  # tempdf에 값 넣어주기
 
             df[name] = pd.concat([df[name].iloc[:5], tempdf]) #합친 것을  데이터로 넣어주기
+            df[name]= making.calculate_o_ratio_for_series(df[name].iloc[:5]) #출석율 통계 합쳐서 계산하기
 
         elif name in tempdf.columns.tolist() and name not in olddata.columns.tolist(): #새신자 출석부에 명단이 없는경우
             tempdf = tempdf[name]
 
             df[name] = pd.concat([df[name].iloc[:5], tempdf])  # 첫 4행까지는 기본정보이므로 그 이후부터 복사함.
-
 
         elif name not in tempdf.columns.tolist() and name in olddata.columns.tolist(): #새신자 출석부에만 명단이 있는경우
             olddata = olddata[name]

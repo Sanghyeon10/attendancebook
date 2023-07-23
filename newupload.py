@@ -14,7 +14,7 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/dirve'
 ]
-creds = ServiceAccountCredentials.from_json_keyfile_name("C:\\Users\\A\\PycharmProjects\\pythonProject3\\abiding-honor-375915-c16db88a8008.json")
+creds = ServiceAccountCredentials.from_json_keyfile_name("C:\\Users\\User\PycharmProjects\pythonProject\\abiding-honor-375915-c16db88a8008.json")
 
 file = gspread.authorize(creds)
 sh = file.open('새친구 관리엑셀표') #woorbook = sh
