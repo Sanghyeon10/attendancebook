@@ -1,4 +1,5 @@
 import datetime
+import re
 
 def index():
     df=[]
@@ -78,3 +79,39 @@ def calculate_o_ratio_for_series(series):
     series.iloc[-1] = o_ratio
 
     return series
+
+
+
+def read_attendance_from_file(attendance_file_path):
+    # 주의사항, 목장 내용인데 사이가 space바여야지, tab(\t)으로 구분되어있으면 오류남
+    attendance_dict = {}
+
+    with open(attendance_file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
+            fields = [line for line in re.split('\s|,|\.', line) if line]
+
+            # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
+            farm_name, *attendees = fields
+            # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
+            attendance_dict[farm_name] = attendees
+
+    return attendance_dict
+
+def read_nocome_from_file(nocome_file_path):
+    nocome_dict = {}
+
+    with open(nocome_file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            # 정규 표현식을 사용하여 첫 번째 공백문자로 분리합니다.
+            pattern = r'^(\S+)\s(.+)$'
+            match = re.match(pattern, line)
+
+            if match:
+                # 두 개의 그룹으로 나눈 문자열을 변수에 저장합니다.
+                farm_name = match.group(1)
+                reason = match.group(2).strip()  # 리스트에서 양쪽 공백 제거
+                # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
+                nocome_dict[farm_name] = reason
+
+    return nocome_dict

@@ -11,48 +11,20 @@ tempdf = pd.read_excel(r'C:\Users\User\Downloads\2023 초등부 출석표.xlsx',
 
 all_group= making.all_group()
 
-# 출석 정보가 저장된 파일 경로를 입력합니다.
-attendance_file_path = 'attendance.txt'
+attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
 
-# 목장 출석 정보를 저장할 딕셔너리를 생성합니다.
-attendance_dict = {}
 
-# 출석 정보 파일을 읽어서 딕셔너리에 저장합니다.
-# 주의사항, 목장 내용인데 사이가 space바여야지, tab(\t)으로 구분되어있으면 오류남
-with open(attendance_file_path, 'r', encoding='utf-8') as f:
-    for line in f:
-        # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-        # fields = line.strip().split()
-        fields = [line for line in re.split('\s|,|\.', line) if line]
 
-        # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
-        farm_name, *attendees = fields
+# # 각 목장의 출석 정보 리스트를 출력합니다.
+# for farm_name, attendees in attendance_dict.items():
+#     print(f'{farm_name} 목장 출석자: {attendees}', '인원수:' ,len(attendees))
 
-        # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
-        attendance_dict[farm_name] = attendees
 
-# 각 목장의 출석 정보 리스트를 출력합니다.
-for farm_name, attendees in attendance_dict.items():
-    print(f'{farm_name} 목장 출석자: {attendees}', '인원수:' ,len(attendees))
+#비고칸에 채울 결석 관련 정보를 딕셔너리 형태로 저장
+nocome_dict = making.read_nocome_from_file('nocome.txt')
 
-#결석정보 추가 코드
-nocome_file_path = 'nocome.txt'
-
-# 결석 사유 정보를 저장할 딕셔너리를 생성합니다.
-nocome_dict = {}
-
-# 딕셔너리에 저장합니다.
-with open(nocome_file_path, 'r', encoding='utf-8') as f:
-    for line in f:
-        # fields = line.strip().split()
-        field = line.split(" ",1)
-
-        # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
-        farm_name, reason = field
-
-        # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
-        nocome_dict[farm_name] = reason
-
+# 잘 저장되었는지 출력
+# print(nocome_dict)
 
 
 
@@ -69,6 +41,7 @@ N = int(now.strftime("%U"))-1
 # N = int(input("오늘은 몇번째 주일꺼 입력?+ upload시 목장if문 체크 input")) #특정 일자 입력할때 쓰는것
 print(dff.iloc[N,0])
 
+print()
 
 getnamelist=[] #정보없는 목장 선생님 이름 구하기
 
@@ -143,12 +116,14 @@ for i in range(len(all_group)):
     df.to_excel("{}.xlsx".format(all_group[i])) #5-1식으로 출력
 
 
+print()
+
 getname= making.get_name()
 print('정보부재목장')
 for l in getnamelist: #목장 별로 하나씩 꺼내서 이름프린트
     print(getname[l])
 
-print('nocome 개수', int(len(nocome_dict.keys()))  )
+
 
 print()
 print()
