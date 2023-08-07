@@ -150,10 +150,35 @@ for i in range(1,len(df.columns.tolist())): #애들 이름 순대로 하기 첫�
         date = datetime.datetime.strptime(df.loc[df.index[1], df.columns.tolist()[i]], "%Y-%m-%d") #날짜를 datetime화
         target_date=  date + datetime.timedelta(weeks=12) #12주후 출석율
         # print(target_date,datetime.datetime.now())
-        if datetime.datetime.now()> target_date:#등록이후 12주가 지나도 등반이 안돼면 등반여부체크
-            df.iat[3, i] ="등반?"
-        else:
-            df.iat[3, i] ="" # 아니면 빈칸기입
+
+        for j in range(len(df.index) - 1):  # 출석율 계산, 마지막은 비고이므로 생략
+            # print((df.index[j]))
+            if j > 4:  # 년월일 인덱스인 부분만 계산해야함.
+                # print(df.index[j], type(df.index[j]))
+                if datetime.datetime.strptime(df.index[j], "%Y-%m-%d") >= target_date:  # 이미 datetime.datetime형
+                    # 12주 후부터 세기, 또한 마지막은 비고라서 패스
+
+                    if df.loc[df.index[j], df.columns.tolist()[i]] == 'O':
+                        numrberofO = numrberofO + 1
+
+                    elif df.loc[df.index[j], df.columns.tolist()[i]] == 'X':
+                        numrberofX = numrberofX + 1
+                    else:
+                        pass
+
+                if (numrberofO) == 0:
+                    result = 0
+                elif (numrberofO + numrberofX) == 0:
+                    result = 0
+
+                else:
+                    result = round(numrberofO / (numrberofO + numrberofX) * 100)
+
+
+        if result ==0: #등록후 12개월 이후 출석율이 0이면 논할게 없고
+            pass
+        else: #있다면 등반여부 체크하기
+            df.iat[3, i] = "등반?"
 
 
 
