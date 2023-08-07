@@ -106,7 +106,7 @@ df.loc['등반날짜','통계']= str(round(up/total*100))+'%' # 등반 인원수
 numrberofO=0
 numrberofX=0
 
-for i in range(len(df.columns.tolist())): #애들 이름 순대로 하기
+for i in range(1,len(df.columns.tolist())): #애들 이름 순대로 하기 첫번째 칸은 통계임
     # print(df.columns.tolist()[i])
     numrberofO = 0
     numrberofX = 0 #변수 초기화
@@ -115,10 +115,7 @@ for i in range(len(df.columns.tolist())): #애들 이름 순대로 하기
     if df.loc[df.index[2], df.columns.tolist()[i]]!= "X" and i!=0 :#날짜 값이 있는경우 즉 등반날짜가 있는경우.
         # print(df.loc[df.index[2], df.columns.tolist()[i]])
         # print(type(df.loc[df.index[2], df.columns.tolist()[i]]))
-        date = datetime.datetime.strptime(df.loc[df.index[2], df.columns.tolist()[i]], "%Y-%m-%d")
-        # print(date)
-
-        # date = datetime.datetime.strptime(df.loc[df.index[2], df.columns.tolist()[i]], "%Y-%m-%d")
+        date = datetime.datetime.strptime(df.loc[df.index[2], df.columns.tolist()[i]], "%Y-%m-%d") #날짜를 datetime화
         target_date=  date + datetime.timedelta(weeks=12) #12주후 출석율
         # print(target_date)
 
@@ -148,8 +145,15 @@ for i in range(len(df.columns.tolist())): #애들 이름 순대로 하기
                 # print(df.loc[df.index[3],df.columns.tolist()[i]])
                 df.iat[3,i]= result
 
-    else: #등반날짜까 없는 경우
-        df.iat[3, i] ="" #빈칸
+    else: #등반날짜가 없는 경우
+        # 2번째칸에 있는 등록날짜기준으로 날자 세는거임.
+        date = datetime.datetime.strptime(df.loc[df.index[1], df.columns.tolist()[i]], "%Y-%m-%d") #날짜를 datetime화
+        target_date=  date + datetime.timedelta(weeks=12) #12주후 출석율
+        # print(target_date,datetime.datetime.now())
+        if datetime.datetime.now()> target_date:#등록이후 12주가 지나도 등반이 안돼면 등반여부체크
+            df.iat[3, i] ="등반?"
+        else:
+            df.iat[3, i] ="" # 아니면 빈칸기입
 
 
 
