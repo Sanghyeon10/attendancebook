@@ -64,22 +64,22 @@ def calculate_o_ratio(df):
     return df
 
 def calculate_o_ratio_for_series(series):
+    start_index = 5  # 6번째 칸까지의 것은 세지 않습니다
+    end_index = len(series) - 1  # -1해줘야 인덱스 안벗어남
+    selected_data = series[start_index:]
 
-    start_index = 5 #6번째 칸까지의 것은 세지 않는다
-    end_index = len(series)  # 시리즈의 길이
-    selected_data = series[start_index:end_index]
 
     # 'O'와 'X'의 개수 세기
-    o_count = selected_data.str.count('O').sum()
-    x_count = selected_data.str.count('X').sum()
+    o_count = selected_data.eq('O').sum()
+    x_count = selected_data.eq('X').sum()
 
-    # 'o'의 비율 계산
+    # 'O'의 비율 계산
     total_count = o_count + x_count
-    o_ratio = o_count / total_count if total_count > 0 else 0.0
-    series.iloc[-1] = o_ratio
+    o_ratio = round(o_count / total_count*100) if total_count > 0 else 0.0
+
+    series[end_index] = o_ratio
 
     return series
-
 
 
 def read_attendance_from_file(attendance_file_path):
