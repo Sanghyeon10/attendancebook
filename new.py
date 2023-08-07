@@ -69,7 +69,8 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
                     tempdf.loc[tempdf.index[p]] = olddata.loc[olddata.index[p]]  # tempdf에 값 넣어주기
 
             df[name] = pd.concat([df[name].iloc[:5], tempdf]) #합친 것을  데이터로 넣어주기
-            df[name]= making.calculate_o_ratio_for_series(df[name].iloc[:5]) #출석율 통계 합쳐서 계산하기
+            # df[name]= making.calculate_o_ratio_for_series(df[name].iloc[:5]) #출석율 통계 합쳐서 계산하기
+            # 합쳐서 통계작성 오류 있음.
 
         elif name in tempdf.columns.tolist() and name not in olddata.columns.tolist(): #새신자 출석부에 명단이 없는경우
             tempdf = tempdf[name]

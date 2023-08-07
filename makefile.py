@@ -56,12 +56,12 @@ with open(nocome_file_path, 'r', encoding='utf-8') as f:
 
 
 
-
 print()
 print()
 
 now =datetime.datetime.now()
 
+nocomecount=0
 
 dff=tempdf[all_group[0]]
 print(int(now.strftime("%U"))-1) #오늘은 몇번째 주일?\
@@ -104,6 +104,7 @@ for i in range(len(all_group)):
         if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]].strip() #입력해주기
             print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
+            nocomecount += 1
 
 
     elif all_group[i] == '새신자': #새신자라면, 비출석이 불출석이 아님.
@@ -129,6 +130,7 @@ for i in range(len(all_group)):
         if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]].strip() #입력해주기
             print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
+            nocomecount += 1
 
 
 
@@ -145,6 +147,8 @@ getname= making.get_name()
 print('정보부재목장')
 for l in getnamelist: #목장 별로 하나씩 꺼내서 이름프린트
     print(getname[l])
+
+print('nocome 개수', int(len(nocome_dict.keys()))  )
 
 print()
 print()
