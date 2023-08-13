@@ -60,8 +60,14 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     df=df.loc[:,temp]
     # df=df[[temp]]
 
+
+    if all_group[i]=='6-4': #안쓰이는 이름은 제거하기
+        temp= making.gettruelist(temp,["김현아", "정현영","이가영","조서현","신재은","유하은","서예린"])
+        # print(temp)
     # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용
     if printing == 'yes': #프린트 하는게 맞으면
+
+
         make_5line(all_group[i],temp) #5명씩 잘라서 표현할때
 
 

@@ -115,3 +115,9 @@ def read_nocome_from_file(nocome_file_path):
                 nocome_dict[farm_name] = reason
 
     return nocome_dict
+
+
+def gettruelist(my_list,remove_items):
+    new_list = [item for item in my_list if item not in remove_items]
+
+    return (new_list)

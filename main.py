@@ -31,4 +31,4 @@ removingexcel(file_path)
 file_path = r"C:\Users\user\Downloads/새친구 관리엑셀표.xlsx"
 removingexcel(file_path)
 
-input('사본 만들기?+nocome은 지우기')
+print('사본 만들기?+nocome은 지우기')
