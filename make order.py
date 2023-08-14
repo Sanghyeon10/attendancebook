@@ -83,3 +83,4 @@ if printing =='yes':
     for m in all_group:
         print(m)
     print('불출석')
+    print('등반자')

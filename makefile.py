@@ -59,7 +59,7 @@ for i in range(len(all_group)):
     if attendance_dict[all_group[i]] !=[] and all_group[i]!='새신자': # 출석 공란이 아닌경우 (정상적인경우) and 새신자가 아니면
         for j in namelist: #기존 엑셀시트에 있는 이름중
             if j in attendance_dict[all_group[i]]: # 오늘 출석정보가 있다면.ex4-3을 넣고 해당하는 출석정보 리스트 얻기
-                df.loc[df.index[N],j]='O'
+                df.loc[df.index[N],j]='O'+making.checkO(j,attendance_dict['등반자'])
                 check.append(j) #확인된건 넣어두기
 
 
@@ -83,7 +83,7 @@ for i in range(len(all_group)):
     elif all_group[i] == '새신자': #새신자라면, 비출석이 불출석이 아님.
         for j in namelist: #기존 엑셀시트에 있는 이름중
             if j in attendance_dict[all_group[i]]: # 오늘 출석정보가 있다면 새신자 딕셔너리를 넣고 해당하는 출석정보 리스트 얻기
-                df.loc[df.index[N],j]='O'
+                df.loc[df.index[N],j]='O'+making.checkO(j,attendance_dict['등반자'])
                 check.append(j) #확인된건 넣어두기
 
             if j in attendance_dict['불출석']: #불출석에 들어있다면,
@@ -117,10 +117,9 @@ for i in range(len(all_group)):
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]].strip() #입력해주기
             print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
 
-
-    #파일로 만들기
-    df.to_excel("{}.xlsx".format(all_group[i])) #5-1식으로 출력
-
+        # 파일로 만들기
+    df.to_excel("{}.xlsx".format(all_group[i]))  # 5-1식으로 출력
+    # 출력해야지 그 출력된 결과물에서 다시 통계작성함.
 
 print()
 

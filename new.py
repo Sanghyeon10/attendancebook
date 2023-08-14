@@ -148,7 +148,7 @@ for i in range(1,len(df.columns.tolist())): #애들 이름 순대로 하기 첫�
     else: #등반날짜가 없는 경우
         # 2번째칸에 있는 등록날짜기준으로 날자 세는거임.
         date = datetime.datetime.strptime(df.loc[df.index[1], df.columns.tolist()[i]], "%Y-%m-%d") #날짜를 datetime화
-        target_date=  date + datetime.timedelta(weeks=12) #12주후 출석율
+        target_date=  date + datetime.timedelta(weeks=8) #8주(2달)후 출석율
         # print(target_date,datetime.datetime.now())
 
         for j in range(len(df.index) - 1):  # 출석율 계산, 마지막은 비고이므로 생략

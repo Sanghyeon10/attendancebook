@@ -1,30 +1,51 @@
-import re
 import pandas as pd
 
-def calculate_o_ratio_for_series(series):
-    start_index = 5  # 6번째 칸까지의 것은 세지 않습니다
-    end_index = len(series)-1 #-1해줘야 인덱스 안벗어남
-    selected_data = series[start_index:]
+# 예시 시리즈 생성
+data = pd.Series(['A', 'B', 'C', 'O', 'E', 'F', 'O??', 'OG', 'H', 'O'])
 
-    selected_data = selected_data.fillna("") # 결측치 있으면 .str에서 오류남
+# 'O'를 포함하는 경우의 합계 구하기
+o_included_sum = data.str.contains('O').sum()
 
-    # 'O'와 'X'의 개수 세기
-    o_count = selected_data.str.count('O').sum()
-    x_count = selected_data.str.count('X').sum()
-
-    # 'O'의 비율 계산
-    total_count = o_count + x_count
-    o_ratio = o_count / total_count if total_count > 0 else 0.0
+print("O를 포함하는 경우의 합계:", o_included_sum)
 
 
 
 
-    series[end_index] = o_ratio
 
-    return series
+#
+# from datetime import datetime, timedelta
+#
+# # 일기 데이터 예시: {날짜: [활동1 여부, 활동2 여부, ...]}
+# diary_data = {
+#     "2023-08-08": ["운동", "독서", "요리"],
+#     "2023-08-09": ["운동", "영화", "쇼핑"],
+#     # 날짜와 활동 여부를 기록한 데이터를 입력하세요.
+# }
+#
+# # 활동 이름 리스트
+# activity_names = ["운동", "독서", "요리", "영화", "쇼핑", "등산"]  # 실제 활동 이름으로 대체하세요.
+#
+#
+# def print_weekly_summary(data, activities):
+#     today = datetime.today()
+#     start_of_week = today - timedelta(days=today.weekday())
+#
+#     weekly_summary = {}
+#
+#     for date_str, activities_done in data.items():
+#         date = datetime.strptime(date_str, "%Y-%m-%d")
+#         if start_of_week <= date <= today:
+#             for activity in activities_done:
+#                 if activity not in weekly_summary:
+#                     weekly_summary[activity] = 0
+#                 weekly_summary[activity] += 1
+#
+#     print("주간 활동 요약")
+#     print("----------------")
+#     for activity, count in weekly_summary.items():
+#         print(f"{activity}: {count}번")
+#
+#
+# # 주간 요약 프린트
+# print_weekly_summary(diary_data, activity_names)
 
-# 테스트를 위한 예제 데이터
-data = pd.Series(['O', 'O', 'X', 'X', None, None, None, 'O', None, 42])
-
-result_series = calculate_o_ratio_for_series(data)
-print(result_series)

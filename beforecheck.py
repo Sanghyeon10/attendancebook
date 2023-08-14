@@ -56,6 +56,9 @@ print()
 #비고칸에 채울 결석 관련 정보를 딕셔너리 형태로 저장
 nocome_dict = making.read_nocome_from_file('nocome.txt')
 # 잘 저장되었는지 출력
-print("nocome_dict", nocome_dict)
+print("nocome_dict")
+for key, value in nocome_dict.items():
+    print(key, value)
+
 
 input('누락명단이 정상이면 넘어가기 input')

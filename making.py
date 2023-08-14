@@ -53,8 +53,9 @@ def calculate_o_ratio(df):
 
     # 날짜 열들에 대해 반복하여 'o'의 개수를 세서 리스트에 추가
     for column in df.columns :
-        o_count = df[column].eq('O').sum() #0도아니고 o도 아니고 O일것.
-        x_count = df[column].eq('X').sum()
+        # df[column] = df[column].astype(str)
+        o_count = df[column].astype(str).str.contains('O').sum() #0도아니고 o도 아니고 O일것. -> 수정함. O을 포함.
+        x_count = df[column].astype(str).str.contains('X').sum()
         total_count = o_count + x_count
         df.loc[df.index[-1],column] = round(o_count / total_count*100)  if total_count > 0 else 0.0
         #맨 아래에 값에 o/(o+x)값 넣어주기
@@ -70,8 +71,8 @@ def calculate_o_ratio_for_series(series):
 
 
     # 'O'와 'X'의 개수 세기
-    o_count = selected_data.eq('O').sum()
-    x_count = selected_data.eq('X').sum()
+    o_count = selected_data.astype(str).str.contains('O').sum()
+    x_count = selected_data.astype(str).str.contains('X').sum()
 
     # 'O'의 비율 계산
     total_count = o_count + x_count
@@ -121,3 +122,12 @@ def gettruelist(my_list,remove_items):
     new_list = [item for item in my_list if item not in remove_items]
 
     return (new_list)
+
+
+def checkO(name, list):
+    if name in list:
+        A="?"
+    else:
+        A=""
+
+    return A
