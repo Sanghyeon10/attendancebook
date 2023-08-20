@@ -12,7 +12,6 @@ attendance_file_path = 'attendance.txt' #첫 엑셀표 양식만들때 쓰는거
 attendance_dict = {}
 
 # 출석 정보 파일을 읽어서 딕셔너리에 저장합니다.
-# 주의사항, 목장 내용인데 사이가 space바여야지, tab(\t)으로 구분되어있으면 오류남
 with open(attendance_file_path, 'r', encoding='utf-8') as f:
     for line in f:
         # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
@@ -23,7 +22,9 @@ with open(attendance_file_path, 'r', encoding='utf-8') as f:
         farm_name, *attendees = fields
 
         # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
+        attendees = ['기타']+ attendees #리스트 맨 앞에 기타 추가해줘야함.
         attendance_dict[farm_name] = attendees
+
 
 # 각 목장의 출석 정보 리스트를 출력합니다.
 for farm_name, attendees in attendance_dict.items():
