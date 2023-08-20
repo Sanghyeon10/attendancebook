@@ -2,8 +2,8 @@ import pandas as pd
 import making
 
 # 비교할 엑셀 파일의 경로
-file_path1 = r'C:\Users\A\Downloads\2023 초등부 출석표.xlsx'
-file_path2 = r'C:\Users\A\Downloads\2023 초등부 출석표의 사본 6_11.xlsx'
+file_path1 = r'C:\Users\User\Downloads\2023 초등부 출석표.xlsx'
+file_path2 = r'C:\Users\User\Downloads\2023 초등부 출석표의 사본8월14일.xlsx'
 
 # 엑셀 파일 불러오기
 

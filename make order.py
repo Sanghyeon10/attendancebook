@@ -61,9 +61,16 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     # df=df[[temp]]
 
 
-    if all_group[i]=='6-4': #안쓰이는 이름은 제거하기
+    if all_group[i]=='6-4': #안쓰이는 이름은 제거하고 프린트
         temp= making.gettruelist(temp,["김현아", "정현영","이가영","조서현","신재은","유하은","서예린"])
         # print(temp)
+    if all_group[i]=="5-1":
+        temp= making.gettruelist(temp,["김동혁", "김해진" ,"서시우","고연우"])
+
+    if all_group[i]=="6-1":
+        temp = making.gettruelist(temp, ["김건우(1)"])
+
+
     # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용
     if printing == 'yes': #프린트 하는게 맞으면
 
@@ -77,7 +84,8 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     b=[]
 
     if all_group[i] != '새신자':
-        df.to_excel("{}.xlsx".format(all_group[i]))
+        # df.to_excel("{}.xlsx".format(all_group[i]))
+        pass # 엑셀 정렬화 필요가 없어서 주석처리해놓음.
 if printing =='yes':
     print("")
     for m in all_group:

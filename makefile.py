@@ -115,7 +115,7 @@ for i in range(len(all_group)):
         #결석사유칸이 존재한다면
         if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]].strip() #입력해주기
-            print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
+            # print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
 
         # 파일로 만들기
     df.to_excel("{}.xlsx".format(all_group[i]))  # 5-1식으로 출력
