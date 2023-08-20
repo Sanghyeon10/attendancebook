@@ -126,7 +126,7 @@ def gettruelist(my_list,remove_items):
 
 def checkO(name, list):
     if name in list:
-        A="?"
+        A="(등반)"
     else:
         A=""
 

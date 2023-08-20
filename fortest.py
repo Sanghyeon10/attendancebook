@@ -1,51 +1,21 @@
 import pandas as pd
+import numpy as np
 
-# 예시 시리즈 생성
-data = pd.Series(['A', 'B', 'C', 'O', 'E', 'F', 'O??', 'OG', 'H', 'O'])
+# 큰 데이터프레임 생성 예시 (10개의 행, 10개의 열)
+np.random.seed(42)
+data = np.random.randint(0, 100, size=(10, 10))
+columns = [f'칼럼{i}' for i in range(10)]
 
-# 'O'를 포함하는 경우의 합계 구하기
-o_included_sum = data.str.contains('O').sum()
+df = pd.DataFrame(data, columns=columns)
 
-print("O를 포함하는 경우의 합계:", o_included_sum)
+# 칼럼을 여러 조각으로 나누어 프린트하기
+chunk_size = 3  # 각 조각의 크기를 설정
 
+num_chunks = len(df.columns) // chunk_size + 1
 
-
-
-
-#
-# from datetime import datetime, timedelta
-#
-# # 일기 데이터 예시: {날짜: [활동1 여부, 활동2 여부, ...]}
-# diary_data = {
-#     "2023-08-08": ["운동", "독서", "요리"],
-#     "2023-08-09": ["운동", "영화", "쇼핑"],
-#     # 날짜와 활동 여부를 기록한 데이터를 입력하세요.
-# }
-#
-# # 활동 이름 리스트
-# activity_names = ["운동", "독서", "요리", "영화", "쇼핑", "등산"]  # 실제 활동 이름으로 대체하세요.
-#
-#
-# def print_weekly_summary(data, activities):
-#     today = datetime.today()
-#     start_of_week = today - timedelta(days=today.weekday())
-#
-#     weekly_summary = {}
-#
-#     for date_str, activities_done in data.items():
-#         date = datetime.strptime(date_str, "%Y-%m-%d")
-#         if start_of_week <= date <= today:
-#             for activity in activities_done:
-#                 if activity not in weekly_summary:
-#                     weekly_summary[activity] = 0
-#                 weekly_summary[activity] += 1
-#
-#     print("주간 활동 요약")
-#     print("----------------")
-#     for activity, count in weekly_summary.items():
-#         print(f"{activity}: {count}번")
-#
-#
-# # 주간 요약 프린트
-# print_weekly_summary(diary_data, activity_names)
-
+for i in range(num_chunks):
+    start = i * chunk_size
+    end = (i + 1) * chunk_size
+    chunk_columns = df.columns[start:end]
+    print(df[chunk_columns])
+    print()  # 각 조각 사이에 공백 라인 삽입
