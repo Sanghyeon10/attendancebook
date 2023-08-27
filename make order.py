@@ -82,6 +82,13 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     if all_group[i] != '새신자':
         # df.to_excel("{}.xlsx".format(all_group[i]))
         pass # 엑셀 정렬화 필요가 없어서 주석처리해놓음.
+    else: #새신자이면
+        print("")
+        print("이름:")
+        print("전도자(목장):")
+        print("인적사항:주소 생년월일 학교명 가족관계 핸드폰번호")
+
+
 if printing =='yes':
     print("")
     for m in all_group:
