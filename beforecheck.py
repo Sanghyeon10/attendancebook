@@ -50,6 +50,21 @@ for i in range(len(all_group)):
         if diff1 !=[]: # 빈 리스트가 아니라면 누락존재
             print('새신자 이름 누락',all_group[i], diff1)
 
+
+
+# 등반자가 있다면,구글폼 새신자 리스트에서는 표시될 이유가 이젠 없음.
+file_name = "class_data.txt"
+loaded_data = making.load_dict_from_file(file_name)
+haveToaddset=set(attendance_dict['등반자'])- set(loaded_data['새신자'])
+print(haveToaddset)
+if haveToaddset !=set(): #빈 집합이 아니라면 추가해야함
+    for i in haveToaddset:
+        loaded_data['새신자'].append(i)
+
+making.save_dict_to_file(loaded_data, file_name)
+print(loaded_data)
+
+
 print()
 print()
 

@@ -1,21 +1,27 @@
-import pandas as pd
-import numpy as np
+import json
 
-# 큰 데이터프레임 생성 예시 (10개의 행, 10개의 열)
-np.random.seed(42)
-data = np.random.randint(0, 100, size=(10, 10))
-columns = [f'칼럼{i}' for i in range(10)]
+def save_dict_to_file(data, file_name):
+    with open(file_name, 'w') as file:
+        json.dump(data, file)
 
-df = pd.DataFrame(data, columns=columns)
+def load_dict_from_file(file_name):
+    with open(file_name, 'r') as file:
+        loaded_data = json.load(file)
+    return loaded_data
 
-# 칼럼을 여러 조각으로 나누어 프린트하기
-chunk_size = 3  # 각 조각의 크기를 설정
+# 예시 딕셔너리
+data = {
+    "6-4": ["김현아", "정현영", "이가영", "조서현", "신재은", "유하은", "서예린"],
+    "5-1": ["김동혁", "김해진", "서시우", "고연우"],
+    "6-1": ["김건우(1)"],
+    "새신자": ["김아정",	"설민주"	,"설우진"]
+}
 
-num_chunks = len(df.columns) // chunk_size + 1
 
-for i in range(num_chunks):
-    start = i * chunk_size
-    end = (i + 1) * chunk_size
-    chunk_columns = df.columns[start:end]
-    print(df[chunk_columns])
-    print()  # 각 조각 사이에 공백 라인 삽입
+# file_name = "class_data.txt"
+# save_dict_to_file(data, file_name)
+
+
+file_name = "class_data.txt"
+loaded_data = load_dict_from_file(file_name)
+print(loaded_data)

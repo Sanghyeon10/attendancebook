@@ -60,15 +60,11 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     df=df.loc[:,temp]
     # df=df[[temp]]
 
+    file_name = "class_data.txt"
+    loaded_data = making.load_dict_from_file(file_name)
 
-    if all_group[i]=='6-4': #안쓰이는 이름은 제거하고 프린트
-        temp= making.gettruelist(temp,["김현아", "정현영","이가영","조서현","신재은","유하은","서예린"])
-        # print(temp)
-    if all_group[i]=="5-1":
-        temp= making.gettruelist(temp,["김동혁", "김해진" ,"서시우","고연우"])
-
-    if all_group[i]=="6-1":
-        temp = making.gettruelist(temp, ["김건우(1)"])
+    if all_group[i] in loaded_data.keys():# 명단에서 제외해야할 명단이 있다면
+        temp = making.gettruelist(temp, loaded_data[all_group[i]]) # 순서에서 제외해서 저장하기
 
 
     # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용

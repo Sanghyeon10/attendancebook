@@ -85,7 +85,7 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
             df[name] = pd.concat([df[name].iloc[:5], olddata])  # 첫 4행까지는 기본정보이므로 그 이후부터 복사함.
 
         else:
-            print('오류가능성!')
+            print('오류가능성!',name)
 
         # df[name] = pd.concat([df[name].iloc[:5], tempdf]) #첫 4행까지는 기본정보이므로 그 이후부터 복사함.
         # print(df[name])

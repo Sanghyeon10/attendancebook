@@ -1,5 +1,6 @@
 import datetime
 import re
+import json
 
 def index():
     df=[]
@@ -29,7 +30,7 @@ def index():
             # print(day.strftime("%Y-%m-%d"))
         day += datetime.timedelta(days=7)
 
-    df.append('비고')
+    df.append('비고') #비고에는 출석율 계산할것임.
     return df
 
 def all_group(): #그룹리스트 가져오기
@@ -43,6 +44,7 @@ def get_name(): #정보 부존재 목장의 선생님 이름 구하기
     with open("namebook.txt", "r" , encoding="utf-8") as file:
         for line in file:
             name, number = line.strip().split(" ")  # 빈칸으로 구분된 이름과 전화번호 추출
+            #예시 4-1 홍길동
             B[name] = number  # 딕셔너리에 추가
 
     return B
@@ -84,7 +86,6 @@ def calculate_o_ratio_for_series(series):
 
 
 def read_attendance_from_file(attendance_file_path):
-    # 주의사항, 목장 내용인데 사이가 space바여야지, tab(\t)으로 구분되어있으면 오류남
     attendance_dict = {}
 
     with open(attendance_file_path, 'r', encoding='utf-8') as f:
@@ -120,7 +121,7 @@ def read_nocome_from_file(nocome_file_path):
 
 def gettruelist(my_list,remove_items):
     new_list = [item for item in my_list if item not in remove_items]
-
+    #순서를 유지하는체로 리스트 중복을 제거하는 코드
     return (new_list)
 
 
@@ -131,3 +132,13 @@ def checkO(name, list):
         A=""
 
     return A
+
+
+def save_dict_to_file(data, file_name):
+    with open(file_name, 'w') as file:
+        json.dump(data, file)
+
+def load_dict_from_file(file_name):
+    with open(file_name, 'r') as file:
+        loaded_data = json.load(file)
+    return loaded_data
