@@ -36,7 +36,8 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     b.sort(key=lambda x: x[1], reverse=True) #(이름, 출석율)의 정보 리스트, a는 출석개수가 많은것 b는적은것
     a= a+b #출석 정보가 작은 애들은 뒤로 빼준 것임.
     a.remove(('기타',0)) #기타는 첫번째로 넣어야되서 일단 삭제
-    filtered_data = filtered_data+ [all_group[i]]+ [item for item in a if int(item[1]) < 10 and item not in loaded_data[all_group[i]] ]
+    # print('dd',[item for item in a if (int(item[1]) < 10 and item[0] not in loaded_data[all_group[i]])])
+    filtered_data = filtered_data+ [all_group[i]]+ [item for item in a if int(item[1]) < 10 and item[0] not in loaded_data[all_group[i]] ]
     #출석율이 특정숫자보다 낮고 제거명부에 없는 애들은 명부 프린트에서 제거해줄지 검토해야함
     #목장이름+ 리스트형태로 명부 만들어서 마지막에 프린트해줌.
 
