@@ -124,7 +124,7 @@ for i in range(len(all_group)):
 print()
 
 getname= making.get_name()
-if getnamelist!=[]: #명단이 빈 리스트그 아니면
+if getnamelist!=[]: #명단이 빈 리스트가 아니면
     print('정보부재목장') #출력해주기
 for l in getnamelist: #목장 별로 하나씩 꺼내서 이름프린트
     print(getname[l])

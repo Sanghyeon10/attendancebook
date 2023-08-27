@@ -135,10 +135,10 @@ def checkO(name, list):
 
 
 def save_dict_to_file(data, file_name):
-    with open(file_name, 'w') as file:
-        json.dump(data, file)
+    with open(file_name, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
 
 def load_dict_from_file(file_name):
-    with open(file_name, 'r') as file:
+    with open(file_name, 'r', encoding="utf-8") as file:
         loaded_data = json.load(file)
     return loaded_data

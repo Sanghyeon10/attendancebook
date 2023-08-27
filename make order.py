@@ -86,7 +86,8 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
         print("")
         print("이름:")
         print("전도자(목장):")
-        print("인적사항:주소 생년월일 학교명 가족관계 핸드폰번호")
+        print("인적사항:")
+        print("주소 생년월일 학교명 가족관계 핸드폰번호")
 
 
 if printing =='yes':

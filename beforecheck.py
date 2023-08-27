@@ -61,7 +61,7 @@ if haveToaddset !=set(): #빈 집합이 아니라면 추가해야함
     for i in haveToaddset:
         loaded_data['새신자'].append(i)
 
-making.save_dict_to_file(loaded_data, file_name)
+making.save_dict_to_file(loaded_data, file_name) #json형태로 딕셔너리 저장하고 명단 프린트.
 print(loaded_data)
 
 
