@@ -142,3 +142,21 @@ def load_dict_from_file(file_name):
     with open(file_name, 'r', encoding="utf-8") as file:
         loaded_data = json.load(file)
     return loaded_data
+
+def make_5line(groupname,my_list):
+    print(groupname, end=' ')
+    for i, x in enumerate(my_list):
+        if i % 5 == 0 and i != 0:
+            print()
+        elif i >= 5 and i % 10 == 5:
+            print()
+        else:
+            pass
+
+
+        if i == len(my_list)-1: #마지막
+            print(x)
+        else: #평상시
+            print(x, end=' ')
+
+    return False
