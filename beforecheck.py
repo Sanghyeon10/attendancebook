@@ -56,7 +56,7 @@ for i in range(len(all_group)):
 file_name = "class_data.txt"
 loaded_data = making.load_dict_from_file(file_name)
 haveToaddset=set(attendance_dict['등반자'])- set(loaded_data['새신자'])
-print(haveToaddset)
+print("등반자",haveToaddset)
 if haveToaddset !=set(): #빈 집합이 아니라면 추가해야함
     for i in haveToaddset:
         loaded_data['새신자'].append(i)

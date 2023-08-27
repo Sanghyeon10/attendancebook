@@ -76,7 +76,7 @@ for i in range(len(all_group)):
         #결석사유칸이 존재한다면
         if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]].strip() #입력해주기
-            print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
+            # print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
 
 
 
@@ -102,7 +102,7 @@ for i in range(len(all_group)):
         #결석사유칸이 존재한다면
         if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]].strip() #입력해주기
-            print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
+            # print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
 
 
 
@@ -124,14 +124,13 @@ for i in range(len(all_group)):
 print()
 
 getname= making.get_name()
-print('정보부재목장')
+if getnamelist!=[]: #명단이 빈 리스트그 아니면
+    print('정보부재목장') #출력해주기
 for l in getnamelist: #목장 별로 하나씩 꺼내서 이름프린트
     print(getname[l])
 
 
 
-print()
-print()
 print()
 
 #여기서는 4-1부터 6-4파일을 가져와 출석율을 계산해줌
@@ -146,4 +145,4 @@ for l in range(len(all_group)):
 
 
     df.to_excel("{}.xlsx".format(all_group[l]),  index=True )  # 5-1식으로 출력
-print('통계작성완료')
+# print('통계작성완료') #통계 작성완료도 큰 의미가 없어서 출력안함.
