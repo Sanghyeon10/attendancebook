@@ -20,7 +20,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     namelist = df.columns
     # print(all_group[i], namelist.tolist()) #정렬하기 않고 기존꺼 포현할때 쓰는것
 
-    #프린트 명부에서 제거해야할 명단
+    #프린트 명부에서 제거해야할 명단의 딕셔너리
     file_name = "class_data.txt"
     loaded_data = making.load_dict_from_file(file_name)
 
@@ -48,7 +48,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     # print(temp)
 
     temp.insert(0,'기타') #기타 첫번째로 다시 넣어주기
-    df=df.loc[:,temp]
+    df=df.loc[:,temp] #데이터 프레임에 주어진 명단순서대로 넣기, 다만 to_excel안하면 큰 의미는 없음.
     # df=df[[temp]]
 
 
@@ -61,7 +61,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
         making.make_5line(all_group[i],temp) #5명씩 잘라서 표현할때
 
 
-
+    #변수 초기화
     temp=[]
     a=[]
     b=[]
@@ -77,6 +77,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
         print("주소 생년월일 학교명 가족관계 핸드폰번호")
 
 
+#전체 리스트 출력해주기, attendance초기화할때 이거 복붙하는것임.
 if printing =='yes':
     print("")
     for m in all_group:

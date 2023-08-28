@@ -5,13 +5,31 @@ import re
 
 
 
-print('초등부 출석표 파일 맞음?')
+
+
+
 tempdf = pd.read_excel(r'C:\Users\User\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
 
 
 all_group= making.all_group()
 
 attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
+
+toinputdict={}
+
+
+print("")
+try:
+    for i in range(int(input("(코드로 이름 추가할 목장 수)반복 횟수를 입력하세요: "))):
+        line= input('목장과 새로 기입할 명단을 복붙해 입력 input')
+        farm_name, attendees = line.split(" ",1) # 4-3은 key로 ,뒤 리스트는 value로 저장
+        # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
+        toinputdict[farm_name] = eval(attendees)
+except: #중간에 잘못입력해도 잘 입력한건 들어감.
+
+    print('숫자가 아님')
+
+print('명단에 추가할 이름:',toinputdict)
 
 
 
@@ -50,13 +68,17 @@ for i in range(len(all_group)):
     df=tempdf[all_group[i]] #해당하는 목장 정보 불러오기
     # print(df)
     df.set_index('날짜\이름',inplace=True)
+
+    if all_group[i] in toinputdict.keys():  # 명단 추가해야하면
+        df = making.AddNewMembers(df , toinputdict[all_group[i]])
+
+
     namelist = df.columns
-
-
-    check=[]
+    check=[] #출석인원 수 초기화
 
 
     if attendance_dict[all_group[i]] !=[] and all_group[i]!='새신자': # 출석 공란이 아닌경우 (정상적인경우) and 새신자가 아니면
+
         for j in namelist: #기존 엑셀시트에 있는 이름중
             if j in attendance_dict[all_group[i]]: # 오늘 출석정보가 있다면.ex4-3을 넣고 해당하는 출석정보 리스트 얻기
                 df.loc[df.index[N],j]='O'+making.checkO(j,attendance_dict['등반자'])

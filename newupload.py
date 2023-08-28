@@ -1,6 +1,3 @@
-import pandas as pd
-import datetime
-import time
 import  openpyxl  as  op
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials

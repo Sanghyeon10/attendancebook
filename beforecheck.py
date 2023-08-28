@@ -24,7 +24,7 @@ for farm_name, attendees in attendance_dict.items():
 print()
 print()
 
-
+print('누락 존재 명단?')
 getnamelist=[] #정보없는 목장 선생님 이름 구하기
 
 #for문 돌리기
@@ -40,7 +40,7 @@ for i in range(len(all_group)):
 
         diff1= list(set(attendance_dict[all_group[i]]) -set(namelist)  ) # check(출석인원중) 명부인원을 빼면 누락된 사람 찾아내기 가능
         if diff1 !=[]: #빈칸이면 pass
-            print('누락존재 목장',all_group[i], diff1)
+            print(all_group[i], diff1)
 
 
     elif all_group[i] == '새신자': #새신자라면, 비출석이 불출석이 아님.
@@ -48,7 +48,7 @@ for i in range(len(all_group)):
         diff1= list(set(attendance_dict[all_group[i]]+(attendance_dict['불출석'])) -set(namelist))
         # 오늘 출석 정보에 있는 명단에서 check(출석인원중)을 빼면 누락된 사람 찾아내기 가능
         if diff1 !=[]: # 빈 리스트가 아니라면 누락존재
-            print('새신자 이름 누락',all_group[i], diff1)
+            print(all_group[i], diff1)
 
 
 

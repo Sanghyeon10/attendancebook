@@ -160,3 +160,9 @@ def make_5line(groupname,my_list):
             print(x, end=' ')
 
     return False
+
+def AddNewMembers(df,columns):
+    for new_column_name in columns:
+        df[new_column_name] = None
+
+    return  df

@@ -32,4 +32,5 @@ removingexcel(file_path)
 file_path = r"C:\Users\user\Downloads/새친구 관리엑셀표.xlsx"
 removingexcel(file_path)
 
-print('사본 만들기?+nocome은 지우기')
+input('사본 만들기, 구글폼 행숨기기하기, 구글폼 명단 개정해주기')
+input('사본 만들기, 구글폼 행숨기기하기, 구글폼 명단 개정해주기')

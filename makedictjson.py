@@ -18,6 +18,16 @@ making.save_dict_to_file(loaded_data, file_name)
 print(loaded_data)
 
 
+#데이터 입력(오류날 가능성이 높아서 코드로하는것임) , 예시2개
+# loaded_data['특정목장'].append("사람이름")
+# loaded_data["특정목장"].remove('사람이름')
+
+
+# loaded_data['4-3'].remove("유정도")
+
+
+
+
 
 # 불러온 데이터를 정렬
 sorted_data = dict(sorted(loaded_data.items() ,key=lambda x: (x[0] != "새신자", x[0])))
