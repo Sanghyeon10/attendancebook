@@ -141,15 +141,15 @@ def checkO(name, list):
 
     return A
 
-
-def save_dict_to_file(data, file_name):
-    with open(file_name, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4, ensure_ascii=False)
-
-def load_dict_from_file(file_name):
-    with open(file_name, 'r', encoding="utf-8") as file:
-        loaded_data = json.load(file)
-    return loaded_data
+# json형태로 쓰는건 너무 불편해서 폐기함.
+# def save_dict_to_file(data, file_name):
+#     with open(file_name, "w", encoding="utf-8") as file:
+#         json.dump(data, file, indent=4, ensure_ascii=False)
+#
+# def load_dict_from_file(file_name):
+#     with open(file_name, 'r', encoding="utf-8") as file:
+#         loaded_data = json.load(file)
+#     return loaded_data
 
 def make_line(groupname,my_list):
     n=6
@@ -208,4 +208,4 @@ def savedicttotxt(file_name, data ):
     with open(file_name, 'w', encoding='UTF-8') as txt_file:
         for key, value in data.items():
             txt_file.write(f"{key}: {value}\n")
-    
+

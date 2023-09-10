@@ -21,8 +21,8 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     # print(all_group[i], namelist.tolist()) #정렬하기 않고 기존꺼 포현할때 쓰는것
 
     #프린트 명부에서 제거해야할 명단의 딕셔너리
-    file_name = "class_data.txt"
-    loaded_data = making.load_dict_from_file(file_name)
+    file_name = "except_data.txt"
+    loaded_data = making.makedictfromtxt(file_name)
 
     for j in namelist:  # 기존 엑셀시트에 있는 이름중
         if df[j][(df[j] == 'O') | (df[j] == 'X')].count() >5: # X든 O든 총개수가 5를 넘어야

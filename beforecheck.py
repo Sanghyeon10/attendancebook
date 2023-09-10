@@ -53,15 +53,17 @@ for i in range(len(all_group)):
 
 
 # 등반자가 있다면,구글폼 새신자 리스트에서는 표시될 이유가 이젠 없음.
-file_name = "class_data.txt"
-loaded_data = making.load_dict_from_file(file_name)
+file_name = "except_data.txt"
+loaded_data = making.makedictfromtxt(file_name)
+
+
 haveToaddset=set(attendance_dict['등반자'])- set(loaded_data['새신자'])
 print("등반자",haveToaddset)
 if haveToaddset !=set(): #빈 집합이 아니라면 추가해야함
     for i in haveToaddset:
         loaded_data['새신자'].append(i)
 
-making.save_dict_to_file(loaded_data, file_name) #json형태로 딕셔너리 저장하고 명단 프린트.
+making.savedicttotxt(file_name=file_name, data=loaded_data) #텍스트 파일로 저장하고 명단 프린트
 print(loaded_data)
 
 

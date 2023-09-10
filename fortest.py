@@ -6,27 +6,20 @@ import pandas as pd
 import time
 import making
 
-# #딕셔너리 생성
-# data = {
-#     'name': 'John',
-#     'friends': ['홍길동' ,'안철수', '문제인', '죽음']
-# }
-#
-# # 딕셔너리를 텍스트 파일로 저장
-# with open('data.txt', 'w', encoding='UTF-8') as txt_file:
-#     for key, value in data.items():
-#         txt_file.write(f"{key}: {value}\n")
 
-# 텍스트 파일을 딕셔너리로 불러오기
-loaded_data = {}
-with open('data.txt', 'r',encoding='UTF-8') as txt_file:
-    for line in txt_file:
-        key, value = line.strip().split(': ')
-        loaded_data[key] = eval(value)
 
-# 불러온 데이터 출력
-print(loaded_data)
-print(loaded_data['friends'][-1])
+
+loadeddata=making.makedictfromtxt("except_data.txt")
+
+loadeddata['새신자'].append('심상현')
+print(loadeddata)
+
+making.savedicttotxt(file_name='except_data.txt', data=loadeddata)
+
+
+
+
+
 
 
 
