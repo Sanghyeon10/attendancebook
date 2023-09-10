@@ -3,7 +3,7 @@ import making
 
 # 비교할 엑셀 파일의 경로
 file_path1 = r'C:\Users\User\Downloads\2023 초등부 출석표.xlsx'
-file_path2 = r'C:\Users\User\Downloads\2023 초등부 출석표의 사본 8월20일.xlsx'
+file_path2 = r'C:\Users\User\Downloads\2023 초등부 출석표의 사본 9월3일.xlsx'
 
 # 엑셀 파일 불러오기
 

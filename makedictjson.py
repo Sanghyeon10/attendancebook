@@ -24,7 +24,8 @@ print(loaded_data)
 
 
 # loaded_data['4-3'].remove("유정도")
-
+loaded_data['새신자'].append("이원준")
+loaded_data['새신자'].append("김채원")
 
 
 

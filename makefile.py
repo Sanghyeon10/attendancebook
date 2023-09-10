@@ -8,7 +8,7 @@ import re
 
 
 
-tempdf = pd.read_excel(r'C:\Users\User\Downloads\2023 초등부 출석표.xlsx', sheet_name=None)
+tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
 
 
 all_group= making.all_group()
@@ -168,3 +168,4 @@ for l in range(len(all_group)):
 
     df.to_excel("{}.xlsx".format(all_group[l]),  index=True )  # 5-1식으로 출력
 # print('통계작성완료') #통계 작성완료도 큰 의미가 없어서 출력안함.
+

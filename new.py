@@ -8,7 +8,7 @@ import making
 
 
 print('초등부 새친구 출석표 파일 맞음?')
-tempdf = pd.read_excel(r'C:\Users\User\Downloads\새친구 관리엑셀표.xlsx', sheet_name=None)
+tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers), sheet_name=None)
 df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
 df.set_index('날짜\이름', inplace=True)
 
@@ -196,7 +196,7 @@ df.iloc[1] = df.iloc[1].apply(lambda x: x.strftime('%Y-%m-%d') if type(x)== date
 df.iloc[2] = df.iloc[2].apply(lambda x: x.strftime('%Y-%m-%d') if type(x)== datetime.datetime else x )
 #datetime형태로 들어가면 업로드에 문제생김 다 통계 작성하고 바꿔주기
 
-df.to_excel("{}.xlsx".format('test'), index=True)
+df.to_excel("{}.xlsx".format(making.Newmembers), index=True)
 
 
 

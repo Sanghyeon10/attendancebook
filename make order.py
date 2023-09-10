@@ -58,7 +58,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
     # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용
     if printing == 'yes': #프린트 하는게 맞으면
-        making.make_5line(all_group[i],temp) #5명씩 잘라서 표현할때
+        making.make_line(all_group[i],temp) #5명씩 잘라서 표현할때
 
 
     #변수 초기화

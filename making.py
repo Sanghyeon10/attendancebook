@@ -2,6 +2,12 @@ import datetime
 import re
 import json
 
+
+ThisYearAttendnce="2023 초등부 출석표"
+
+Newmembers = "새친구 관리엑셀표"
+
+
 def index():
     df=[]
     year = 2023 #년도는 체크하기
@@ -32,6 +38,7 @@ def index():
 
     df.append('비고') #비고에는 출석율 계산할것임.
     return df
+
 
 def all_group(): #그룹리스트 가져오기
     A = ['4-1', '4-2', '4-3', '4-4', '4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','새신자']
@@ -91,7 +98,8 @@ def read_attendance_from_file(attendance_file_path):
     with open(attendance_file_path, 'r', encoding='utf-8') as f:
         for line in f:
             # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-            fields = [line for line in re.split('\s|,|\.', line) if line]
+            # fields = [line for line in re.split('\s|,|\.', line) if line]
+            fields = [line for line in re.split('\s|,|\.|/', line) if line]
 
             # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
             farm_name, *attendees = fields
@@ -143,12 +151,11 @@ def load_dict_from_file(file_name):
         loaded_data = json.load(file)
     return loaded_data
 
-def make_5line(groupname,my_list):
+def make_line(groupname,my_list):
+    n=6
     print(groupname, end=' ')
     for i, x in enumerate(my_list):
-        if i % 5 == 0 and i != 0:
-            print()
-        elif i >= 5 and i % 10 == 5:
+        if i % n == 0 and i != 0:
             print()
         else:
             pass
@@ -166,3 +173,39 @@ def AddNewMembers(df,columns):
         df[new_column_name] = None
 
     return  df
+
+
+def getrangename(df):
+    num_rows, num_cols = df.shape
+    start_cell = "A1"
+
+    # Calculate the end cell column label
+    end_col_label = ""
+    while num_cols > 0:
+        num_cols, remainder = divmod(num_cols - 1, 26)
+        end_col_label = chr(65 + remainder) + end_col_label
+
+    end_cell = end_col_label + str(num_rows + 1)
+
+    range_name = f"{start_cell}:{end_cell}"
+
+    return range_name
+
+
+def makedictfromtxt(file_name):
+    # 텍스트 파일을 딕셔너리로 불러오기
+    # value는 리스트 형태일것.
+    loaded_data = {}
+    with open(file_name, 'r', encoding='UTF-8') as txt_file:
+        for line in txt_file:
+            key, value = line.strip().split(': ')
+            loaded_data[key] = eval(value)
+
+    return loaded_data
+
+def savedicttotxt(file_name, data ):
+    # 딕셔너리를 텍스트 파일로 저장
+    with open(file_name, 'w', encoding='UTF-8') as txt_file:
+        for key, value in data.items():
+            txt_file.write(f"{key}: {value}\n")
+    

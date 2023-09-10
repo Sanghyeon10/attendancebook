@@ -14,7 +14,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_name("C:\\Users\\User\Pychar
 
 file = gspread.authorize(creds)
 # sh = file.open("오류 테스트용")
-sh = file.open('2023 초등부 출석표') #woorbook = sh
+sh = file.open(making.ThisYearAttendnce) #woorbook = sh
 # print(type(sh.worksheets()[1]))
 
 input('구글에 업로드가 맞는가? 하기전 사본만들기,원본파일 다른곳에 두기! input')
@@ -39,6 +39,7 @@ for i in range(len(all_group)):
 
         time.sleep(2)
         print(all_group[i])
+        print(making.getrangename(tempdf))
     else:
         pass
 
