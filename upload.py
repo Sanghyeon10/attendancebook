@@ -31,6 +31,7 @@ if len(worksheet_list)!= len(all_group): #에러상황일수도? 워크 시트 �
 for i in range(len(all_group)):
     if all_group[i] != '9-2': #일부분만 올릴때 쓰기
         sheet= sh.worksheet(all_group[i]) #구글 스프레드기준 찾기
+        print(all_group[i])
 
         tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i])) #해당파일찾고 데이터 옮겨오기
         tempdf = tempdf.fillna('')
@@ -38,7 +39,7 @@ for i in range(len(all_group)):
         sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
         #6.0.0 버전되면 구문 위치 바뀐다고함.
         time.sleep(2)
-        print(all_group[i])
+
         # print(making.getrangename(tempdf))
     else:
         pass
