@@ -141,7 +141,7 @@ def checkO(name, list):
 
     return A
 
-# json형태로 쓰는건 너무 불편해서 폐기함.
+# ##json형태로 쓰는건 너무 불편해서 폐기함.
 # def save_dict_to_file(data, file_name):
 #     with open(file_name, "w", encoding="utf-8") as file:
 #         json.dump(data, file, indent=4, ensure_ascii=False)

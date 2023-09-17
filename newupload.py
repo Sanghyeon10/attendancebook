@@ -27,6 +27,6 @@ tempdf = pd.read_excel(r'{}.xlsx'.format(making.Newmembers)) #해당파일찾고
 tempdf = tempdf.fillna('')
 
 
-sheet.update([tempdf.columns.values.tolist()] +tempdf.values.tolist() ) #데이터 덧씌우기
+sheet.update( making.getrangename(tempdf) ,[tempdf.columns.values.tolist()]+tempdf.values.tolist()) #데이터 덧씌우기
 
 time.sleep(2)
