@@ -78,4 +78,4 @@ for key, value in nocome_dict.items():
     print(key, value)
 
 
-input('누락명단이 정상이면 넘어가기 input')
+

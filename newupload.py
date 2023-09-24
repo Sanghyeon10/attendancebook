@@ -6,7 +6,7 @@ import time
 
 import making
 
-input('새친구 엑셀 업로드가 맞는가? input')
+# input('새친구 엑셀 업로드가 맞는가? input')
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',

@@ -6,7 +6,7 @@ import re
 
 
 
-
+input('누락명단이 정상이면 넘어가기 input')
 
 tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
 
