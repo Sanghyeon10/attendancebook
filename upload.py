@@ -17,7 +17,10 @@ file = gspread.authorize(creds)
 sh = file.open(making.ThisYearAttendnce) #woorbook = sh
 # print(type(sh.worksheets()[1]))
 
-input('구글에 업로드가 맞는가? 하기전 사본만들기,원본파일 다른곳에 두기! input')
+A = input('특정 목장 업로드할지 판단 0이면 전부올리기 input')
+uploadlist = making.WhatIsToUpload(A)
+print("uploadlist:",uploadlist)
+
 
 all_group= making.all_group()
 worksheet_list = sh.worksheets()
@@ -29,7 +32,7 @@ if len(worksheet_list)!= len(all_group): #에러상황일수도? 워크 시트 �
     # time.sleep(600)
 
 for i in range(len(all_group)):
-    if all_group[i] != '9-2': #일부분만 올릴때 쓰기
+    if all_group[i] in uploadlist: #업로드 리스트에 해당하는 것만 업로드하기
         sheet= sh.worksheet(all_group[i]) #구글 스프레드기준 찾기
         print(all_group[i])
 
@@ -38,7 +41,7 @@ for i in range(len(all_group)):
 
         sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
         #6.0.0 버전되면 구문 위치 바뀐다고함.
-        time.sleep(2)
+        time.sleep(4)
 
         # print(making.getrangename(tempdf))
     else:
@@ -59,11 +62,4 @@ for i in range(len(all_group)):
 # sheet.insert_row(['날짜\이름','윤시원', '김혜준', '김선', '최시환'], 1)
 # sheet.update('A1:A66', list_of_dicts)
 
-
-
-
-
-# worksheet = sh.add_worksheet(title='4-2',  rows='100', cols='20')
-# sh.share('capture490@gmail.com', perm_type='user', role='writer')
-# print(sheet.range('A2:A5'))
 

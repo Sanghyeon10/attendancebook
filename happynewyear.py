@@ -15,7 +15,6 @@ attendance_dict = {}
 with open(attendance_file_path, 'r', encoding='utf-8') as f:
     for line in f:
         # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-        # fields = line.strip().split()
         fields = [line for line in re.split('\s|,|\.', line) if line]
 
         # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.

@@ -23,8 +23,7 @@ subprocess.Popen([sys.executable, "new.py"]).communicate()  #파일 생성하기
 
 
 subprocess.Popen([sys.executable, "upload.py"]).communicate() #구글 스르페드 시트에 업로드
-subprocess.Popen([sys.executable, "extrafileupload.py"]).communicate() #새친구, 새신자, 특정목장 업로드
-# subprocess.Popen([sys.executable, "hongattendance.py"]).communicate() #특정 목장을 위해 따로 만들어진 출석부
+subprocess.Popen([sys.executable, "extrafileupload.py"]).communicate() #새친구, 새신자 전용 파일, 특정목장 업로드
 
 
 file_path = r"C:\Users\user\Downloads/2023 초등부 출석표.xlsx" #삭제안하면, 실수할수 있어서 자동삭제.

@@ -6,7 +6,13 @@ import pandas as pd
 import time
 import making
 
+A= input('no입력하면 업로드 안함 input')
+givenlist=[making.Newmembers,'5-3',"새신자"] #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.
 
+if A =='no':
+    givenlist=[]
+else:
+    pass
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -16,7 +22,6 @@ creds = ServiceAccountCredentials.from_json_keyfile_name("C:\\Users\\User\Pychar
 
 file = gspread.authorize(creds)
 
-givenlist=[making.Newmembers,'5-3',"새신자"] #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.
 for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업로드
 
     sh = file.open(i) #woorbook = sh
@@ -33,4 +38,4 @@ for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업�
 
     sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
 
-    time.sleep(2)
+    time.sleep(4)

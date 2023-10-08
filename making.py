@@ -1,7 +1,8 @@
 import datetime
 import re
 import json
-
+import pandas as pd
+import making
 
 ThisYearAttendnce="2023 초등부 출석표"
 
@@ -208,4 +209,21 @@ def savedicttotxt(file_name, data ):
     with open(file_name, 'w', encoding='UTF-8') as txt_file:
         for key, value in data.items():
             txt_file.write(f"{key}: {value}\n")
+
+def WhatIsToUpload(A):
+    if A==0 or A=="0":
+        return making.all_group()
+    else:
+        # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
+        uploadlist = [line for line in re.split('\s|,|\.|/', A) if line]
+
+        return uploadlist
+
+
+def count_os(row): #가로줄 O세어보기
+    if row is not None:
+        return row.astype(str).str.contains('O').sum()
+    else:
+        return None
+
 

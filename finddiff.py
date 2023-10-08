@@ -3,7 +3,7 @@ import making
 
 # 비교할 엑셀 파일의 경로
 file_path1 = r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce)
-file_path2 = r'C:\Users\User\Downloads\2023 초등부 출석표의 사본 9월3일.xlsx'
+file_path2 = r'C:\Users\User\Downloads\2023 초등부 출석표의 사본9월24일.xlsx'
 
 # 엑셀 파일 불러오기
 
@@ -19,7 +19,7 @@ for i in all_group:
     # 차이가 있는 행 출력
 
     print(i)
-    print('칼럼명같음?',df1.columns.tolist()==df2.columns.tolist())
+    print('칼럼명같음?',set(df1.columns)== set(df2.columns))
     diff = diff[diff['날짜\이름']!='비고'] #비고는 의미가 없으므로 제거
 
 
