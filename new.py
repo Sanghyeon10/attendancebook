@@ -1,7 +1,5 @@
 import pandas as pd
 import datetime
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import time
 import making
@@ -60,16 +58,12 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
 
 
         if name in tempdf.columns.tolist() and name in olddata.columns.tolist(): #가져올게 있으면, 데이터프레임형태로 가져오기
-            tempdf = tempdf[name]
-            olddata = olddata[name]
+            # tempdf = tempdf[name]
+            # olddata = olddata[name]
 
-            for p in range(len(tempdf)):
-                # print(olddata.loc[olddata.index[p]])
-                if pd.notnull(olddata.loc[olddata.index[p]]):  # 결측치가 아니다. 즉 새신자 정보란에 값이 있다면
-                    tempdf.loc[tempdf.index[p]] = olddata.loc[olddata.index[p]]  # tempdf에 값 넣어주기
-                    if tempdf.loc[tempdf.index[p]] != olddata.loc[olddata.index[p]]: #혹시 둘의 값이 다르다면 확인해주기.
-                        print(name, '정보값 확인하기', tempdf.loc[tempdf.index[p]],olddata.loc[olddata.index[p]] )
+            tempdf.update(olddata,overwrite=True, filter_func=lambda x: x=="X")#출석X표시에 대하여 다른 파일 참고하여 업데이트
 
+            tempdf = tempdf[name] #필요한 하나의 시리즈만 가져옴.
             df[name] = pd.concat([df[name].iloc[:5], tempdf]) #합친 것을  데이터로 넣어주기
             df[name]= making.calculate_o_ratio_for_series(df[name]) #출석율 통계 합쳐서 계산하기
             # 합쳐서 통계작성 오류 있음.
@@ -87,8 +81,6 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
         else:
             print('오류가능성!',name)
 
-        # df[name] = pd.concat([df[name].iloc[:5], tempdf]) #첫 4행까지는 기본정보이므로 그 이후부터 복사함.
-        # print(df[name])
 
 
 
@@ -190,6 +182,8 @@ under=(len(df.columns)-1 - df.iloc[2].value_counts()["X"]) # 전체인원수 -�
 positive_counts =  str(round((under- df.iloc[3].value_counts()["X"] )/ under *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
 
 df.iat[3,0]= positive_counts
+
+
 
 
 df.iloc[1] = df.iloc[1].apply(lambda x: x.strftime('%Y-%m-%d') if type(x)== datetime.datetime else x )
