@@ -3,6 +3,7 @@ import re
 import json
 import pandas as pd
 import making
+import os
 
 ThisYearAttendnce="2023 초등부 출석표"
 
@@ -226,4 +227,12 @@ def count_os(row): #가로줄 O세어보기
     else:
         return None
 
+
+def removingexcel(file_path):
+    if os.path.exists(file_path):
+        # 파일 제거
+        os.remove(file_path)
+        print(file_path,"파일이 성공적으로 제거되었습니다.")
+    else:
+        print(file_path,"파일이 존재하지 않습니다.")
 
