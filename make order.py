@@ -37,7 +37,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     a= a+b #출석 정보가 작은 애들은 뒤로 빼준 것임.
     a.remove(('기타',0)) #기타는 첫번째로 넣어야되서 일단 삭제
     # print('dd',[item for item in a if (int(item[1]) < 10 and item[0] not in loaded_data[all_group[i]])])
-    filtered_data = filtered_data+ [all_group[i]]+ [item for item in a if int(item[1]) <= 15 and item[0] not in loaded_data[all_group[i]] ]
+    filtered_data = filtered_data+ [all_group[i]]+ [item for item in a if int(item[1]) <= 10 and item[0] not in loaded_data[all_group[i]] ]
     #출석율이 특정숫자보다 낮고 제거명부에 없는 애들은 명부 프린트에서 제거해줄지 검토해야함
     #목장이름+ 리스트형태로 명부 만들어서 마지막에 프린트해줌.
 
@@ -70,6 +70,8 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
         # df.to_excel("{}.xlsx".format(all_group[i]))
         pass # 정렬화한 후 엑셀출력이 필요가 없어서 주석처리해놓음.
     else: #새신자이면
+        print("불출석")
+        print("등반자")
         print("")
         print("이름:")
         print("전도자(목장):")

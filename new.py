@@ -185,6 +185,21 @@ df.iat[3,0]= positive_counts
 
 
 
+# 등반자 리스트에서 자동으로 등반날짜 입력해주기
+now =datetime.datetime.now()
+N = int(now.strftime("%U")) - 1
+
+attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
+if attendance_dict['등반자'] !=[]: #빈 리스트가 아니라면 실행
+    for name in attendance_dict['등반자']:
+        df.loc[df.index[2],name]= making.index()[N] #인덱스를 불러와서 이번주에 해당하는 날짜를 등반일에 입력해주는 것임.
+        # print(making.index()[N], type(making.index()[N]))
+
+
+
+
+
+
 
 df.iloc[1] = df.iloc[1].apply(lambda x: x.strftime('%Y-%m-%d') if type(x)== datetime.datetime else x )
 df.iloc[2] = df.iloc[2].apply(lambda x: x.strftime('%Y-%m-%d') if type(x)== datetime.datetime else x )
