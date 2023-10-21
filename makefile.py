@@ -13,7 +13,8 @@ tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYear
 
 all_group= making.all_group()
 
-attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
+# attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
+attendance_dict, nocome_dict = making.make_data_from_file("attendance.txt")
 
 toinputdict={}
 
@@ -21,13 +22,13 @@ toinputdict={}
 print("")
 try:
     for i in range(int(input("(코드로 이름 추가할 목장 수)반복 횟수를 입력하세요: "))):
-        line= input('목장과 새로 기입할 명단을 복붙해 입력 input')
+        line= input('목장과 새로 기입할 명단을 복붙해 입력(숫자 리스트형태로) input')
         farm_name, attendees = line.split(" ",1) # 4-3은 key로 ,뒤 리스트는 value로 저장
         # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
         toinputdict[farm_name] = eval(attendees)
 except: #중간에 잘못입력해도 잘 입력한건 들어감.
 
-    print('숫자가 아님')
+    print('형식이 잘못되었음')
 
 print('명단에 추가할 이름:',toinputdict)
 
@@ -39,7 +40,7 @@ print('명단에 추가할 이름:',toinputdict)
 
 
 #비고칸에 채울 결석 관련 정보를 딕셔너리 형태로 저장
-nocome_dict = making.read_nocome_from_file('nocome.txt')
+# nocome_dict = making.read_nocome_from_file('nocome.txt')
 
 # 잘 저장되었는지 출력
 # print(nocome_dict)
@@ -115,7 +116,7 @@ for i in range(len(all_group)):
 
         #이름다 체크했다면,
 
-        diff1= list(set(attendance_dict[all_group[i]]+(attendance_dict['불출석'])) -set(check))
+        diff1= list(set(attendance_dict[all_group[i]]+attendance_dict['불출석'] +attendance_dict['등반자'] ) -set(check))
         # 오늘 출석 정보에 있는 명단에서 check(출석인원중)을 빼면 누락된 사람 찾아내기 가능
         if diff1 !=[]: # 빈 리스트가 아니라면 누락존재
             print('새신자 이름 누락',all_group[i], diff1)

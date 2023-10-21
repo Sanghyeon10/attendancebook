@@ -11,8 +11,8 @@ tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYear
 
 all_group= making.all_group()
 
-attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
-
+# attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
+attendance_dict, nocome_dict =making.make_data_from_file("attendance.txt") #텍스트 파일 읽어오기
 
 
 
@@ -44,8 +44,8 @@ for i in range(len(all_group)):
 
 
     elif all_group[i] == '새신자': #새신자라면, 비출석이 불출석이 아님.
-
-        diff1= list(set(attendance_dict[all_group[i]]+(attendance_dict['불출석'])) -set(namelist))
+        #새신자, 불출석자, 등반자 3개다 조사할것.
+        diff1= list(set(attendance_dict[all_group[i]]+attendance_dict['불출석']+attendance_dict['등반자']) -set(namelist))
         # 오늘 출석 정보에 있는 명단에서 check(출석인원중)을 빼면 누락된 사람 찾아내기 가능
         if diff1 !=[]: # 빈 리스트가 아니라면 누락존재
             print(all_group[i], diff1)
@@ -71,11 +71,13 @@ print()
 print()
 
 #비고칸에 채울 결석 관련 정보를 딕셔너리 형태로 저장
-nocome_dict = making.read_nocome_from_file('nocome.txt')
+# nocome_dict = making.read_nocome_from_file('nocome.txt')
+
 # 잘 저장되었는지 출력
 print("nocome_dict")
 for key, value in nocome_dict.items():
-    print(key, value)
+    if value != "X":
+        print(key, value)
 
 
 

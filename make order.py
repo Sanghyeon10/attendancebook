@@ -49,7 +49,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
     temp.insert(0,'기타') #기타 첫번째로 다시 넣어주기
     df=df.loc[:,temp] #데이터 프레임에 주어진 명단순서대로 넣기, 다만 to_excel안하면 큰 의미는 없음.
-    # df=df[[temp]]
+
 
 
     if all_group[i] in loaded_data.keys():# 명단에서 제외해야할 명단이 있다면
@@ -70,22 +70,26 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
         # df.to_excel("{}.xlsx".format(all_group[i]))
         pass # 정렬화한 후 엑셀출력이 필요가 없어서 주석처리해놓음.
     else: #새신자이면
-        print("불출석")
-        print("등반자")
-        print("")
-        print("이름:")
-        print("전도자(목장):")
-        print("인적사항:")
-        print("주소 생년월일 학교명 가족관계 핸드폰번호")
+        pass
+        # 아래 문구는 구글폼 한번만 붙혀넣으면 됨.
+        # print("불출석")
+        # print("등반자")
+        # print("")
+        # print("이름:")
+        # print("전도자(목장):")
+        # print("인적사항:")
+        # print("주소 생년월일 학교명 가족관계 핸드폰번호")
 
 
-#전체 리스트 출력해주기, attendance초기화할때 이거 복붙하는것임.
-if printing =='yes':
-    print("")
-    for m in all_group:
-        print(m)
-    print('불출석')
-    print('등반자')
+#전체 리스트 출력하는기능, attendance초기화할때 이거 복붙하는것임. 이제는 불필요한듯.
+# if printing =='yes':
+#     print("")
+#     for m in all_group:
+#         print(m)
+print("")
+print("새신자")
+print('불출석')
+print('등반자')
 
 print("")
 print("")

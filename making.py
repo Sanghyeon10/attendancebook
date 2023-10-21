@@ -101,7 +101,7 @@ def read_attendance_from_file(attendance_file_path):
         for line in f:
             # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
             # fields = [line for line in re.split('\s|,|\.', line) if line]
-            fields = [line for line in re.split('\s|,|\.|/', line) if line]
+            fields = [line for line in re.split('\s|,|\.', line) if line]
 
             # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
             farm_name, *attendees = fields
@@ -128,6 +128,36 @@ def read_nocome_from_file(nocome_file_path):
 
     return nocome_dict
 
+
+def make_data_from_file(attendance_file_path):
+    #출석정보, 비고 한번에 생성.
+
+    # 결과를 저장할 딕셔너리들
+    attendance_dict = {}
+    nocome_dict = {}
+
+    with open(attendance_file_path, 'r', encoding='utf-8') as f:
+        for oneline in f:
+            # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
+            # "///"을 포함하는지 확인
+            if "///" in oneline:
+                # 딕셔너리를 생성 (///이 있는 경우)
+                split_string = oneline.split("///")[0] #앞의것을 쪼개서 정보저장
+                split_string = [line for line in re.split('\s|,|\.', split_string) if line]
+                class_name, *student_names = split_string
+                attendance_dict[class_name] = student_names
+
+                nocome_dict[class_name] = oneline.split("///")[1] #뒤에꺼는 기타사항 딕셔너리 정보에 추가
+
+            else:
+                split_string = [line for line in re.split('\s|,|\.', oneline) if line]
+                # 딕셔너리를 생성 (///이 없는 경우)
+                class_name, *student_names = split_string
+
+                attendance_dict[class_name] = student_names
+                nocome_dict[class_name] = "X"  # 기타사항이 없는 경우 X으로 처리
+
+    return attendance_dict, nocome_dict
 
 def gettruelist(my_list,remove_items):
     new_list = [item for item in my_list if item not in remove_items]
@@ -216,7 +246,7 @@ def WhatIsToUpload(A):
         return making.all_group()
     else:
         # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-        uploadlist = [line for line in re.split('\s|,|\.|/', A) if line]
+        uploadlist = [line for line in re.split('\s|,|\.', A) if line]
 
         return uploadlist
 

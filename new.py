@@ -66,7 +66,6 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
             tempdf = tempdf[name] #필요한 하나의 시리즈만 가져옴.
             df[name] = pd.concat([df[name].iloc[:5], tempdf]) #합친 것을  데이터로 넣어주기
             df[name]= making.calculate_o_ratio_for_series(df[name]) #출석율 통계 합쳐서 계산하기
-            # 합쳐서 통계작성 오류 있음.
 
         elif name in tempdf.columns.tolist() and name not in olddata.columns.tolist(): #새신자 출석부에 명단이 없는경우
             tempdf = tempdf[name]
@@ -189,7 +188,7 @@ df.iat[3,0]= positive_counts
 now =datetime.datetime.now()
 N = int(now.strftime("%U")) - 1
 
-attendance_dict = making.read_attendance_from_file("attendance.txt") #텍스트 파일 읽어오기
+attendance_dict, nocome_dict = making.make_data_from_file("attendance.txt") #텍스트 파일 읽어오기
 if attendance_dict['등반자'] !=[]: #빈 리스트가 아니라면 실행
     for name in attendance_dict['등반자']:
         df.loc[df.index[2],name]= making.index()[N] #인덱스를 불러와서 이번주에 해당하는 날짜를 등반일에 입력해주는 것임.

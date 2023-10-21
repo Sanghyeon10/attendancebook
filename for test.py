@@ -1,13 +1,29 @@
-import pandas as pd
+import re
+input_string = "4-1 홍길동 김철수 김영희 나도현/// 김영희 아픔."
 
-# 예제 시리즈 생성
-A = pd.Series([1, 2, 3, 4, 5])
-B = pd.Series([10, 20, 30, 40, 50])
+# 결과를 저장할 딕셔너리들
+students_dict = {}
+miscellaneous_dict = {}
 
-# 조건을 만족하는 A의 값에 해당하는 B의 값을 가져오고 싶다면
-condition = A == 3  # 예를 들어, A 시리즈에서 값이 3인 경우
 
-# 조건을 만족하는 경우 B 시리즈의 값을 가져옴
-result = B[condition]
+# "///"을 포함하는지 확인
+if "///" in input_string:
+    # 딕셔너리를 생성 (///이 있는 경우)
+    split_string= input_string.split("///")[0]
+    split_string=[line for line in re.split('\s|,|\.', split_string) if line]
+    class_name ,*student_names =  split_string
+    students_dict[class_name] = student_names
 
-print(result)
+    miscellaneous_dict[class_name] = input_string.split("///")[1]
+
+else:
+    split_string=[line for line in re.split('\s|,|\.', input_string) if line]
+    # 딕셔너리를 생성 (///이 없는 경우)
+    class_name, *student_names = split_string
+
+    students_dict[class_name] = student_names
+    miscellaneous_dict[class_name] = "X"  # 기타사항이 없는 경우 X으로 처리
+
+# 결과 출력
+print("학생 딕셔너리:", students_dict)
+print("기타사항 딕셔너리:", miscellaneous_dict)

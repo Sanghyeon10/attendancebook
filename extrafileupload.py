@@ -38,4 +38,4 @@ for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업�
 
     sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
 
-    time.sleep(4)
+    time.sleep(5)
