@@ -58,6 +58,8 @@ loaded_data = making.makedictfromtxt(file_name)
 
 
 haveToaddset=set(attendance_dict['등반자'])- set(loaded_data['새신자'])
+print()
+print()
 print("등반자",haveToaddset)
 if haveToaddset !=set(): #빈 집합이 아니라면 추가해야함
     for i in haveToaddset:
