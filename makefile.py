@@ -170,3 +170,33 @@ for l in range(len(all_group)):
     df.to_excel("{}.xlsx".format(all_group[l]),  index=True )  # 5-1식으로 출력
 # print('통계작성완료') #통계 작성완료도 큰 의미가 없어서 출력안함.
 
+
+
+#새로운 사람 추가시 새친구파일에 업데이트할것
+if toinputdict!={}: #빈 딕녀서리가 아니라면 입력할것이 있다.
+    tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers), sheet_name=None)
+    df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
+    df.set_index('날짜\이름', inplace=True)
+
+    indexlist = making.index()
+
+    for l in range(5): #0~4번까지 돌리기
+        indexlist.insert(l,df.index[l]) #앞의 정보는 유지해야함
+
+    df.index = indexlist
+    df.index.name= '날짜\이름'
+
+    for mokjang in toinputdict.keys():  # 명단 추가해야하면
+        for name in toinputdict[mokjang]: #toinputdict[mokjang]은 리스트형태,["홍길동"], 여기서 하나씩 칼럼에 추가
+            df[name] = None
+            df.loc[df.index[0], name] = "X"
+            df.loc[df.index[1], name] = making.index()[N] #이번주 일요일 날짜.
+            df.loc[df.index[2], name] = "X"
+            df.loc[df.index[3], name] = "X"
+            df.loc[df.index[4], name] = mokjang + " "+ "목장" #ex. 4-3 목장
+
+    df.to_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers), sheet_name="시트1", engine='openpyxl')
+    #다운로드 파일의 파일을 업데이트해야 new 파일돌릴때 인식제대로함.
+
+
+
