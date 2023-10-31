@@ -53,7 +53,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
 
     if all_group[i] in loaded_data.keys():# 명단에서 제외해야할 명단이 있다면
-        temp = making.gettruelist(temp, loaded_data[all_group[i]]) # 순서에서 제외해서 저장하기
+        temp = making.gettruelist(temp, loaded_data[all_group[i]]+['기타']) # 순서에서 제외해서 저장하기
 
 
     # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용
