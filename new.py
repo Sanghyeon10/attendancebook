@@ -173,12 +173,14 @@ for i in range(1,len(df.columns.tolist())): #애들 이름 순대로 하기 첫�
 
 
 
-counts = df.iloc[3].value_counts()["X"]
 
-under=(len(df.columns)-1 - df.iloc[2].value_counts()["X"]) # 전체인원수 -등반실패인원 = 등반인원 수
+# count_x_in_row = df.loc[2].tolist().count('X')
+dengbannumber = len(df.columns) -1 -df.iloc[2].tolist().count('X')#등반자 수 = 전체 인원수- 등반 아닌사람
+survivednumber= len(df.columns) -1 -df.iloc[3].tolist().count('X') #생존자수 = 전체인w원수- 생존율 정보가 없는사람
+
 
 # print( df.iloc[3].value_counts()[100])
-positive_counts =  str(round((under- df.iloc[3].value_counts()["X"] )/ under *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
+positive_counts =  str(round(survivednumber/ dengbannumber *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
 
 df.iat[3,0]= positive_counts
 
