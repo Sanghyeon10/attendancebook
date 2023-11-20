@@ -3,6 +3,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import time
 import making
+import datetime
 
 
 
@@ -48,18 +49,41 @@ for i in range(len(all_group)):
         pass
 
 
-# print(dataframe.columns.values.tolist())
-# print(dataframe.index[5])
+### 백업파일 업로드
 
-# sheet.update_cell(1, 2, 'Bingo!')
-# sheet = sh.worksheet("5-1")
+now =datetime.datetime.now()
+N = int(now.strftime("%U"))% 6
+print('N',N)
 
-# df = {'col0': [1, 2, 3, 4],
-#             'col1': [10, 20, 30, 40],
-#             'col2': [100, 200, 300, 400]}
-# sheet.update(df)
 
-# sheet.insert_row(['날짜\이름','윤시원', '김혜준', '김선', '최시환'], 1)
-# sheet.update('A1:A66', list_of_dicts)
+sh = file.open("백업"+str(N)) #woorbook = sh
 
+print('백업파일 업로드')
+uploadlist = making.WhatIsToUpload(A)
+
+
+all_group= making.all_group()
+worksheet_list = sh.worksheets()
+
+if len(worksheet_list)!= len(all_group): #에러상황일수도? 워크 시트 기준으로해야맞음
+    print(worksheet_list)
+    print(all_group)
+    input('시트와 변수개수가 안맞다!')
+    # time.sleep(600)
+
+for i in range(len(all_group)):
+    if all_group[i] in uploadlist: #업로드 리스트에 해당하는 것만 업로드하기
+        sheet= sh.worksheet(all_group[i]) #구글 스프레드기준 찾기
+        print(all_group[i])
+
+        tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i])) #해당파일찾고 데이터 옮겨오기
+        tempdf = tempdf.fillna('')
+
+        sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
+        #6.0.0 버전되면 구문 위치 바뀐다고함.
+        time.sleep(5)
+
+        # print(making.getrangename(tempdf))
+    else:
+        pass
 

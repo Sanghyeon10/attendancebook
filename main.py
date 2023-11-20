@@ -11,9 +11,8 @@ subprocess.Popen([sys.executable, "makefile.py"]).communicate() #파일 생성�
 subprocess.Popen([sys.executable, "new.py"]).communicate()  #파일 생성하기
 
 
-
-subprocess.Popen([sys.executable, "upload.py"]).communicate() #구글 스프레드 시트에 업로드
 subprocess.Popen([sys.executable, "extrafileupload.py"]).communicate() #새친구, 새신자 전용 파일, 특정목장 업로드
+subprocess.Popen([sys.executable, "upload.py"]).communicate() #구글 스프레드 시트에 업로드
 
 subprocess.Popen([sys.executable, "make order.py"]).communicate() #전체 명단 확보하기
 
