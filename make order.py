@@ -3,7 +3,7 @@ import making
 
 
 all_group = making.all_group()
-tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
+# tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
 
 printing= 'yes'#input('명단 프린트할꺼라면 yes라고 치기')
 
@@ -14,8 +14,10 @@ temp=[]
 
 filtered_data=[] #먼저 빈리스트 정의하기
 for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용)
-    df = tempdf[all_group[i]]
+    df =pd.read_excel(r'{}.xlsx'.format(all_group[i])) #새로이 만든 파일 기준으로 명단출력
+    # df = tempdf[all_group[i]]
     df.set_index('날짜\이름', inplace=True)
+    # print(df)
 
     namelist = df.columns
     # print(all_group[i], namelist.tolist()) #정렬하기 않고 기존꺼 포현할때 쓰는것
@@ -79,11 +81,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
         print("주소 생년월일 학교명 가족관계 핸드폰번호")
 
 
-#전체 리스트 출력하는기능, attendance초기화할때 이거 복붙하는것임. 이제는 불필요한듯.
-# if printing =='yes':
-#     print("")
-#     for m in all_group:
-#         print(m)
+
 print("")
 print("새신자")
 print('불출석')

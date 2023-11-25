@@ -174,7 +174,7 @@ for l in range(len(all_group)):
 
 #새로운 사람 추가시 새친구파일에 업데이트할것
 if toinputdict!={}: #빈 딕녀서리가 아니라면 입력할것이 있다.
-    checkcheck = input("새신자 리스트에 추가할지 여부no이면 안함 input")
+    checkcheck = input("새친구 관리 엑셀표에 추가할지 여부no이면 안함 input")
     if checkcheck !='no':
         tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers), sheet_name=None)
         df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
