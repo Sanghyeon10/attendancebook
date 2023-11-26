@@ -50,8 +50,12 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     # print(temp)
 
     temp.insert(0,'기타') #기타 첫번째로 다시 넣어주기
-    df=df.loc[:,temp] #데이터 프레임에 주어진 명단순서대로 넣기, 다만 to_excel안하면 큰 의미는 없음.
-
+    # print(temp)
+    temp = making.gettruelist(temp, loaded_data[all_group[i]]) +loaded_data[all_group[i]]
+    #기존의 명부에서 제외해야하는 아이들 이름 제외한 리스트를 구하고 뒤에 제외리스트를 추가함.
+    df=df.loc[:,temp] #데이터 프레임에 주어진 명단순서대로 넣기
+    if all_group[i] != '새신자': #새신자만 아니면
+        df.to_excel("{}.xlsx".format(all_group[i])) #엑셀파일 출력
 
 
     if all_group[i] in loaded_data.keys():# 명단에서 제외해야할 명단이 있다면
@@ -69,8 +73,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     b=[]
 
     if all_group[i] != '새신자':
-        # df.to_excel("{}.xlsx".format(all_group[i]))
-        pass # 정렬화한 후 엑셀출력이 필요가 없어서 주석처리해놓음.
+        pass
     else: #새신자이면
         print("불출석")
         print("등반자")
