@@ -7,7 +7,7 @@ import time
 import making
 
 A= input('no입력하면 extrafile 업로드 안함 input')
-givenlist=[making.Newmembers,'5-3',"새신자" ,"6-4"] #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.
+givenlist=[making.Newmembers ] #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.
 
 if A =='no':
     givenlist=[]

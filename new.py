@@ -25,6 +25,7 @@ all_group= making.all_group()
 
 
 # 혹시나 문자열이 아니라 datetime형태의 정보로 저장하고 있으면 에러나므로 검사하고 만일 맞으면 강제종료
+# '20230101 처럼 '붙혀줘야 문자열로 인식함.
 my_list = df.iloc[2].value_counts().index.tolist() + df.iloc[1].value_counts().index.tolist()
 # print(my_list)
 

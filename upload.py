@@ -87,3 +87,4 @@ for i in range(len(all_group)):
     else:
         pass
 
+print('N',N)

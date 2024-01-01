@@ -5,14 +5,14 @@ import pandas as pd
 import making
 import os
 
-ThisYearAttendnce="2023 초등부 출석표"
+ThisYearAttendnce="2024 초등부 출석표"
 
-Newmembers = "새친구 관리엑셀표"
+Newmembers = "2024 새친구 관리엑셀표"
 
 
 def index():
     df=[]
-    year = 2023 #년도는 체크하기
+    year = 2024 #년도는 체크하기
 
     # 특정 년도의 첫 번째 날
     first_day = datetime.date(year, 1, 1)
@@ -187,7 +187,9 @@ def make_line(groupname,my_list):
     n=6
     print(groupname, end=' ')
     for i, x in enumerate(my_list):
-        if i % n == 0 and i != 0:
+        if i ==0: #4-1 같은건 따로 빼기 위해서 4-1 출력후 바로 한칸 내림
+            print()
+        elif i % n == 0 and i != 0:
             print()
         else:
             pass

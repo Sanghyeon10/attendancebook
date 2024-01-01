@@ -21,4 +21,4 @@ making.removingexcel(file_path)
 file_path = r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers)
 making.removingexcel(file_path)
 
-input('구글폼 행숨기기하기, 구글폼 명단 개정해주기')
+print('구글폼 행숨기기하기, 구글폼 명단 개정해주기')
