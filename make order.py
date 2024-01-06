@@ -1,5 +1,7 @@
 import pandas as pd
 import making
+import numpy as np
+import datetime
 
 
 all_group = making.all_group()
@@ -19,8 +21,11 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     df.set_index('날짜\이름', inplace=True)
     # print(df)
 
+    if int(datetime.datetime.now().strftime("%U"))==0: #엑셀파일 처음만들었때의 주에서만 작동하는 코드
+        df.loc[df.index[-1],:]=0 #엑셀 파일 처음 만들면 기타의 출석율이 0이 아님. 0으로 다 채워줌. 안 채우면 오류남
+
     namelist = df.columns
-    # print(all_group[i], namelist.tolist()) #정렬하기 않고 기존꺼 포현할때 쓰는것
+    # print(all_group[i], namelist.tolist())
 
     #프린트 명부에서 제거해야할 명단의 딕셔너리
     file_name = "except_data.txt"
@@ -37,6 +42,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     a.sort(key=lambda x: x[1], reverse=True)   #전부 정보획득했으면 정렬하기
     b.sort(key=lambda x: x[1], reverse=True) #(이름, 출석율)의 정보 리스트, a는 출석개수가 많은것 b는적은것
     a= a+b #출석 정보가 작은 애들은 뒤로 빼준 것임.
+    # print(a)
     a.remove(('기타',0)) #기타는 첫번째로 넣어야되서 일단 삭제
     # print('dd',[item for item in a if (int(item[1]) < 10 and item[0] not in loaded_data[all_group[i]])])
     filtered_data = filtered_data+ [all_group[i]]+ [item for item in a if int(item[1]) <= 10 and item[0] not in loaded_data[all_group[i]] ]
@@ -53,7 +59,10 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     # print(temp)
     temp = making.gettruelist(temp, loaded_data[all_group[i]]) +loaded_data[all_group[i]]
     #기존의 명부에서 제외해야하는 아이들 이름 제외한 리스트를 구하고 뒤에 제외리스트를 추가함.
+
     df=df.loc[:,temp] #데이터 프레임에 주어진 명단순서대로 넣기(기타+ 출석율순 명단+ 제외 명단)
+
+
     if all_group[i] != '새신자': #새신자만 아니면
         df.to_excel("{}.xlsx".format(all_group[i])) #엑셀파일 출력
 
@@ -75,6 +84,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     if all_group[i] != '새신자':
         pass
     else: #새신자이면
+        print("")
         print("불출석")
         print("등반자")
         print("")
@@ -85,10 +95,6 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
 
 
-print("")
-print("새신자")
-print('불출석')
-print('등반자')
 
 print("")
 print("")

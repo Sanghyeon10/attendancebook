@@ -40,6 +40,7 @@ for i in range(len(all_group)):
         tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i])) #해당파일찾고 데이터 옮겨오기
         tempdf = tempdf.fillna('')
 
+        sheet.clear()
         sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
         #6.0.0 버전되면 구문 위치 바뀐다고함.
         time.sleep(5)
@@ -79,6 +80,7 @@ for i in range(len(all_group)):
         tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i])) #해당파일찾고 데이터 옮겨오기
         tempdf = tempdf.fillna('')
 
+        sheet.clear()
         sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
         #6.0.0 버전되면 구문 위치 바뀐다고함.
         time.sleep(5)
