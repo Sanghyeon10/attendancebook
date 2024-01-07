@@ -21,7 +21,8 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     df.set_index('날짜\이름', inplace=True)
     # print(df)
 
-    if int(datetime.datetime.now().strftime("%U"))==0: #엑셀파일 처음만들었때의 주에서만 작동하는 코드
+    if int(datetime.datetime.now().strftime("%U"))==0 and df.loc[df.index[-1],'기타']!=0 : #엑셀파일 처음만들었때의 주에서만 작동하는 코드
+        # print("처음 파일 생성")
         df.loc[df.index[-1],:]=0 #엑셀 파일 처음 만들면 기타의 출석율이 0이 아님. 0으로 다 채워줌. 안 채우면 오류남
 
     namelist = df.columns

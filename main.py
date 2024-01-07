@@ -15,6 +15,7 @@ subprocess.Popen([sys.executable, "make order.py"]).communicate() #전체 명단
 subprocess.Popen([sys.executable, "extrafileupload.py"]).communicate() #새친구, 새신자 전용 파일, 특정목장 업로드
 subprocess.Popen([sys.executable, "upload.py"]).communicate() #구글 스프레드 시트에 업로드
 
+making.move_attendance_file() # PC의 개인폴더에 백업하는 코드
 
 file_path = r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce) #삭제안하면, 실수할수 있어서 자동삭제.
 making.removingexcel(file_path)

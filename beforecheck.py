@@ -81,5 +81,5 @@ for key, value in nocome_dict.items():
     if value != "X":
         print(key, value)
 
-print('attendance 16줄체크')
+print('attendance 17줄체크')
 

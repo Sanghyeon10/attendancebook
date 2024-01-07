@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import making
 import os
+import shutil
 
 ThisYearAttendnce="2024 초등부 출석표"
 
@@ -267,4 +268,31 @@ def removingexcel(file_path):
         print(file_path,"파일이 성공적으로 제거되었습니다.")
     else:
         print(file_path,"파일이 존재하지 않습니다.")
+
+def move_attendance_file():
+
+    # 개인파일 폴더 경로
+    destination_folder = r'C:\Users\User\Desktop\diary\개인 파일' #보관하고 싶은 절대주소를 적으면 됩니다.
+
+    # 다운로드 폴더 경로
+    source_folder = r'C:\Users\User\Downloads' #다운로드파일에 있는 최신 엑셀파일을 복사합니다.
+
+    # 출석부 엑셀 파일 이름
+    file_name = ThisYearAttendnce+".xlsx"
+
+    # 출석부 파일 경로
+    source_path = os.path.join(source_folder, file_name)
+    destination_path = os.path.join(destination_folder, file_name)
+
+    # 개인파일 폴더에 있는 출석부 파일 제거
+    if os.path.exists(destination_path):
+        os.remove(destination_path)
+        print(f'{file_name} 파일이 개인파일 폴더에서 제거되었습니다.')
+
+    # 다운로드 폴더에서 출석부 파일을 개인파일 폴더로 복사
+    if os.path.exists(source_path):
+        shutil.copy(source_path, destination_folder)
+        print(f'{file_name} 파일이 다운로드 폴더에서 개인파일 폴더로 복사되었습니다.')
+    else:
+        print(f'{file_name} 파일을 다운로드 폴더에서 찾을 수 없습니다.')
 

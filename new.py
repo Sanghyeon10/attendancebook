@@ -181,7 +181,10 @@ survivednumber= len(df.columns) -1 -df.iloc[3].tolist().count('X') #생존자수
 
 
 # print( df.iloc[3].value_counts()[100])
-positive_counts =  str(round(survivednumber/ dengbannumber *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
+if dengbannumber!=0:
+    positive_counts =  str(round(survivednumber/ dengbannumber *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
+else:
+    positive_counts=0
 
 df.iat[3,0]= positive_counts
 

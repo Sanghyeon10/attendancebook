@@ -35,7 +35,7 @@ for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업�
     tempdf = pd.read_excel(r'{}.xlsx'.format(i)) #해당파일찾고 데이터 옮겨오기
     tempdf = tempdf.fillna('') #이거 안해주면 업로드시 오류남
 
-
+    sheet.clear()
     sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
 
     time.sleep(5)
