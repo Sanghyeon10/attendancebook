@@ -1,8 +1,8 @@
 import pandas as pd
 
-ROE = 15
-PBR = 1.37
-N=7
+ROE = 5
+PBR = 3.4
+N=5
 
 r= (1+ROE)/ (PBR**(1/N)) - 1
 

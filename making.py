@@ -146,17 +146,23 @@ def make_data_from_file(attendance_file_path):
                 split_string = oneline.split("///")[0] #앞의것을 쪼개서 정보저장
                 split_string = [line for line in re.split('\s|,|\.', split_string) if line]
                 class_name, *student_names = split_string
-                attendance_dict[class_name] = student_names
 
-                nocome_dict[class_name] = oneline.split("///")[1] #뒤에꺼는 기타사항 딕셔너리 정보에 추가
+                if class_name not in attendance_dict.keys():
+                    attendance_dict[class_name] = student_names
+                    nocome_dict[class_name] = oneline.split("///")[1] #뒤에꺼는 기타사항 딕셔너리 정보에 추가
+                else:
+                    print('중복 존재',class_name)
 
             else:
                 split_string = [line for line in re.split('\s|,|\.', oneline) if line]
                 # 딕셔너리를 생성 (///이 없는 경우)
                 class_name, *student_names = split_string
 
-                attendance_dict[class_name] = student_names
-                nocome_dict[class_name] = "X"  # 기타사항이 없는 경우 X으로 처리
+                if class_name not in attendance_dict.keys():
+                    attendance_dict[class_name] = student_names
+                    nocome_dict[class_name] = "X"  # 기타사항이 없는 경우 X으로 처리
+                else:
+                    print('중복 존재',class_name)
 
     return attendance_dict, nocome_dict
 

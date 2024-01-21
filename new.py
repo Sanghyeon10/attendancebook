@@ -87,12 +87,13 @@ for i in range(1,len(df.columns.tolist())): #첫번재칸은 통계라 예외
 
 # 통계 작성
 total =len(df.columns)-1 # 전체인원수 구하기
-failnumber = df.iloc[2].value_counts()["X"] #등반 미달자 수
+# print(df.iloc[2].value_counts().index)
+failnumber = df.iloc[2].value_counts()["X"] if "X" in df.iloc[2].value_counts().index else 0  #등반 미달자 수(X가 하나도 없으면 0명처리)
 up = total - failnumber #등반 성공자 수
 
 df.loc['등록날짜','통계']= total
 
-df.loc['등반날짜','통계']= str(round(up/total*100))+'%' # 등반 인원수/ 전체 인원
+df.loc['등반날짜','통계']= str(round(up/total*100))+'%' if total!=0 else 0  # 등반 인원수/ 전체 인원(0명이면 0처리)
 #등반율 구하기
 
 numrberofO=0
@@ -138,53 +139,54 @@ for i in range(1,len(df.columns.tolist())): #애들 이름 순대로 하기 첫�
                 df.iat[3,i]= result
 
     else: #등반날짜가 없는 경우
-        # 2번째칸에 있는 등록날짜기준으로 날자 세는거임.
-        date = datetime.datetime.strptime(df.loc[df.index[1], df.columns.tolist()[i]], "%Y-%m-%d") #날짜를 datetime화
-        target_date=  date + datetime.timedelta(weeks=8) #8주(2달)후 출석율
-        # print(target_date,datetime.datetime.now())
-
-        for j in range(len(df.index) - 1):  # 출석율 계산, 마지막은 비고이므로 생략
-            # print((df.index[j]))
-            if j > 4:  # 년월일 인덱스인 부분만 계산해야함.
-                # print(df.index[j], type(df.index[j]))
-                if datetime.datetime.strptime(df.index[j], "%Y-%m-%d") >= target_date:  # 이미 datetime.datetime형
-                    # 12주 후부터 세기, 또한 마지막은 비고라서 패스
-
-                    if df.loc[df.index[j], df.columns.tolist()[i]] == 'O':
-                        numrberofO = numrberofO + 1
-
-                    elif df.loc[df.index[j], df.columns.tolist()[i]] == 'X':
-                        numrberofX = numrberofX + 1
-                    else:
-                        pass
-
-                if (numrberofO) == 0:
-                    result = 0
-                elif (numrberofO + numrberofX) == 0:
-                    result = 0
-
-                else:
-                    result = round(numrberofO / (numrberofO + numrberofX) * 100)
-
-
-        if result <30: #등록후 12개주 이후 출석율이 특정 숫자 미만이면 논할게 없고
-            df.iat[3, i] = "X"
-        else: #특정 숫자 이상이라면  등반여부 체크하기
-            df.iat[3, i] = "X" #이젠 삭제 통계 계산시 오류남.
+        pass
+        # # 2번째칸에 있는 등록날짜기준으로 날자 세는거임.
+        # date = datetime.datetime.strptime(df.loc[df.index[1], df.columns.tolist()[i]], "%Y-%m-%d") #날짜를 datetime화
+        # target_date=  date + datetime.timedelta(weeks=8) #8주(2달)후 출석율
+        # # print(target_date,datetime.datetime.now())
+        #
+        # for j in range(len(df.index) - 1):  # 출석율 계산, 마지막은 비고이므로 생략
+        #     # print((df.index[j]))
+        #     if j > 4:  # 년월일 인덱스인 부분만 계산해야함.
+        #         # print(df.index[j], type(df.index[j]))
+        #         if datetime.datetime.strptime(df.index[j], "%Y-%m-%d") >= target_date:  # 이미 datetime.datetime형
+        #             # 12주 후부터 세기, 또한 마지막은 비고라서 패스
+        #
+        #             if df.loc[df.index[j], df.columns.tolist()[i]] == 'O':
+        #                 numrberofO = numrberofO + 1
+        #
+        #             elif df.loc[df.index[j], df.columns.tolist()[i]] == 'X':
+        #                 numrberofX = numrberofX + 1
+        #             else:
+        #                 pass
+        #
+        #         if (numrberofO) == 0:
+        #             result = 0
+        #         elif (numrberofO + numrberofX) == 0:
+        #             result = 0
+        #
+        #         else:
+        #             result = round(numrberofO / (numrberofO + numrberofX) * 100)
+        #
+        #
+        # if result <30: #등록후 12개주 이후 출석율이 특정 숫자 미만이면 논할게 없고
+        #     df.iat[3, i] = "X"
+        # else: #특정 숫자 이상이라면  등반여부 체크하기
+        #     df.iat[3, i] = "X" #이젠 삭제 통계 계산시 오류남.
 
 
 
 
 # count_x_in_row = df.loc[2].tolist().count('X')
-dengbannumber = len(df.columns) -1 -df.iloc[2].tolist().count('X')#등반자 수 = 전체 인원수- 등반 아닌사람
-survivednumber= len(df.columns) -1 -df.iloc[3].tolist().count('X') #생존자수 = 전체인w원수- 생존율 정보가 없는사람
+dengbannumber = len(df.columns) -1 -df.iloc[2].tolist().count('X') if df.iloc[2].tolist().count('X')!=0 else 0  #등반자 수 = 전체 인원수- 등반 아닌사람
+survivednumber= len(df.columns) -1 -df.iloc[3].tolist().count('X') if df.iloc[3].tolist().count('X')!=0 else 0 #생존자수 = 전체 인원수- 생존율 정보가 없는사람
 
 
 # print( df.iloc[3].value_counts()[100])
-if dengbannumber!=0:
-    positive_counts =  str(round(survivednumber/ dengbannumber *100)) + '%' # 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
-else:
-    positive_counts=0
+
+positive_counts = str(round(survivednumber / dengbannumber * 100)) + '%' if dengbannumber != 0 else 0
+# 3개월후 출석율이 찍힘수(=등반인원수 - 실패율) / 등반 인원수
+
 
 df.iat[3,0]= positive_counts
 

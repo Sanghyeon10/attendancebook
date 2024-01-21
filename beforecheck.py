@@ -17,8 +17,10 @@ attendance_dict, nocome_dict =making.make_data_from_file("attendance.txt") #텍�
 
 
 # 각 목장의 출석 정보 리스트를 출력합니다.
-for farm_name, attendees in attendance_dict.items():
-    print(f'{farm_name} 목장 출석자: {attendees}', '인원수:' ,len(attendees))
+for groupname in all_group:
+    for farm_name, attendees in attendance_dict.items():
+        if farm_name == groupname:
+            print(f'{farm_name} 목장 출석자: {attendees}', '인원수:' ,len(attendees))
 
 
 print()
