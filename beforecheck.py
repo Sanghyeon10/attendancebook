@@ -28,6 +28,7 @@ print()
 
 print('누락 존재 명단?')
 getnamelist=[] #정보없는 목장 선생님 이름 구하기
+getname= making.get_name()
 
 #for문 돌리기
 for i in range(len(all_group)):
@@ -51,6 +52,9 @@ for i in range(len(all_group)):
         # 오늘 출석 정보에 있는 명단에서 check(출석인원중)을 빼면 누락된 사람 찾아내기 가능
         if diff1 !=[]: # 빈 리스트가 아니라면 누락존재
             print(all_group[i], diff1)
+
+    else:#not 새신자 and 출석칸 공란이면,
+        print(getname[all_group[i]] )
 
 
 
