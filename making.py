@@ -10,6 +10,11 @@ ThisYearAttendnce="2024 초등부 출석표"
 
 Newmembers = "2024 새친구 관리엑셀표"
 
+addressgibon = 'C:\\Users\\captu\\Downloads\\'
+
+#C:\Users\User\Downloads
+
+addrresOfjsonfile = r"C:\Users\captu\PycharmProjects\pythonProject\abiding-honor-375915-c16db88a8008.json"
 
 def index():
     df=[]
@@ -90,7 +95,8 @@ def calculate_o_ratio_for_series(series):
     total_count = o_count + x_count
     o_ratio = round(o_count / total_count*100) if total_count > 0 else 0.0
 
-    series[end_index] = o_ratio
+    # series[end_index] = o_ratio
+    series.iloc[end_index] = o_ratio
 
     return series
 
@@ -102,7 +108,7 @@ def read_attendance_from_file(attendance_file_path):
         for line in f:
             # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
             # fields = [line for line in re.split('\s|,|\.', line) if line]
-            fields = [line for line in re.split('\s|,|\.', line) if line]
+            fields = [line for line in re.split(r'\s|,|\.', line) if line]
 
             # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
             farm_name, *attendees = fields
@@ -144,7 +150,7 @@ def make_data_from_file(attendance_file_path):
             if "///" in oneline:
                 # 딕셔너리를 생성 (///이 있는 경우)
                 split_string = oneline.split("///")[0] #앞의것을 쪼개서 정보저장
-                split_string = [line for line in re.split('\s|,|\.', split_string) if line]
+                split_string = [line for line in re.split(r'\s|,|\.', split_string) if line]
                 class_name, *student_names = split_string
 
                 if class_name not in attendance_dict.keys():
@@ -154,7 +160,7 @@ def make_data_from_file(attendance_file_path):
                     print('중복 존재',class_name)
 
             else:
-                split_string = [line for line in re.split('\s|,|\.', oneline) if line]
+                split_string = [line for line in re.split(r'\s|,|\.', oneline) if line]
                 # 딕셔너리를 생성 (///이 없는 경우)
                 class_name, *student_names = split_string
 
@@ -255,7 +261,7 @@ def WhatIsToUpload(A):
         return making.all_group()
     else:
         # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-        uploadlist = [line for line in re.split('\s|,|\.', A) if line]
+        uploadlist = [line for line in re.split(r'\s|,|\.', A) if line]
 
         return uploadlist
 
@@ -278,10 +284,10 @@ def removingexcel(file_path):
 def move_attendance_file():
 
     # 개인파일 폴더 경로
-    destination_folder = r'C:\Users\User\Desktop\diary\개인 파일' #보관하고 싶은 절대주소를 적으면 됩니다.
+    destination_folder = r'C:\Users\captu\OneDrive\바탕 화면\diary\개인 파일' #보관하고 싶은 절대주소를 적으면 됩니다.
 
     # 다운로드 폴더 경로
-    source_folder = r'C:\Users\User\Downloads' #다운로드파일에 있는 최신 엑셀파일을 복사합니다.
+    source_folder = addressgibon #다운로드파일에 있는 최신 엑셀파일을 복사합니다.
 
     # 출석부 엑셀 파일 이름
     file_name = ThisYearAttendnce+".xlsx"
@@ -298,7 +304,7 @@ def move_attendance_file():
     # 다운로드 폴더에서 출석부 파일을 개인파일 폴더로 복사
     if os.path.exists(source_path):
         shutil.copy(source_path, destination_folder)
-        print(f'{file_name} 파일이 다운로드 폴더에서 개인파일 폴더로 복사되었습니다.')
+        print(f'{file_name} 파일이 복사 성공.')
     else:
-        print(f'{file_name} 파일을 다운로드 폴더에서 찾을 수 없습니다.')
+        print(f'{file_name} 실패.')
 

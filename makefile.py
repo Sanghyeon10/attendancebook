@@ -8,7 +8,8 @@ import re
 
 input('누락명단이 정상이면 넘어가기 input')
 
-tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
+# tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
+tempdf = pd.read_excel(r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce), sheet_name=None)
 
 
 all_group= making.all_group()
@@ -176,7 +177,8 @@ for l in range(len(all_group)):
 if toinputdict!={}: #빈 딕녀서리가 아니라면 입력할것이 있다.
     checkcheck = input("새친구 관리 엑셀표에 추가할지 여부no이면 안함 input")
     if checkcheck !='no':
-        tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers), sheet_name=None)
+        # tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers), sheet_name=None)
+        tempdf = pd.read_excel(r'{}{}.xlsx'.format(making.addressgibon, making.Newmembers), sheet_name=None)
         df=tempdf['시트1'] # 여러 시트중 시트1을 지정해 저장
         df.set_index('날짜\이름', inplace=True)
 

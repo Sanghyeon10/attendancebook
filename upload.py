@@ -11,7 +11,8 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/dirve'
 ]
-creds = ServiceAccountCredentials.from_json_keyfile_name("C:\\Users\\User\PycharmProjects\pythonProject\\abiding-honor-375915-c16db88a8008.json")
+creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfile)
+#위치 바뀌면 수정해줄것.
 
 file = gspread.authorize(creds)
 # sh = file.open("오류 테스트용")
@@ -41,7 +42,7 @@ for i in range(len(all_group)):
         tempdf = tempdf.fillna('')
 
         sheet.clear()
-        sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
+        sheet.update(range_name=making.getrangename(tempdf) ,values=[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
         #6.0.0 버전되면 구문 위치 바뀐다고함.
         time.sleep(5)
 
@@ -81,7 +82,7 @@ for i in range(len(all_group)):
         tempdf = tempdf.fillna('')
 
         sheet.clear()
-        sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
+        sheet.update(range_name=making.getrangename(tempdf) ,values=[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
         #6.0.0 버전되면 구문 위치 바뀐다고함.
         time.sleep(5)
 

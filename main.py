@@ -17,9 +17,9 @@ subprocess.Popen([sys.executable, "upload.py"]).communicate() #구글 스프레�
 
 making.move_attendance_file() # PC의 개인폴더에 백업하는 코드
 
-file_path = r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce) #삭제안하면, 실수할수 있어서 자동삭제.
+file_path = r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce) #삭제안하면, 실수할수 있어서 자동삭제.
 making.removingexcel(file_path)
-file_path = r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers)
+file_path = r'{}{}.xlsx'.format(making.addressgibon, making.Newmembers)
 making.removingexcel(file_path)
 
 print('구글폼 행숨기기하기, 구글폼 명단 개정해주기')

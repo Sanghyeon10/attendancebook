@@ -2,8 +2,10 @@ import pandas as pd
 import making
 
 # 비교할 엑셀 파일의 경로
-file_path1 = r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce)
-file_path2 = r'C:\Users\User\Downloads\백업5.xlsx'
+file_path1 = r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce)
+file_path2 = r'{}백업5.xlsx'.format(making.addressgibon)
+
+
 
 # 엑셀 파일 불러오기
 

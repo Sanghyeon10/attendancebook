@@ -18,8 +18,8 @@ scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/dirve'
 ]
-creds = ServiceAccountCredentials.from_json_keyfile_name("C:\\Users\\User\PycharmProjects\pythonProject\\abiding-honor-375915-c16db88a8008.json")
-
+creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfile)
+# 위json파일 주소는 위치바뀌면 수정해줄것.
 file = gspread.authorize(creds)
 
 for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업로드
@@ -36,6 +36,6 @@ for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업�
     tempdf = tempdf.fillna('') #이거 안해주면 업로드시 오류남
 
     sheet.clear()
-    sheet.update(making.getrangename(tempdf) ,[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
+    sheet.update(range_name=making.getrangename(tempdf) ,values=[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
 
     time.sleep(5)

@@ -6,7 +6,7 @@ import re
 
 
 print('초등부 출석표 파일 맞음?')
-tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
+tempdf = pd.read_excel(r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce), sheet_name=None)
 
 
 all_group= making.all_group()
