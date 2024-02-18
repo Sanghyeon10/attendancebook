@@ -87,5 +87,5 @@ for key, value in nocome_dict.items():
     if value != "X":
         print(key, value)
 
-print('attendance 17줄체크')
+print('attendance {}줄체크'.format(str(len(making.all_group())+2)))
 

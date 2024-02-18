@@ -5,6 +5,7 @@ import pandas as pd
 import making
 import os
 import shutil
+import calendar
 
 ThisYearAttendnce="2024 초등부 출석표"
 
@@ -45,6 +46,7 @@ def index():
         day += datetime.timedelta(days=7)
 
     df.append('비고') #비고에는 출석율 계산할것임.
+    # print(df)
     return df
 
 
@@ -283,28 +285,51 @@ def removingexcel(file_path):
 
 def move_attendance_file():
 
-    # 개인파일 폴더 경로
-    destination_folder = r'C:\Users\captu\OneDrive\바탕 화면\diary\개인 파일' #보관하고 싶은 절대주소를 적으면 됩니다.
+    for name in [ThisYearAttendnce,Newmembers]:
 
-    # 다운로드 폴더 경로
-    source_folder = addressgibon #다운로드파일에 있는 최신 엑셀파일을 복사합니다.
+        # 개인파일 폴더 경로
+        destination_folder = r'C:\Users\captu\OneDrive\바탕 화면\diary\개인 파일' #보관하고 싶은 절대주소를 적으면 됩니다.
 
-    # 출석부 엑셀 파일 이름
-    file_name = ThisYearAttendnce+".xlsx"
+        # 다운로드 폴더 경로
+        source_folder = addressgibon #다운로드파일에 있는 최신 엑셀파일을 복사합니다.
 
-    # 출석부 파일 경로
-    source_path = os.path.join(source_folder, file_name)
-    destination_path = os.path.join(destination_folder, file_name)
+        # 출석부 엑셀 파일 이름
+        file_name = name+".xlsx"
 
-    # 개인파일 폴더에 있는 출석부 파일 제거
-    if os.path.exists(destination_path):
-        os.remove(destination_path)
-        print(f'{file_name} 파일이 개인파일 폴더에서 제거되었습니다.')
+        # 출석부 파일 경로
+        source_path = os.path.join(source_folder, file_name)
+        destination_path = os.path.join(destination_folder, file_name)
 
-    # 다운로드 폴더에서 출석부 파일을 개인파일 폴더로 복사
-    if os.path.exists(source_path):
-        shutil.copy(source_path, destination_folder)
-        print(f'{file_name} 파일이 복사 성공.')
-    else:
-        print(f'{file_name} 실패.')
+        # 개인파일 폴더에 있는 출석부 파일 제거
+        if os.path.exists(destination_path):
+            os.remove(destination_path)
+            print(f'{file_name} 파일이 개인파일 폴더에서 제거되었습니다.')
 
+        # 다운로드 폴더에서 출석부 파일을 개인파일 폴더로 복사
+        if os.path.exists(source_path):
+            shutil.copy(source_path, destination_folder)
+            print(f'{file_name} 파일이 복사 성공.')
+        else:
+            print(f'{file_name} 실패.')
+
+
+def getdaydate(day):
+    # 특정 날짜 문자열
+    date_str = day
+
+    # 문자열을 datetime 객체로 변환
+    # date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+    date_obj=day
+
+    # 날짜가 속한 달의 달력을 얻어오기
+    _, last_day = calendar.monthrange(date_obj.year, date_obj.month)
+    month_calendar = calendar.monthcalendar(date_obj.year, date_obj.month)
+
+    # 날짜가 속한 주차 찾기
+    week_of_month = next((week_num for week_num, week in enumerate(month_calendar, start=1) if date_obj.day in week),
+                         None)
+
+    week_of_month-=1 #0주차부터 시작해야함
+    # # 결과 출력
+    # print(f"{date_str}은 {date_obj.month}월의 {week_of_month}주차에 속합니다.")
+    return (date_obj.month,week_of_month)

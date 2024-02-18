@@ -199,7 +199,8 @@ if toinputdict!={}: #빈 딕녀서리가 아니라면 입력할것이 있다.
                 df.loc[df.index[3], name] = "X"
                 df.loc[df.index[4], name] = mokjang + " "+ "목장" #ex. 4-3 목장
 
-        df.to_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.Newmembers), sheet_name="시트1", engine='openpyxl')
+        # pd.read_excel(r'{}{}.xlsx'.format(making.addressgibon, making.Newmembers), sheet_name=None)
+        df.to_excel(r'{}{}.xlsx'.format(making.addressgibon,making.Newmembers), sheet_name="시트1", engine='openpyxl')
         #다운로드 파일의 파일을 업데이트해야 new 파일돌릴때 인식제대로함.
 
 
