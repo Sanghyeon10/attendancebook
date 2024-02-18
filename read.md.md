@@ -61,5 +61,5 @@ pandas
 openpyxl
 pyarrow
 gspread
-
+tabulate
 
