@@ -22,20 +22,22 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 # 위json파일 주소는 위치바뀌면 수정해줄것.
 file = gspread.authorize(creds)
 
-for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업로드
+making.upload_data_to_sheets(file,givenlist)
 
-    sh = file.open(i) #woorbook = sh
-
-    worksheet_name = sh.worksheets()[0]
-
-
-    print(i)
-    sheet= sh.worksheet('시트1') #구글 스프레드기준 찾기
-
-    tempdf = pd.read_excel(r'{}.xlsx'.format(i)) #해당파일찾고 데이터 옮겨오기
-    tempdf = tempdf.fillna('') #이거 안해주면 업로드시 오류남
-
-    sheet.clear()
-    sheet.update(range_name=making.getrangename(tempdf) ,values=[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
-
-    time.sleep(5)
+# for i in givenlist: #새신자파일, 특정목장 파일, 새친구 파일 업로드
+#
+#     sh = file.open(i) #woorbook = sh
+#
+#     worksheet_name = sh.worksheets()[0]
+#
+#
+#     print(i)
+#     sheet= sh.worksheet('시트1') #구글 스프레드기준 찾기
+#
+#     tempdf = pd.read_excel(r'{}.xlsx'.format(i)) #해당파일찾고 데이터 옮겨오기
+#     tempdf = tempdf.fillna('') #이거 안해주면 업로드시 오류남
+#
+#     sheet.clear()
+#     sheet.update(range_name=making.getrangename(tempdf) ,values=[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
+#
+#     time.sleep(5)
