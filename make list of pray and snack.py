@@ -14,8 +14,11 @@ tabulate.WIDE_CHARS_MODE = False
 # tabulate.PRESERVE_WHITESPACE = True
 
 
-start=2# int(input("시작월"))
-end=4# int(input("끝나는월"))
+# 변수 설정
+start=4# int(input("시작월"))
+end=6# int(input("끝나는월"))
+
+
 
 daylist= making.index()[:-1]
 # 문자열을 datetime 객체로 변환
@@ -41,17 +44,20 @@ print(snacksunsu)
 
 
 #변수설정
-startday= datetime.datetime(year=2024,month=2,day=19)
+startday= datetime.datetime(year=2024,month=4,day=7)
+specialday= [datetime.datetime(year=2024,month=5,day=12)]
 
-specialday= [datetime.datetime(year=2024,month=3,day=24)]
+#기도 ['6-1','6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']
+#간식 ['6-3','6-2','6-1', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
+realpraysunsu=['5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']+  praysunsu*10
+realsnacksunsu=['5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님'] + snacksunsu*10
 
-#['6-3','6-2','6-1', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
-#['6-1','6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']
-realpraysunsu=['6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']+  praysunsu*10
-realsnacksunsu=['6-3', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님'] + snacksunsu*10
+
 
 # print( ["a","a"]+ [5,4,3]*10)
 
+
+# 계산
 i=0
 j=0
 for day in daylist:
@@ -60,14 +66,14 @@ for day in daylist:
             print(day)
             pandan=int(input("기도pass? 1이면 참 0이면 거짓"))
             if pandan:
-                A=str(input("적을내용"))
+                A="공란"
             else:
                 A="대표기도,성경봉독:"+realpraysunsu[i]
                 i +=1
 
             pandan= int(input("간식pass? 1이면 참 0이면 거짓"))
             if pandan:
-                B=str(input("적을내용"))
+                B="공란"
             else:
                 B="간식:"+realsnacksunsu[j]
                 j +=1
