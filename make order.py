@@ -3,6 +3,7 @@ import making
 import numpy as np
 import datetime
 
+attendance_dict, nocome_dict = making.make_data_from_file("attendance.txt")
 
 all_group = making.all_group()
 # tempdf = pd.read_excel(r'C:\Users\User\Downloads\{}.xlsx'.format(making.ThisYearAttendnce), sheet_name=None)
@@ -12,7 +13,7 @@ printing= 'yes'#input('명단 프린트할꺼라면 yes라고 치기')
 a=[]
 b=[]
 temp=[]
-
+getname= making.get_name()
 
 filtered_data=[] #먼저 빈리스트 정의하기
 for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용)
@@ -61,7 +62,15 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     temp = making.gettruelist(temp, loaded_data[all_group[i]]) +loaded_data[all_group[i]]
     #기존의 명부에서 제외해야하는 아이들 이름 제외한 리스트를 구하고 뒤에 제외리스트를 추가함.
 
-    df=df.loc[:,temp] #데이터 프레임에 주어진 명단순서대로 넣기(기타+ 출석율순 명단+ 제외 명단)
+    # print(df)
+    # print(temp)
+    #새신자 목장이 없어서, 새신자 정상등록이 되지 않아서, 예외처리하는 코드 만듬.
+    df = df.loc[:, temp]
+    # if len(df.columns) == len(temp): #정상적인경우
+    #     df=df.loc[:,temp] #데이터 프레임에 주어진 명단순서대로 넣기(기타+ 출석율순 명단+ 제외 명단)
+    # else: #등반자로 등록되면 temp의 목록에서 삭제되니까 일반목장에서도 삭제되서 에러남. 다시 넣어줌.
+    #     df=df.loc[:,temp+attendance_dict['등반자']]
+
 
 
     if all_group[i] != '새신자': #새신자만 아니면
@@ -74,7 +83,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 
     # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용
     if printing == 'yes': #프린트 하는게 맞으면
-        making.make_line(all_group[i],temp) #n명씩 잘라서 표현할때
+        making.make_line(all_group[i],temp, getname[all_group[i]]) #n명씩 잘라서 표현할때
 
 
     #변수 초기화

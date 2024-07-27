@@ -88,6 +88,7 @@ for i in range(len(all_group)):
 
 
             else:
+                # df[j] = df[j].astype(object)
                 df.loc[df.index[N],j]='X' #없다면 x표시
 
         #이름다 체크했다면,
@@ -121,6 +122,7 @@ for i in range(len(all_group)):
         # 오늘 출석 정보에 있는 명단에서 check(출석인원중)을 빼면 누락된 사람 찾아내기 가능
         if diff1 !=[]: # 빈 리스트가 아니라면 누락존재
             print('새신자 이름 누락',all_group[i], diff1)
+            
 
 
         #결석사유칸이 존재한다면

@@ -14,11 +14,33 @@ tabulate.WIDE_CHARS_MODE = False
 # tabulate.PRESERVE_WHITESPACE = True
 
 
+
+
+all_group=making.all_group()[:-1] #새신자 삭제
+praysunsu= sorted(all_group, key=lambda x: (int(x.split('-')[0])) , reverse=True)
+snacksunsu= all_group[::-1]+ ["부장님","총무님"]
+snacksunsu.remove('6-5')
+snacksunsu.remove('6-4')
+print(praysunsu)
+print(snacksunsu)
+
+
 # 변수 설정
-start=4# int(input("시작월"))
-end=6# int(input("끝나는월"))
+start=6# int(input("시작월"))
+end=8# int(input("끝나는월"))
+
+startday= datetime.datetime(year=2024,month=4,day=7)
+specialday=[]# [datetime.datetime(year=2024,month=5,day=12)]
+
+#기도 ['6-1','6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']
+#간식 ['6-3','6-2','6-1', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
+realpraysunsu=['4-2', '4-3', '4-4']+  praysunsu*10
+realsnacksunsu= snacksunsu*10
 
 
+
+
+# df 생성
 
 daylist= making.index()[:-1]
 # 문자열을 datetime 객체로 변환
@@ -32,25 +54,8 @@ df = pd.DataFrame(index=range(0, 5), columns=columns)
 # df.index.name="주차\월"
 
 
-all_group=making.all_group()[:-1] #새신자 삭제
-praysunsu= sorted(all_group, key=lambda x: (int(x.split('-')[0])) , reverse=True)
-snacksunsu= all_group[::-1]+ ["부장님","총무님"]
-snacksunsu.remove('6-5')
-snacksunsu.remove('6-4')
-print(praysunsu)
-print(snacksunsu)
 
 
-
-
-#변수설정
-startday= datetime.datetime(year=2024,month=4,day=7)
-specialday= [datetime.datetime(year=2024,month=5,day=12)]
-
-#기도 ['6-1','6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']
-#간식 ['6-3','6-2','6-1', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
-realpraysunsu=['5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']+  praysunsu*10
-realsnacksunsu=['5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님'] + snacksunsu*10
 
 
 

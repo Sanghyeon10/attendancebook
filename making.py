@@ -198,9 +198,9 @@ def checkO(name, list):
 #         loaded_data = json.load(file)
 #     return loaded_data
 
-def make_line(groupname,my_list):
+def make_line(groupname,my_list, teachername):
     n=6
-    print(groupname, end=' ')
+    print(groupname,teachername,'선생님',end=' ')
     for i, x in enumerate(my_list):
         if i ==0: #4-1 같은건 따로 빼기 위해서 4-1 출력후 바로 한칸 내림
             print()
@@ -214,6 +214,7 @@ def make_line(groupname,my_list):
             print(x)
         else: #평상시
             print(x, end=' ')
+    print()
 
     return False
 
