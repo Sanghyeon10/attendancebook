@@ -60,11 +60,50 @@ def get_name(): #정보 부존재 목장의 선생님 이름 구하기
 
     with open("namebook.txt", "r" , encoding="utf-8") as file:
         for line in file:
-            name, number = line.strip().split(" ")  # 빈칸으로 구분된 이름과 전화번호 추출
+            farm_name, name = line.strip().split(" ")  # 빈칸으로 구분된 이름과 전화번호 추출
             #예시 4-1 홍길동
-            B[name] = number  # 딕셔너리에 추가
+            B[farm_name] = name  # 딕셔너리에 추가
 
     return B
+
+
+def get_phonenumber(): #정보 부존재 목장의 선생님 이름 구하기
+    B={}  # 빈 딕셔너리 생성
+
+    with open("phonenumber.txt", "r" , encoding="utf-8") as file:
+        for line in file:
+            farm_name, name = line.strip().split(" ")  # 빈칸으로 구분된 이름과 전화번호 추출
+            #예시 4-1 홍길동
+            B[farm_name] = name  # 딕셔너리에 추가
+
+    return B
+
+
+
+def get_keyAndlist(filname):
+    # 출석 정보가 저장된 파일 경로를 입력합니다.
+    # attendance_file_path = 'famenameAndkids.txt'  # 첫 엑셀표 양식만들때 쓰는거라 같은 텍스트파일을 활용함.
+    attendance_file_path=filname
+
+    # 목장 출석 정보를 저장할 딕셔너리를 생성합니다.
+    attendance_dict = {}
+
+    # 출석 정보 파일을 읽어서 딕셔너리에 저장합니다.
+    with open(attendance_file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
+            fields = [line for line in re.split('\s|,|\.', line) if line]
+
+            # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
+            farm_name, *attendees = fields
+
+            # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
+            attendance_dict[farm_name] = attendees
+
+    return attendance_dict
+
+
+
 
 
 def calculate_o_ratio(df):
@@ -103,39 +142,6 @@ def calculate_o_ratio_for_series(series):
     return series
 
 
-def read_attendance_from_file(attendance_file_path):
-    attendance_dict = {}
-
-    with open(attendance_file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-            # fields = [line for line in re.split('\s|,|\.', line) if line]
-            fields = [line for line in re.split(r'\s|,|\.', line) if line]
-
-            # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
-            farm_name, *attendees = fields
-            # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
-            attendance_dict[farm_name] = attendees
-
-    return attendance_dict
-
-def read_nocome_from_file(nocome_file_path):
-    nocome_dict = {}
-
-    with open(nocome_file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            # 정규 표현식을 사용하여 첫 번째 공백문자로 분리합니다.
-            pattern = r'^(\S+)\s(.+)$'
-            match = re.match(pattern, line)
-
-            if match:
-                # 두 개의 그룹으로 나눈 문자열을 변수에 저장합니다.
-                farm_name = match.group(1)
-                reason = match.group(2).strip()  # 리스트에서 양쪽 공백 제거
-                # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
-                nocome_dict[farm_name] = reason
-
-    return nocome_dict
 
 
 def make_data_from_file(attendance_file_path):
@@ -187,16 +193,6 @@ def checkO(name, list):
         A=""
 
     return A
-
-# ##json형태로 쓰는건 너무 불편해서 폐기함.
-# def save_dict_to_file(data, file_name):
-#     with open(file_name, "w", encoding="utf-8") as file:
-#         json.dump(data, file, indent=4, ensure_ascii=False)
-#
-# def load_dict_from_file(file_name):
-#     with open(file_name, 'r', encoding="utf-8") as file:
-#         loaded_data = json.load(file)
-#     return loaded_data
 
 def make_line(groupname,my_list, teachername):
     n=6

@@ -26,16 +26,16 @@ print(snacksunsu)
 
 
 # 변수 설정
-start=6# int(input("시작월"))
-end=8# int(input("끝나는월"))
+start=10# int(input("시작월"))
+end=13# int(input("끝나는월"))
 
 startday= datetime.datetime(year=2024,month=4,day=7)
-specialday=[]# [datetime.datetime(year=2024,month=5,day=12)]
+specialday= []#[datetime.datetime(year=2024,month=10,day=20),datetime.datetime(year=2024,month=9,day=29)]
 
 #기도 ['6-1','6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']
 #간식 ['6-3','6-2','6-1', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
-realpraysunsu=['4-2', '4-3', '4-4']+  praysunsu*10
-realsnacksunsu= snacksunsu*10
+realpraysunsu=['4-2', '4-3']+  praysunsu*10
+realsnacksunsu=['5-5', '5-4', '5-3', '5-2', '5-1', '4-4','4-3', '4-2', '4-1', '부장님']+ snacksunsu*10
 
 
 
@@ -63,8 +63,8 @@ df = pd.DataFrame(index=range(0, 5), columns=columns)
 
 
 # 계산
-i=0
-j=0
+i=0 #기도순서 +1
+j=0 # 간식순서 +1
 for day in daylist:
     if startday<= day and making.getdaydate(day)[0] in columns: #특정 날자 이후 그리고 표를 작성해야하는 달에 해당하면
         if day in specialday:#특이사항인경우
@@ -73,8 +73,12 @@ for day in daylist:
             if pandan:
                 A="공란"
             else:
-                A="대표기도,성경봉독:"+realpraysunsu[i]
-                i +=1
+                if making.getdaydate(day)[1] !=2 : #3주차가 아닌경우 문제없음.
+                    A="대표기도,성경봉독:"+realpraysunsu[i]
+                    i +=1
+                else:
+                    A="대표기도:장로님"
+                    #i는 변동없음
 
             pandan= int(input("간식pass? 1이면 참 0이면 거짓"))
             if pandan:
@@ -82,6 +86,8 @@ for day in daylist:
             else:
                 B="간식:"+realsnacksunsu[j]
                 j +=1
+
+
             text= "\n".join([A, B])
 
         elif making.getdaydate(day)[1] ==2 : #3주차인경우
@@ -107,7 +113,7 @@ df.to_excel("{}.xlsx".format(name))
 # print(df)
 
 table = tabulate.tabulate(df, headers='keys', tablefmt='grid', showindex="always", stralign='left')
-
+print(df.index.name)
 print(table)
 
 
