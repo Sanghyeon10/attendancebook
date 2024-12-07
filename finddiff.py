@@ -3,7 +3,7 @@ import making
 
 # 비교할 엑셀 파일의 경로
 file_path1 = r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce)
-file_path2 = r'{}백업5.xlsx'.format(making.addressgibon)
+file_path2 = r'{}2024 초등부 출석표의 사본.xlsx'.format(making.addressgibon)
 
 
 

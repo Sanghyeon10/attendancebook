@@ -28,7 +28,7 @@ def load_data():
     # print(os.getcwd())
     # print(file_list)
     # 목장과 그 목장 아이들 리스트
-    ranch_students =making.get_keyAndlist('farmnameAndkids')
+    ranch_students =making.get_keyAndlist('farmnameAndkids.txt')
 
 
     # 아이 이름과 정보
@@ -105,7 +105,7 @@ def save_each_sheet_as_file(input_file):
 create_excel()
 save_each_sheet_as_file(filename+".xlsx")
 
-
+#업로드
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/dirve'
@@ -114,41 +114,11 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 #위치 바뀌면 수정해줄것.
 
 file = gspread.authorize(creds)
-# sh = file.open("오류 테스트용")
-sh = file.open(filename) #woorbook = sh
-# print(type(sh.worksheets()[1]))
 
-A = input('특정 목장 업로드할지 판단 0이면 전부올리기 input')
-uploadlist = making.WhatIsToUpload(A)
-print("uploadlist:",uploadlist)
+making.upload_data_to_allsheets(file,[filename], making.all_group()[:-1] )
+# 마지막은 새신자라 여기서는 필요없음
 
 
-all_group= grouplist
-worksheet_list = sh.worksheets()
 
-if len(worksheet_list)!= len(all_group): #에러상황일수도? 워크 시트 기준으로해야맞음
-    print(worksheet_list)
-    print(all_group)
-    input('시트와 변수개수가 안맞다!')
-    # time.sleep(600)
-
-for i in range(len(all_group)):
-    if all_group[i] in uploadlist: #업로드 리스트에 해당하는 것만 업로드하기
-        try:
-            sheet= sh.worksheet(all_group[i]) #구글 스프레드기준 찾기
-            print(all_group[i])
-
-            tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i])) #해당파일찾고 데이터 옮겨오기
-            tempdf = tempdf.fillna('')
-
-            sheet.clear()
-            sheet.update(range_name=making.getrangename(tempdf) ,values=[tempdf.columns.values.tolist()] +tempdf.values.tolist()) #데이터 덧씌우기
-            #6.0.0 버전되면 구문 위치 바뀐다고함.
-            time.sleep(5)
-
-            # print(making.getrangename(tempdf))
-        except:
-            print( all_group[i], "에러")
-    else:
-        pass
-
+# 개인파일에 저장.
+making.move_attendance_file(["아이들 정보"])

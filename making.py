@@ -294,9 +294,9 @@ def removingexcel(file_path):
     else:
         print(file_path,"파일이 존재하지 않습니다.")
 
-def move_attendance_file():
+def move_attendance_file(fileToUploadlist):
 
-    for name in [ThisYearAttendnce,Newmembers]:
+    for name in fileToUploadlist:
 
         # 개인파일 폴더 경로
         destination_folder = r'C:\Users\captu\OneDrive\바탕 화면\diary\개인 파일' #보관하고 싶은 절대주소를 적으면 됩니다.
@@ -369,6 +369,47 @@ def upload_data_to_sheets(file,givenlist):
                      values=[tempdf.columns.values.tolist()] + tempdf.values.tolist())  # 데이터 덧씌우기
 
         time.sleep(5)
+
+
+def upload_data_to_allsheets(file,givenlist,all_group):
+    for i in givenlist:  # 새신자파일, 특정목장 파일, 새친구 파일 업로드
+
+        sh = file.open(i)  # woorbook = sh
+
+        print(i)
+        A = input('특정 목장 업로드할지 판단 0이면 전부올리기 input')
+        uploadlist = making.WhatIsToUpload(A)
+        print("uploadlist:", uploadlist)
+
+        worksheet_list = sh.worksheets()
+
+
+        if len(worksheet_list) != len(all_group):  # 에러상황일수도? 워크 시트 기준으로해야맞음
+            print(worksheet_list)
+            print(all_group)
+            input('시트와 변수개수가 안맞다!')
+            # time.sleep(600)
+
+        for i in range(len(all_group)):
+            if all_group[i] in uploadlist:  # 업로드 리스트에 해당하는 것만 업로드하기
+                try:
+                    sheet = sh.worksheet(all_group[i])  # 구글 스프레드기준 찾기
+                    print(all_group[i])
+
+                    tempdf = pd.read_excel(r'{}.xlsx'.format(all_group[i]))  # 해당파일찾고 데이터 옮겨오기
+                    tempdf = tempdf.fillna('')
+
+                    sheet.clear()
+                    sheet.update(range_name=making.getrangename(tempdf),
+                                 values=[tempdf.columns.values.tolist()] + tempdf.values.tolist())  # 데이터 덧씌우기
+                    # 6.0.0 버전되면 구문 위치 바뀐다고함.
+                    time.sleep(5)
+
+                    # print(making.getrangename(tempdf))
+                except Exception as e:
+                    print(all_group[i],f"오류 발생: {e}")
+            else:
+                pass
 
 
 def find_duplicate_names(names): #중복 된거 찾기.
