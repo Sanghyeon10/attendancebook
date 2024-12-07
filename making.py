@@ -1,4 +1,3 @@
-import datetime
 import re
 import json
 import pandas as pd
@@ -6,6 +5,10 @@ import making
 import os
 import shutil
 import calendar
+import datetime
+import time
+from collections import Counter
+
 
 ThisYearAttendnce="2024 초등부 출석표"
 
@@ -59,6 +62,17 @@ def get_name(): #정보 부존재 목장의 선생님 이름 구하기
     B={}  # 빈 딕셔너리 생성
 
     with open("namebook.txt", "r" , encoding="utf-8") as file:
+        for line in file:
+            farm_name, name = line.strip().split(" ")  # 빈칸으로 구분된 이름과 전화번호 추출
+            #예시 4-1 홍길동
+            B[farm_name] = name  # 딕셔너리에 추가
+
+    return B
+
+def get_newname(): #정보 부존재 목장의 선생님 이름 구하기
+    B={}  # 빈 딕셔너리 생성
+
+    with open("newnamebook.txt", "r" , encoding="utf-8") as file:
         for line in file:
             farm_name, name = line.strip().split(" ")  # 빈칸으로 구분된 이름과 전화번호 추출
             #예시 4-1 홍길동
@@ -332,9 +346,6 @@ def getdaydate(day):
     return (date_obj.month,week_of_month)
 
 
-import datetime
-import time
-import pandas as pd
 
 def upload_to_sheet(sheet, dataframe):
     sheet.clear()
@@ -358,3 +369,9 @@ def upload_data_to_sheets(file,givenlist):
                      values=[tempdf.columns.values.tolist()] + tempdf.values.tolist())  # 데이터 덧씌우기
 
         time.sleep(5)
+
+
+def find_duplicate_names(names): #중복 된거 찾기.
+    count = Counter(names)
+    # 출현 횟수가 1보다 큰 이름을 반환
+    return [name for name, freq in count.items() if freq > 1]

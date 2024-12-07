@@ -26,16 +26,16 @@ print(snacksunsu)
 
 
 # 변수 설정
-start=10# int(input("시작월"))
-end=13# int(input("끝나는월"))
+start=1# int(input("시작월"))
+end=3# int(input("끝나는월"))
 
-startday= datetime.datetime(year=2024,month=4,day=7)
+startday= datetime.datetime(year=2024,month=1,day=7)
 specialday= []#[datetime.datetime(year=2024,month=10,day=20),datetime.datetime(year=2024,month=9,day=29)]
 
 #기도 ['6-1','6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']
 #간식 ['6-3','6-2','6-1', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
-realpraysunsu=['4-2', '4-3']+  praysunsu*10
-realsnacksunsu=['5-5', '5-4', '5-3', '5-2', '5-1', '4-4','4-3', '4-2', '4-1', '부장님']+ snacksunsu*10
+realpraysunsu =   praysunsu*10
+realsnacksunsu=['1부']*20# "홍세미선생님","이윤미 선생님","이성미 선생님","1번 예외"]*10 #+ snacksunsu*10
 
 
 
@@ -132,5 +132,10 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 file = gspread.authorize(creds)
 
 
+#업로드 이후 A1 값 수정
 making.upload_data_to_sheets(file,givenlist)
+
+spreadsheet = file.open('snack')  # 수정하려는 스프레드시트 이름
+worksheet = spreadsheet.sheet1
+worksheet.update_acell('A1', '2025년')
 
