@@ -6,7 +6,7 @@ import re
 all_group= making.all_group()
 
 # 출석 정보가 저장된 파일 경로를 입력합니다.
-attendance_file_path = 'attendance.txt' #첫 엑셀표 양식만들때 쓰는거라 같은 텍스트파일을 활용함.
+attendance_file_path = 'farmnameAndkids.txt' #첫 엑셀표 양식만들때 쓰는거라 같은 텍스트파일을 활용함.
 
 # 목장 출석 정보를 저장할 딕셔너리를 생성합니다.
 attendance_dict = {}

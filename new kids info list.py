@@ -11,7 +11,7 @@ import making
 import os
 
 filename="2025년 초등2부 목장 편성표"
-grouplist=['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '6-2', '6-3', '6-4','6-5']
+# grouplist=['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '6-2', '6-3', '6-4','6-5']
 
 
 
@@ -115,7 +115,9 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 
 file = gspread.authorize(creds)
 
-making.upload_data_to_allsheets(file,[filename], making.all_group()[:-1] )
+
+
+making.upload_data_to_allsheets(file,[filename], making.all_group()[:-1] ,making.all_group()[:-1] )
 # 마지막은 새신자라 여기서는 필요없음
 
 

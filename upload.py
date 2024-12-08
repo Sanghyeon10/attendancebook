@@ -19,12 +19,17 @@ file = gspread.authorize(creds)
 sh = file.open(making.ThisYearAttendnce) #woorbook = sh
 # print(type(sh.worksheets()[1]))
 
+
+A = input('특정 목장 업로드할지 판단 0이면 전부올리기 input')
+uploadlist = making.WhatIsToUpload(A)
+print("uploadlist:", uploadlist)
+
 #파일업로드
-making.upload_data_to_allsheets(file,[making.ThisYearAttendnce], making.all_group() )
+making.upload_data_to_allsheets(file,[making.ThisYearAttendnce], making.all_group(), uploadlist )
 
 ### 백업파일 업로드
 
 now =datetime.datetime.now()
 N = int(now.strftime("%U"))% 6
 
-making.upload_data_to_allsheets(file,["백업"+str(N)], making.all_group() )
+making.upload_data_to_allsheets(file,["백업"+str(N)], making.all_group(), uploadlist )

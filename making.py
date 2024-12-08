@@ -371,15 +371,12 @@ def upload_data_to_sheets(file,givenlist):
         time.sleep(5)
 
 
-def upload_data_to_allsheets(file,givenlist,all_group):
+def upload_data_to_allsheets(file,givenlist,all_group,uploadlist):
     for i in givenlist:  # 새신자파일, 특정목장 파일, 새친구 파일 업로드
 
         sh = file.open(i)  # woorbook = sh
 
         print(i)
-        A = input('특정 목장 업로드할지 판단 0이면 전부올리기 input')
-        uploadlist = making.WhatIsToUpload(A)
-        print("uploadlist:", uploadlist)
 
         worksheet_list = sh.worksheets()
 
