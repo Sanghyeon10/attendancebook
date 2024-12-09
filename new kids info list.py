@@ -9,8 +9,11 @@ import matplotlib.pyplot as plt
 from openpyxl import Workbook
 import making
 import os
+from  openpyxl.styles.fonts  import  Font
+from  openpyxl.styles  import  Border, Side
 
 filename="2025년 초등2부 목장 편성표"
+lastname="2024 초등부 출석표"
 # grouplist=['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '6-2', '6-3', '6-4','6-5']
 
 
@@ -30,12 +33,12 @@ def load_data():
     # 목장과 그 목장 아이들 리스트
     ranch_students =making.get_keyAndlist('farmnameAndkids.txt')
 
-
+    Score= making.merge_sheets_to_dataframe(lastname+".xlsx")
     # 아이 이름과 정보
     student_information = pd.read_excel(r"C:\Users\captu\Downloads\아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
     print('중복이름:', making.find_duplicate_names(student_information.index))
 
-    return ranch_teacher, teacher_phone, ranch_students, student_information
+    return ranch_teacher, teacher_phone, ranch_students, student_information, Score
 
 
 
@@ -43,7 +46,7 @@ def load_data():
 
 # 엑셀 파일 생성 함수
 def create_excel():
-    ranch_teacher, teacher_phone, ranch_students, student_information = load_data()
+    ranch_teacher, teacher_phone, ranch_students, student_information ,Score = load_data()
 
     workbook = Workbook()
 
@@ -60,22 +63,30 @@ def create_excel():
         for col_num, header in enumerate(headers, 1):
             sheet.cell(row=3, column=col_num, value=header)
 
+
         # 아이들 정보 작성
         students = ranch_students[ranch]
         for idx, student in enumerate(students, 1):
             sheet.cell(row=idx + 3, column=1, value=idx)  # 번호
             sheet.cell(row=idx + 3, column=2, value=student)  # 이름
-            try:
-                sheet.cell(row=idx + 3, column=3, value=student_information.loc[student,student_information.columns[0]])  # 전화번호
-                sheet.cell(row=idx + 3, column=4, value=student_information.loc[student,student_information.columns[1]])  # 부모님 전화번호
-                sheet.cell(row=idx + 3, column=5, value=student_information.loc[student,student_information.columns[2]])  #출결
-                sheet.cell(row=idx + 3, column=6, value=student_information.loc[student, student_information.columns[3]]) # 생일
-                sheet.cell(row=idx + 3, column=7, value=student_information.loc[student, student_information.columns[4]]) #비고
+            # print(student_information.loc[student,student_information.columns[2]])
+            # print(type(student_information.loc[student,student_information.columns[2]]))
 
-                # time.sleep(1)
-            except:
-                pass
-            # print(ranch, student)
+
+            if student in student_information.index.tolist():
+                try:
+                    sheet.cell(row=idx + 3, column=3, value=student_information.loc[student,student_information.columns[0]])  # 전화번호
+                    sheet.cell(row=idx + 3, column=4, value=student_information.loc[student,student_information.columns[1]])  # 부모님 전화번호
+                    sheet.cell(row=idx + 3, column=5, value=making.getTrueScore(Score[student], student_information.loc[student, student_information.columns[2]]))  # 출결
+                    sheet.cell(row=idx + 3, column=6, value=student_information.loc[student, student_information.columns[3]]) # 생일
+                    sheet.cell(row=idx + 3, column=7, value=student_information.loc[student, student_information.columns[4]]) #비고
+
+                    # time.sleep(1)
+                except Exception as e:
+                    print(ranch, student, f"오류 발생내용: {e}")
+                # print(ranch, student)
+            else: #아이들 정보같에 없어도 출결은 업데이트 가능
+                sheet.cell(row=idx + 3, column=5, value=Score[student])  # 출결
 
 
     # 기본 시트 제거
@@ -101,9 +112,10 @@ def save_each_sheet_as_file(input_file):
         print(f"오류 발생: {e}")
 
 
+
 # 실행
-create_excel()
-save_each_sheet_as_file(filename+".xlsx")
+# create_excel()
+# save_each_sheet_as_file(filename+".xlsx")
 
 #업로드
 scopes = [
@@ -116,11 +128,21 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 file = gspread.authorize(creds)
 
 
-
-making.upload_data_to_allsheets(file,[filename], making.all_group()[:-1] ,making.all_group()[:-1] )
 # 마지막은 새신자라 여기서는 필요없음
+# making.upload_data_to_allsheets(file,[filename], making.all_group()[:-1] ,making.all_group()[:-1] )
 
 
+
+#테두리 수정
+
+for i in (making.all_group()[:-1][:3] ):
+    print(i)
+    sh = file.open(filename)
+    sheet = sh.worksheet(i)
+    # sheet.format("E7", {
+    #     "borders": {"bottom": {"style": "DOUBLE"}},
+    # })
+    # sheet.update_title("테스트"+i)
 
 # 개인파일에 저장.
 making.move_attendance_file(["아이들 정보"])

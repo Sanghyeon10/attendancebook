@@ -8,6 +8,7 @@ import calendar
 import datetime
 import time
 from collections import Counter
+import numpy as np
 
 
 ThisYearAttendnce="2024 초등부 출석표"
@@ -413,3 +414,48 @@ def find_duplicate_names(names): #중복 된거 찾기.
     count = Counter(names)
     # 출현 횟수가 1보다 큰 이름을 반환
     return [name for name, freq in count.items() if freq > 1]
+
+
+def getABCD(score):
+    if score>=75:
+        return "A"
+    elif score>=50:
+        return "B"
+    elif score>=25:
+        return "C"
+    else:
+        return "D"
+
+
+def merge_sheets_to_dataframe(file_name):
+    getscoredic = {}
+    file_path = making.addressgibon +  file_name#"2024 초등부 출석표.xlsx"
+    #작년 출석자료 파일위치
+
+
+    # 모든 시트를 데이터프레임으로 읽기
+    sheet_dfs = pd.read_excel(file_path, sheet_name=None)  # 모든 시트를 딕셔너리로 읽음
+
+
+    for sheet_name, df in sheet_dfs.items():
+        df = pd.read_excel(file_path, sheet_name=sheet_name)
+        df.set_index(df.columns[0], inplace=True)
+        df.drop(columns=['기타'], inplace=True)
+        df = df.fillna('')
+        # print(sheet_name)
+
+        if sheet_name != '새신자':
+            for name in df.columns:
+                if name not in getscoredic.keys():
+                    getscoredic[name] = getABCD(int(df.loc[df.index[-1],name]))
+                else:
+                    print("중복이름",name)
+
+    print(getscoredic)
+    return getscoredic
+
+def getTrueScore(calcu, given):
+    if np.isnan(given):
+        return calcu
+    else:
+        return given
