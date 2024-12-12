@@ -25,11 +25,8 @@ uploadlist = making.WhatIsToUpload(A)
 print("uploadlist:", uploadlist)
 
 #파일업로드
-making.upload_data_to_allsheets(file,[making.ThisYearAttendnce], making.all_group(), uploadlist )
-
-### 백업파일 업로드
 
 now =datetime.datetime.now()
 N = int(now.strftime("%U"))% 6
+making.upload_data_to_allsheets(file,[making.ThisYearAttendnce,"백업"+str(N)], making.all_group(), uploadlist )
 
-making.upload_data_to_allsheets(file,["백업"+str(N)], making.all_group(), uploadlist )

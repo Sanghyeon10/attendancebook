@@ -16,7 +16,7 @@ filename="2025년 초등2부 목장 편성표"
 lastname="2024 초등부 출석표"
 # grouplist=['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '6-2', '6-3', '6-4','6-5']
 
-
+# 위의 파일 명과 데이터가 맞는지 확인할것.
 
 
 # 데이터를 불러오는 함수 (예제 텍스트 파일 이름)
@@ -114,8 +114,8 @@ def save_each_sheet_as_file(input_file):
 
 
 # 실행
-# create_excel()
-# save_each_sheet_as_file(filename+".xlsx")
+create_excel()
+save_each_sheet_as_file(filename+".xlsx")
 
 #업로드
 scopes = [
@@ -128,21 +128,21 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 file = gspread.authorize(creds)
 
 
-# 마지막은 새신자라 여기서는 필요없음
-# making.upload_data_to_allsheets(file,[filename], making.all_group()[:-1] ,making.all_group()[:-1] )
+
+sheet = file.open(filename)
+worksheet_list = sheet.worksheets()
+print(worksheet_list)
+print(len(worksheet_list))
+next_group= making.next_group()
+print(next_group)
+print(len(next_group))
 
 
+making.SetName(True,file,filename)
 
-#테두리 수정
 
-for i in (making.all_group()[:-1][:3] ):
-    print(i)
-    sh = file.open(filename)
-    sheet = sh.worksheet(i)
-    # sheet.format("E7", {
-    #     "borders": {"bottom": {"style": "DOUBLE"}},
-    # })
-    # sheet.update_title("테스트"+i)
+# 업로드하기
+making.upload_data_to_allsheets(file,[filename], next_group ,next_group )
 
 # 개인파일에 저장.
 making.move_attendance_file(["아이들 정보"])

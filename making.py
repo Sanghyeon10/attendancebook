@@ -13,6 +13,8 @@ import numpy as np
 
 ThisYearAttendnce="2024 초등부 출석표"
 
+nextYearAttendnce="2025 초등부 출석표"
+
 Newmembers = "2024 새친구 관리엑셀표"
 
 addressgibon = 'C:\\Users\\captu\\Downloads\\'
@@ -54,10 +56,84 @@ def index():
     return df
 
 
+
+
 def all_group(): #그룹리스트 가져오기
     A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
 
     return A
+
+def next_group(): #그래도 새신자칸 넣어주기.
+    A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5']
+
+
+    return A
+
+def index():
+    df=[]
+    year = 2024 #년도는 체크하기
+
+    # 특정 년도의 첫 번째 날
+    first_day = datetime.date(year, 1, 1)
+
+    # 특정 년도의 첫 번째 일요일
+    first_sunday = first_day + datetime.timedelta(days=(6-first_day.weekday()))
+
+    # 특정 년도의 마지막 날
+    last_day = datetime.date(year, 12, 31)
+
+    # 특정 년도의 마지막 일요일
+    if last_day.weekday()==6: #마지막날이 일요일이면 마지막날이 마지막 일요일
+        last_sunday = last_day
+    else:
+        last_sunday = last_day - datetime.timedelta(days=last_day.weekday())
+    # print(last_sunday)
+
+    # 출력
+    day = first_sunday
+    while day <= last_sunday:
+        if day <= last_day or (day == last_day and day.weekday() == 6):
+            df.append(day.strftime("%Y-%m-%d"))
+            # print(day.strftime("%Y-%m-%d"))
+        day += datetime.timedelta(days=7)
+
+    df.append('비고') #비고에는 출석율 계산할것임.
+    # print(df)
+    return df
+
+def next_index():
+    df=[]
+    year = 2025 #년도는 체크하기
+
+    # 특정 년도의 첫 번째 날
+    first_day = datetime.date(year, 1, 1)
+
+    # 특정 년도의 첫 번째 일요일
+    first_sunday = first_day + datetime.timedelta(days=(6-first_day.weekday()))
+
+    # 특정 년도의 마지막 날
+    last_day = datetime.date(year, 12, 31)
+
+    # 특정 년도의 마지막 일요일
+    if last_day.weekday()==6: #마지막날이 일요일이면 마지막날이 마지막 일요일
+        last_sunday = last_day
+    else:
+        last_sunday = last_day - datetime.timedelta(days=last_day.weekday())
+    # print(last_sunday)
+
+    # 출력
+    day = first_sunday
+    while day <= last_sunday:
+        if day <= last_day or (day == last_day and day.weekday() == 6):
+            df.append(day.strftime("%Y-%m-%d"))
+            # print(day.strftime("%Y-%m-%d"))
+        day += datetime.timedelta(days=7)
+
+    df.append('비고') #비고에는 출석율 계산할것임.
+    # print(df)
+    return df
+
+
 
 def get_name(): #정보 부존재 목장의 선생님 이름 구하기
     B={}  # 빈 딕셔너리 생성
@@ -107,7 +183,7 @@ def get_keyAndlist(filname):
     with open(attendance_file_path, 'r', encoding='utf-8') as f:
         for line in f:
             # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-            fields = [line for line in re.split('\s|,|\.', line) if line]
+            fields = [line for line in re.split(r'\s|,|\.', line) if line]
 
             # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
             farm_name, *attendees = fields
@@ -382,11 +458,11 @@ def upload_data_to_allsheets(file,givenlist,all_group,uploadlist):
         worksheet_list = sh.worksheets()
 
 
-        if len(worksheet_list) != len(all_group):  # 에러상황일수도? 워크 시트 기준으로해야맞음
+        if len(worksheet_list) < len(all_group):  # 에러상황일수도? 워크 시트 기준으로해야맞음
             print(worksheet_list)
             print(all_group)
-            input('시트와 변수개수가 안맞다!')
-            # time.sleep(600)
+            input('시트 개수가 부족해!')
+            time.sleep(600)
 
         for i in range(len(all_group)):
             if all_group[i] in uploadlist:  # 업로드 리스트에 해당하는 것만 업로드하기
@@ -459,3 +535,73 @@ def getTrueScore(calcu, given):
         return calcu
     else:
         return given
+
+
+def SetName(check,file,filename):
+    sheet = file.open(filename)
+
+    if check == False:
+        print("이름을 초기화하지 않는다.")
+
+    elif len(next_group) <= len(sheet.worksheets()) and check == True:  # 개수가 적어나 같아야 문제없음.
+        for i in range(len(next_group)):
+            print(str(i), "으로이름수정")
+            worksheet = sheet.get_worksheet(i)
+            worksheet.update_title(title=str(i))
+            time.sleep(1)
+
+        for i in range(len(next_group)):
+            print(next_group[i], "으로이름수정")
+            worksheet = sheet.get_worksheet(i)
+            worksheet.update_title(title=next_group[i])
+            time.sleep(1)
+
+    else:
+        input("워크시트를 더 복사해야해!")
+        time.sleep(1000)
+
+def MakeCorrectLine(check,file,filename,startline):
+    startTrue= False
+    sheet = file.open(filename)
+    next_group= making.next_group()
+
+    worksheet_list = sheet.worksheets()
+    print(worksheet_list)
+
+    worksheet = sheet.get_worksheet(0)
+    index = worksheet.col_values(1)[1:-1]
+    # print(index)
+    gijun = ""
+
+    if check == False:
+        print("선을 그리지 않는다.")
+
+    elif len(next_group) <= len(sheet.worksheets()) and check == True:
+
+        for j in range(len(next_group)):
+            if next_group[j]== startline or startTrue:
+                startTrue =True
+                worksheet = sheet.get_worksheet(j)
+                print(next_group[j], '작업중')
+                for i in range(len(index)):
+                    try:
+                        if gijun != datetime.datetime.strptime(worksheet.cell(i + 2, 1).value, "%Y-%m-%d").month:
+                            gijun = datetime.datetime.strptime(worksheet.cell(i + 2, 1).value, "%Y-%m-%d").month
+                            worksheet.format("A{}:Z{}".format(str(i + 2), str(i + 2)), {"borders": {"top": {"style": "DOUBLE"}}, })
+
+                        else:
+                            worksheet.format("A{}:Z{}".format(str(i + 2), str(i + 2)), {"borders": {"top": {"style": "DOTTED"}}, })
+
+
+                    except Exception as e:
+                        print(next_group[j], f"오류 발생: {e}")
+
+                    time.sleep(1)
+
+
+            else:
+                pass
+
+    else:
+        input('시트 개수가 모자라!')
+        time.sleep(1000)

@@ -2,11 +2,20 @@ import pandas as pd
 import datetime
 import making
 import re
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+import time
 
-all_group= making.all_group()
+
+next_group = making.next_group()
 
 # 출석 정보가 저장된 파일 경로를 입력합니다.
-attendance_file_path = 'farmnameAndkids.txt' #첫 엑셀표 양식만들때 쓰는거라 같은 텍스트파일을 활용함.
+attendance_file_path = 'farmnameAndkids.txt' #기존 텍본파일과 다른것 사용하기.
+
+makeline=False
+setname=False
+
+
 
 # 목장 출석 정보를 저장할 딕셔너리를 생성합니다.
 attendance_dict = {}
@@ -15,7 +24,7 @@ attendance_dict = {}
 with open(attendance_file_path, 'r', encoding='utf-8') as f:
     for line in f:
         # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
-        fields = [line for line in re.split('\s|,|\.', line) if line]
+        fields = [line for line in re.split(r'\s|,|\.', line) if line]
 
         # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
         farm_name, *attendees = fields
@@ -31,8 +40,48 @@ for farm_name, attendees in attendance_dict.items():
 
 
 # 엑셀표 작성해서 출력함
-for i in range(len(all_group)):
-    df = pd.DataFrame(columns=attendance_dict[all_group[i]], index=making.index())
+for i in range(len(next_group)):
+    df = pd.DataFrame(columns=attendance_dict[next_group[i]], index=making.next_index())
     df.rename_axis('날짜\이름',inplace=True)
 
-    df.to_excel("{}.xlsx".format(all_group[i]),  index=True )  # 5-1식으로 출력
+    df.to_excel("{}.xlsx".format(next_group[i]),  index=True )  # 5-1식으로 출력
+
+
+
+
+## 양식 최적화시키기
+
+scopes = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/dirve'
+]
+creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfile)
+#위치 바뀌면 수정해줄것.
+file = gspread.authorize(creds)
+sheet = file.open(making.nextYearAttendnce)
+
+
+# check=input()
+making.MakeCorrectLine(makeline,file,making.nextYearAttendnce, next_group[0]) # next_group[0]
+
+making.SetName(setname,file,making.nextYearAttendnce)
+
+
+
+
+
+input("임시 멈추기")
+
+
+##업로드하기 기능
+
+sh = file.open(making.nextYearAttendnce) #woorbook = sh
+
+uploadlist = making.next_group()
+print("uploadlist:", uploadlist)
+now =datetime.datetime.now()
+N = int(now.strftime("%U"))% 6
+
+#파일업로드
+making.upload_data_to_allsheets(file,[making.nextYearAttendnce, "백업"+str(N)], uploadlist, uploadlist )
+
