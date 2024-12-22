@@ -13,7 +13,7 @@ next_group = making.next_group()
 attendance_file_path = 'farmnameAndkids.txt' #기존 텍본파일과 다른것 사용하기.
 
 makeline=False
-setname=False
+setname=True
 
 
 
@@ -61,27 +61,19 @@ file = gspread.authorize(creds)
 sheet = file.open(making.nextYearAttendnce)
 
 
-# check=input()
-making.MakeCorrectLine(makeline,file,making.nextYearAttendnce, next_group[0]) # next_group[0]
 
+#스프레드 시트 이름 초기화
 making.SetName(setname,file,making.nextYearAttendnce)
 
 
-
-
-
-input("임시 멈추기")
-
-
 ##업로드하기 기능
-
-sh = file.open(making.nextYearAttendnce) #woorbook = sh
 
 uploadlist = making.next_group()
 print("uploadlist:", uploadlist)
 now =datetime.datetime.now()
 N = int(now.strftime("%U"))% 6
 
-#파일업로드
 making.upload_data_to_allsheets(file,[making.nextYearAttendnce, "백업"+str(N)], uploadlist, uploadlist )
 
+# 선 초기화
+making.MakeCorrectLine(makeline,file,making.nextYearAttendnce, next_group[0]) # next_group[0]

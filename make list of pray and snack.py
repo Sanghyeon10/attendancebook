@@ -16,11 +16,11 @@ tabulate.WIDE_CHARS_MODE = False
 
 
 
-all_group=making.all_group()[:-1] #새신자 삭제
+all_group=making.next_group()[:-1] #새신자 삭제
 praysunsu= sorted(all_group, key=lambda x: (int(x.split('-')[0])) , reverse=True)
 snacksunsu= all_group[::-1]+ ["부장님","총무님"]
-snacksunsu.remove('6-5')
-snacksunsu.remove('6-4')
+# snacksunsu.remove('6-5')
+# snacksunsu.remove('6-4')
 print(praysunsu)
 print(snacksunsu)
 
@@ -30,11 +30,11 @@ start=1# int(input("시작월"))
 end=3# int(input("끝나는월"))
 
 startday= datetime.datetime(year=2024,month=1,day=7)
-specialday= []#[datetime.datetime(year=2024,month=10,day=20),datetime.datetime(year=2024,month=9,day=29)]
+specialday= []# [datetime.datetime(year=2025,month=1,day=5),datetime.datetime(year=2025,month=1,day=12),datetime.datetime(year=2025,month=1,day=19),datetime.datetime(year=2025,month=1,day=26)]
 
 #기도 ['6-1','6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '5-5', '4-1', '4-2', '4-3', '4-4']
 #간식 ['6-3','6-2','6-1', '5-5', '5-4', '5-3', '5-2', '5-1', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
-realpraysunsu =   praysunsu*10
+realpraysunsu =   [""]*3+praysunsu*10
 realsnacksunsu=['1부']*20# "홍세미선생님","이윤미 선생님","이성미 선생님","1번 예외"]*10 #+ snacksunsu*10
 
 

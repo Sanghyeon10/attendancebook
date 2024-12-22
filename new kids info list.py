@@ -35,7 +35,7 @@ def load_data():
 
     Score= making.merge_sheets_to_dataframe(lastname+".xlsx")
     # 아이 이름과 정보
-    student_information = pd.read_excel(r"C:\Users\captu\Downloads\아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
+    student_information = pd.read_excel(making.addressgibon+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
     print('중복이름:', making.find_duplicate_names(student_information.index))
 
     return ranch_teacher, teacher_phone, ranch_students, student_information, Score
@@ -86,8 +86,10 @@ def create_excel():
                     print(ranch, student, f"오류 발생내용: {e}")
                 # print(ranch, student)
             else: #아이들 정보같에 없어도 출결은 업데이트 가능
-                sheet.cell(row=idx + 3, column=5, value=Score[student])  # 출결
-
+                try:
+                    sheet.cell(row=idx + 3, column=5, value=Score[student])  # 출결
+                except Exception as e:
+                    print(ranch, student, f"오류 발생내용: {e}")
 
     # 기본 시트 제거
     default_sheet = workbook["Sheet"]
@@ -138,8 +140,8 @@ print(next_group)
 print(len(next_group))
 
 
+# 스프레드 시트 이름 초기화
 making.SetName(True,file,filename)
-
 
 # 업로드하기
 making.upload_data_to_allsheets(file,[filename], next_group ,next_group )

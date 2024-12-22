@@ -64,8 +64,8 @@ def all_group(): #그룹리스트 가져오기
     return A
 
 def next_group(): #그래도 새신자칸 넣어주기.
-    A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5']
-
+    A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+    A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
 
     return A
 
@@ -531,14 +531,16 @@ def merge_sheets_to_dataframe(file_name):
     return getscoredic
 
 def getTrueScore(calcu, given):
-    if np.isnan(given):
-        return calcu
-    else:
+    # print(given,type(given))
+    if isinstance(given, str):
         return given
+    else:
+        return calcu
 
 
 def SetName(check,file,filename):
     sheet = file.open(filename)
+    next_group = making.next_group()
 
     if check == False:
         print("이름을 초기화하지 않는다.")
