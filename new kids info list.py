@@ -17,6 +17,11 @@ lastname="2024 초등부 출석표"
 # grouplist=['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '6-2', '6-3', '6-4','6-5']
 
 # 위의 파일 명과 데이터가 맞는지 확인할것.
+# 목장편성표 작성용코드
+
+pd.set_option('display.max_rows', None)  # 모든 행 출력
+pd.set_option('display.max_columns', None)  # 모든 열 출력
+pd.set_option('display.width', 1000)  # 한 줄에 출력할 수 있는 최대 너비
 
 
 # 데이터를 불러오는 함수 (예제 텍스트 파일 이름)
@@ -36,6 +41,7 @@ def load_data():
     Score= making.merge_sheets_to_dataframe(lastname+".xlsx")
     # 아이 이름과 정보
     student_information = pd.read_excel(making.addressgibon+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
+    # print(student_information)
     print('중복이름:', making.find_duplicate_names(student_information.index))
 
     return ranch_teacher, teacher_phone, ranch_students, student_information, Score
@@ -77,19 +83,24 @@ def create_excel():
                 try:
                     sheet.cell(row=idx + 3, column=3, value=student_information.loc[student,student_information.columns[0]])  # 전화번호
                     sheet.cell(row=idx + 3, column=4, value=student_information.loc[student,student_information.columns[1]])  # 부모님 전화번호
-                    sheet.cell(row=idx + 3, column=5, value=making.getTrueScore(Score[student], student_information.loc[student, student_information.columns[2]]))  # 출결
+                    if student in Score.keys():
+                        sheet.cell(row=idx + 3, column=5, value=making.getTrueScore(Score[student], student_information.loc[student, student_information.columns[2]]))  # 출결
+                    else:
+                        sheet.cell(row=idx + 3, column=5, value=student_information.loc[student,student_information.columns[2]])
                     sheet.cell(row=idx + 3, column=6, value=student_information.loc[student, student_information.columns[3]]) # 생일
                     sheet.cell(row=idx + 3, column=7, value=student_information.loc[student, student_information.columns[4]]) #비고
 
                     # time.sleep(1)
                 except Exception as e:
-                    print(ranch, student, f"오류 발생내용: {e}")
+                    print(ranch, student, f"출결정보 오류 발생내용: {e}")
                 # print(ranch, student)
             else: #아이들 정보같에 없어도 출결은 업데이트 가능
                 try:
                     sheet.cell(row=idx + 3, column=5, value=Score[student])  # 출결
                 except Exception as e:
-                    print(ranch, student, f"오류 발생내용: {e}")
+                    print(ranch, student, f"출결정보 오류 발생내용: {e}")
+
+
 
     # 기본 시트 제거
     default_sheet = workbook["Sheet"]
@@ -141,7 +152,7 @@ print(len(next_group))
 
 
 # 스프레드 시트 이름 초기화
-making.SetName(True,file,filename)
+making.SetName(False,file,filename)
 
 # 업로드하기
 making.upload_data_to_allsheets(file,[filename], next_group ,next_group )

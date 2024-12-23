@@ -65,7 +65,7 @@ def all_group(): #그룹리스트 가져오기
 
 def next_group(): #그래도 새신자칸 넣어주기.
     A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
-    A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+    # A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
 
     return A
 
@@ -156,6 +156,26 @@ def get_newname(): #정보 부존재 목장의 선생님 이름 구하기
             B[farm_name] = name  # 딕셔너리에 추가
 
     return B
+
+
+def get_nextyearinfo(attendance_file_path):
+    # 목장 출석 정보를 저장할 딕셔너리를 생성합니다.
+    attendance_dict = {}
+
+    # 출석 정보 파일을 읽어서 딕셔너리에 저장합니다.
+    with open(attendance_file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            # 한 줄씩 읽어서 공백 , .을 기준으로 분리합니다.(정규 표현식 활용했음)
+            fields = [line for line in re.split(r'\s|,|\.', line) if line]
+
+            # 목장 이름, 출석자 이름1, 출석자 이름2, ...으로 분리합니다.
+            farm_name, *attendees = fields
+
+            # 딕셔너리에 목장 이름을 키로, 출석자 이름 리스트를 값으로 저장합니다.
+            attendees = ['기타'] + attendees  # 리스트 맨 앞에 기타 추가해줘야함.
+            attendance_dict[farm_name] = attendees
+
+    return attendance_dict
 
 
 def get_phonenumber(): #정보 부존재 목장의 선생님 이름 구하기
@@ -525,7 +545,7 @@ def merge_sheets_to_dataframe(file_name):
                 if name not in getscoredic.keys():
                     getscoredic[name] = getABCD(int(df.loc[df.index[-1],name]))
                 else:
-                    print("중복이름",name)
+                    print("중복출석정보이름",name)
 
     print(getscoredic)
     return getscoredic

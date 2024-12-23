@@ -19,6 +19,7 @@ pd.set_option('display.max_columns', None)  # 모든 열 출력
 pd.set_option('display.width', 1000)  # 한 줄에 출력할 수 있는 최대 너비
 
 
+#아이들 정보 기입용 코드
 
 df2 = pd.read_excel(making.addressgibon+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
 df = pd.read_excel(making.addressgibon+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
