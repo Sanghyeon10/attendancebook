@@ -94,7 +94,7 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     if all_group[i] != '새신자':
         pass
     else: #새신자이면
-        print("")
+        # print("")
         print("불출석")
         print("등반자")
         print("")

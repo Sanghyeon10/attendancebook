@@ -19,6 +19,8 @@ for l in range(5): #0~4번까지 돌리기
 df.index = indexlist
 df.index.name= '날짜\이름'
 
+df = df.fillna("")
+
 all_group= making.all_group()
 
 # print(tempdf)

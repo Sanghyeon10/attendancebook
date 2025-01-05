@@ -83,12 +83,14 @@ for i in range(len(all_group)):
 
         for j in namelist: #기존 엑셀시트에 있는 이름중
             if j in attendance_dict[all_group[i]]: # 오늘 출석정보가 있다면.ex4-3을 넣고 해당하는 출석정보 리스트 얻기
+                df[j] = df[j].astype(str)
                 df.loc[df.index[N],j]='O'+making.checkO(j,attendance_dict['등반자'])
                 check.append(j) #확인된건 넣어두기
 
 
             else:
                 # df[j] = df[j].astype(object)
+                df[j] = df[j].astype(str)
                 df.loc[df.index[N],j]='X' #없다면 x표시
 
         #이름다 체크했다면,
@@ -127,6 +129,7 @@ for i in range(len(all_group)):
 
         #결석사유칸이 존재한다면
         if all_group[i] in nocome_dict: # 즉, 결석정보가 들어있는 목장이 있다면
+            df[j] = df[j].astype(str)
             df.loc[df.index[N], '기타'] = nocome_dict[all_group[i]].strip() #입력해주기
             # print(all_group[i] , nocome_dict[all_group[i]] ) #strip해줘야 엔터키 삭제됨.
 
@@ -135,6 +138,7 @@ for i in range(len(all_group)):
 
     else: #출석정보가 없는경우
         for j in namelist:  # 출석정보가 없으므로 ?표시
+            df[j] = df[j].astype(str)
             df.loc[df.index[N], j] = '?'
         getnamelist.append(all_group[i]) #정보 없는 목장 리스트 구하기
 

@@ -11,11 +11,11 @@ from collections import Counter
 import numpy as np
 
 
-ThisYearAttendnce="2024 초등부 출석표"
+ThisYearAttendnce="2025 초등부 출석표"
 
 nextYearAttendnce="2025 초등부 출석표"
 
-Newmembers = "2024 새친구 관리엑셀표"
+Newmembers = "2025 새친구 관리엑셀표"
 
 addressgibon = 'C:\\Users\\captu\\Downloads\\'
 
@@ -25,7 +25,7 @@ addrresOfjsonfile = r"C:\Users\captu\PycharmProjects\pythonProject\abiding-honor
 
 def index():
     df=[]
-    year = 2024 #년도는 체크하기
+    year = 2025 #년도는 체크하기
 
     # 특정 년도의 첫 번째 날
     first_day = datetime.date(year, 1, 1)
@@ -59,47 +59,16 @@ def index():
 
 
 def all_group(): #그룹리스트 가져오기
-    A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
 
     return A
 
 def next_group(): #그래도 새신자칸 넣어주기.
-    A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
     # A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
 
     return A
 
-def index():
-    df=[]
-    year = 2024 #년도는 체크하기
-
-    # 특정 년도의 첫 번째 날
-    first_day = datetime.date(year, 1, 1)
-
-    # 특정 년도의 첫 번째 일요일
-    first_sunday = first_day + datetime.timedelta(days=(6-first_day.weekday()))
-
-    # 특정 년도의 마지막 날
-    last_day = datetime.date(year, 12, 31)
-
-    # 특정 년도의 마지막 일요일
-    if last_day.weekday()==6: #마지막날이 일요일이면 마지막날이 마지막 일요일
-        last_sunday = last_day
-    else:
-        last_sunday = last_day - datetime.timedelta(days=last_day.weekday())
-    # print(last_sunday)
-
-    # 출력
-    day = first_sunday
-    while day <= last_sunday:
-        if day <= last_day or (day == last_day and day.weekday() == 6):
-            df.append(day.strftime("%Y-%m-%d"))
-            # print(day.strftime("%Y-%m-%d"))
-        day += datetime.timedelta(days=7)
-
-    df.append('비고') #비고에는 출석율 계산할것임.
-    # print(df)
-    return df
 
 def next_index():
     df=[]
@@ -306,8 +275,8 @@ def checkO(name, list):
     return A
 
 def make_line(groupname,my_list, teachername):
-    n=6
-    print(groupname,teachername,'선생님',end=' ')
+    n=100
+    print(groupname,end=" ")   #print(groupname,teachername,'선생님',end=' ')
     for i, x in enumerate(my_list):
         if i ==0: #4-1 같은건 따로 빼기 위해서 4-1 출력후 바로 한칸 내림
             print()

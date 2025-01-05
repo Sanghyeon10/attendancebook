@@ -6,8 +6,13 @@ import pandas as pd
 import time
 import making
 
+
+namebook=making.get_name()
+
+HavetoUploadList = [key for key, value in namebook.items() if value == "홍세미"]
+
 A= input('no입력하면 extrafile 업로드 안함 input')
-givenlist=[making.Newmembers,"6-3" ] #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.
+givenlist=[making.Newmembers ]+HavetoUploadList #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.
 
 if A =='no':
     givenlist=[]
