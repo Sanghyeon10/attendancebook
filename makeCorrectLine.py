@@ -13,8 +13,10 @@ scopes = [
 creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfile)
 #위치 바뀌면 수정해줄것.
 file = gspread.authorize(creds)
-sheet = file.open(making.nextYearAttendnce)
 
+##파일이름 설정 ,a부터 bJ까지
+# sheet = file.open(making.nextYearAttendnce)
+sheet = file.open("원페이지")
 
 worksheet_list = sheet.worksheets()
 print(worksheet_list)
@@ -33,12 +35,12 @@ gijun=""
 for i in range(len(index)):
     if gijun != datetime.datetime.strptime(worksheet.cell(i+2, 1).value, "%Y-%m-%d").month:
         gijun = datetime.datetime.strptime(worksheet.cell(i+2, 1).value, "%Y-%m-%d").month
-        worksheet.format("A{}:Z{}".format(str(i+2),str(i+2) ), {
+        worksheet.format("A{}:BJ{}".format(str(i+2),str(i+2) ), {
             "borders": {"top": {"style": "DOUBLE"}},
         })
 
     else:
-        worksheet.format("A{}:Z{}".format(str(i+2),str(i+2) ), {
+        worksheet.format("A{}:BJ{}".format(str(i+2),str(i+2) ), {
             "borders": {"top": {"style": "DOTTED"}},
         })
     time.sleep(1)

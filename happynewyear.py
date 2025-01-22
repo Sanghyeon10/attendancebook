@@ -14,7 +14,7 @@ attendance_file_path = 'farmnameAndkids.txt' #기존 텍본파일과 다른것 �
 
 makeline=False
 setname=False
-
+backupsetname=False
 
 
 # 목장 출석 정보를 저장할 딕셔너리를 생성합니다.
@@ -52,6 +52,11 @@ sheet = file.open(making.nextYearAttendnce)
 #스프레드 시트 이름 초기화
 making.SetName(setname,file,making.nextYearAttendnce)
 
+for i in range(6):
+    making.SetName(backupsetname, file, "백업"+str(i))
+
+
+
 
 ##업로드하기 기능
 
@@ -64,3 +69,4 @@ making.upload_data_to_allsheets(file,[making.nextYearAttendnce ], uploadlist, up
 
 # 선 초기화
 making.MakeCorrectLine(makeline,file,making.nextYearAttendnce, next_group[0]) # next_group[0]
+

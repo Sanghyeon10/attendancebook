@@ -1,20 +1,15 @@
 import pandas as pd
+import making
 
-# 예시 데이터프레임
-df = pd.DataFrame({
-    'A': [1, 2, 3],
-    'B': ['a', 'b', 'c']
-})
+pd.set_option('display.max_rows', None)  # 모든 행 출력
+pd.set_option('display.max_columns', None)  # 모든 열 출력
+pd.set_option('display.width', 1000)  # 한 줄에 출력할 수 있는 최대 너비
 
-# 새로 삽입할 행
-new_row = [4, 'd']
 
-# 삽입할 위치 (2번째 행 뒤에 삽입)
-insert_position = 2
+df = pd.read_excel(making.addressgibon+"책 리스트.xlsx", sheet_name='시트1' , index_col=0)
+df = df[~df.index.isna()]
+# df = pd.concat([df_top, pd.DataFrame([new_row], columns=df.columns), df_bottom]).reset_index(drop=True)
 
-# 데이터프레임을 나누고 새 행 삽입
-df_top = df.iloc[:insert_position]
-df_bottom = df.iloc[insert_position:]
-df = pd.concat([df_top, pd.DataFrame([new_row], columns=df.columns), df_bottom]).reset_index(drop=True)
-
+df.to_excel("책 리스트"+".xlsx")
 print(df)
+print(len(df))

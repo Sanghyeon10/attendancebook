@@ -532,7 +532,7 @@ def SetName(check,file,filename):
     next_group = making.next_group()
 
     if check == False:
-        print("이름을 초기화하지 않는다.")
+        print(str(file)+"이름을 초기화하지 않는다.")
 
     elif len(next_group) <= len(sheet.worksheets()) and check == True:  # 개수가 적어나 같아야 문제없음.
         for i in range(len(next_group)):
