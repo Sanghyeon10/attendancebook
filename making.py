@@ -19,7 +19,8 @@ Newmembers = "2025 새친구 관리엑셀표"
 
 addressgibon = 'C:\\Users\\captu\\Downloads\\'
 
-#C:\Users\User\Downloads
+destination_folder = "C:\\Users\\captu\\Desktop\\diary\\개인 파일\\"
+
 
 addrresOfjsonfile = r"C:\Users\captu\PycharmProjects\pythonProject\abiding-honor-375915-c16db88a8008.json"
 
@@ -317,6 +318,14 @@ def getrangename(df):
 
     return range_name
 
+def getrangecolumns(num_cols):
+
+    end_col_label = ""
+    while num_cols > 0:
+        num_cols, remainder = divmod(num_cols - 1, 26)
+        end_col_label = chr(65 + remainder) + end_col_label
+
+    return end_col_label
 
 def makedictfromtxt(file_name):
     # 텍스트 파일을 딕셔너리로 불러오기
@@ -365,7 +374,7 @@ def move_attendance_file(fileToUploadlist):
     for name in fileToUploadlist:
 
         # 개인파일 폴더 경로
-        destination_folder = r'C:\Users\captu\OneDrive\바탕 화면\diary\개인 파일' #보관하고 싶은 절대주소를 적으면 됩니다.
+        destination_folder  #보관하고 싶은 절대주소
 
         # 다운로드 폴더 경로
         source_folder = addressgibon #다운로드파일에 있는 최신 엑셀파일을 복사합니다.
@@ -375,19 +384,27 @@ def move_attendance_file(fileToUploadlist):
 
         # 출석부 파일 경로
         source_path = os.path.join(source_folder, file_name)
-        destination_path = os.path.join(destination_folder, file_name)
+        destination_path = os.path.join(making.destination_folder, file_name)
 
         # 개인파일 폴더에 있는 출석부 파일 제거
-        if os.path.exists(destination_path):
+        if os.path.exists(destination_path) and os.path.exists(source_path) :
             os.remove(destination_path)
             print(f'{file_name} 파일이 개인파일 폴더에서 제거되었습니다.')
 
         # 다운로드 폴더에서 출석부 파일을 개인파일 폴더로 복사
         if os.path.exists(source_path):
             shutil.copy(source_path, destination_folder)
-            print(f'{file_name} 파일이 복사 성공.')
+            print(f'{file_name} 파일이 개인파일로 복사 성공.')
         else:
             print(f'{file_name} 실패.')
+
+        # 다운로드의 파일 제거
+        if os.path.exists(source_path):
+            os.remove(source_path)
+            print(f'{file_name} 다운로드의 파일 제거 성공.')
+        else:
+            print(f'{file_name} 다운로드의 파일 삭제 실패.')
+
 
 
 def getdaydate(day):

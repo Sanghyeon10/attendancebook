@@ -28,19 +28,30 @@ print(worksheet.cell(2, 1).value)
 print(type((worksheet.cell(2, 1).value)))
 
 index = worksheet.col_values(1)[1:-1]
-print(index)
+# print(index)
 gijun=""
 
+columns= worksheet.row_values(1)[1:-1]
 # for j in range( )
-for i in range(len(index)):
-    if gijun != datetime.datetime.strptime(worksheet.cell(i+2, 1).value, "%Y-%m-%d").month:
-        gijun = datetime.datetime.strptime(worksheet.cell(i+2, 1).value, "%Y-%m-%d").month
-        worksheet.format("A{}:BJ{}".format(str(i+2),str(i+2) ), {
-            "borders": {"top": {"style": "DOUBLE"}},
+for i in range(len(columns)):
+    if gijun != datetime.datetime.strptime(worksheet.cell(1, i+2).value, "%Y-%m-%d").month:
+        gijun = datetime.datetime.strptime(worksheet.cell(1, i+2).value, "%Y-%m-%d").month
+        worksheet.format("{}1:{}77".format(making.getrangecolumns(i+1),making.getrangecolumns(i+1)) , {
+            "borders": {"left": {"style": "DOUBLE"}},
         })
 
     else:
-        worksheet.format("A{}:BJ{}".format(str(i+2),str(i+2) ), {
-            "borders": {"top": {"style": "DOTTED"}},
+        gijun = datetime.datetime.strptime(worksheet.cell(1, i+2).value, "%Y-%m-%d").month
+        worksheet.format("{}1:{}77".format(making.getrangecolumns(i+1),making.getrangecolumns(i+1)) , {
+            "borders": {"left": {"style": "DOTTED"}}
         })
-    time.sleep(1)
+
+
+    # else: # 세로줄만들기.
+    #     worksheet.format("A{}:BB{}".format(str(i+2),str(i+2) ), {
+    #         "borders": {"top": {"style": "DOTTED"}},
+    #     })
+
+
+    print(making.getrangecolumns(i + 1))
+    time.sleep(2)

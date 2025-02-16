@@ -9,8 +9,8 @@ import making
 
 namebook=making.get_name()
 
-HavetoUploadList = [key for key, value in namebook.items() if value == "홍세미"]
-
+HavetoUploadList = [key for key, value in namebook.items() if value in ["홍세미","김원직"] ]
+print(HavetoUploadList)
 A= input('no입력하면 extrafile 업로드 안함 input')
 givenlist=[making.Newmembers ]+HavetoUploadList #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.
 

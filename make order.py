@@ -14,6 +14,7 @@ a=[]
 b=[]
 temp=[]
 getname= making.get_name()
+farmnameAndkids=""
 
 filtered_data=[] #먼저 빈리스트 정의하기
 for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용)
@@ -84,7 +85,8 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
     # print(all_group[i],temp) #애들 한글 명단 다시 만들때 활용할 코드부분. 한줄로 출력할때 사용
     if printing == 'yes': #프린트 하는게 맞으면
         making.make_line(all_group[i],temp, getname[all_group[i]]) #n명씩 잘라서 표현할때
-
+        # print(all_group[i]+" "+' '.join(temp))
+        farmnameAndkids= farmnameAndkids+ (all_group[i]+" "+' '.join(temp)) + '\n'
 
     #변수 초기화
     temp=[]
@@ -109,3 +111,6 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 print("")
 print("")
 print(filtered_data)
+
+with open('farmnameAndkids.txt', 'w', encoding='utf-8') as file:
+    file.write(farmnameAndkids)

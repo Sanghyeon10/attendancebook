@@ -19,10 +19,13 @@ pd.set_option('display.max_columns', None)  # 모든 열 출력
 pd.set_option('display.width', 1000)  # 한 줄에 출력할 수 있는 최대 너비
 
 
+##먼저 개인파일로 옮기기(다운로드에 파일이 있따면)
+making.move_attendance_file(["아이들 정보"])
+
 #아이들 정보 기입용 코드
 
-df2 = pd.read_excel(making.addressgibon+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
-df = pd.read_excel(making.addressgibon+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
+
+df = pd.read_excel(making.destination_folder+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
 
 def insert_info(df, insert_position,new_row ,name ):
 
@@ -124,32 +127,8 @@ df.index.name='이름'
 name = "아이들 정보"
 df.to_excel(name+".xlsx")
 
-
-
-# 개인파일 폴더 경로
-destination_folder = r'C:\Users\captu\OneDrive\바탕 화면\diary\개인 파일'  # 보관하고 싶은 절대주소를 적으면 됩니다.
-
-# 다룰 엑셀파일 위치
-source_folder = r'C:\Users\captu\PycharmProjects\pythonProject' # 다운로드파일에 있는 최신 엑셀파일을 복사합니다.
-
-# 출석부 엑셀 파일 이름
-file_name = name + ".xlsx"
-
-# 현재 시각을 추가한 새로운 파일 이름 생성
-current_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")  # "년월일_시분초" 형식
-new_file_name = f"{name}_{current_time}.xlsx"
-
-# 출석부 파일 경로
-source_path = os.path.join(source_folder, file_name)
-destination_path = os.path.join(destination_folder, new_file_name)
-
-# 다운로드 폴더에서 출석부 파일을 개인파일 폴더로 복사
-if os.path.exists(source_path):
-    shutil.copy(source_path, destination_path)
-    print(f'{new_file_name} 파일이 복사 성공.')
-else:
-    print(f'{file_name} 파일이 존재하지 않습니다.')
-
+df.to_excel(r'{}{}.xlsx'.format(making.destination_folder, "아이들 정보"), sheet_name="시트1", engine='openpyxl')
+# 업로드용 파일위치용과 개인용 파일에 수정도 동시에 해야한다.
 
 
 

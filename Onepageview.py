@@ -26,14 +26,15 @@ accumulatedDF=pd.DataFrame( index=making.index())
 for i in range(len(all_group)):
     df = pd.read_excel(r'{}.xlsx'.format(all_group[i]))  # 해당파일찾고 데이터 옮겨오기
     df.set_index('날짜\이름',inplace=True)
-    df.drop(columns=['기타'], inplace=True)
+    # df.drop(columns=['기타'], inplace=True)
     df = df.rename(columns=lambda x: f"{x}({all_group[i]})")
     df = df.fillna('')
     accumulatedDF = pd.merge(accumulatedDF, df, left_index=True, right_index=True, how='outer')
 
 
 accumulatedDF['이번주 출석인원'] = accumulatedDF.apply(making.count_os, axis=1)
-print(accumulatedDF)
+accumulatedDF=accumulatedDF.T
+# print(accumulatedDF)
 accumulatedDF.to_excel('원페이지.xlsx')
 
 scopes = [
