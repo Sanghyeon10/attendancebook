@@ -396,7 +396,7 @@ def move_attendance_file(fileToUploadlist):
             shutil.copy(source_path, destination_folder)
             print(f'{file_name} 파일이 개인파일로 복사 성공.')
         else:
-            print(f'{file_name} 실패.')
+            print(f'{file_name} 파일이 개인파일로 복사 실패.')
 
         # 다운로드의 파일 제거
         if os.path.exists(source_path):

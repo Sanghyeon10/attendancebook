@@ -26,7 +26,7 @@ making.move_attendance_file(["아이들 정보"])
 
 
 df = pd.read_excel(making.destination_folder+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
-
+print(df)
 def insert_info(df, insert_position,new_row ,name ):
 
     # 삽입할 위치 지정 (예: 2번째 인덱스 뒤에 삽입)

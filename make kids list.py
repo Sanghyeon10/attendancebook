@@ -16,6 +16,11 @@ filename="2025년 초등2부 목장 편성표"
 lastname="2024 초등부 출석표"
 # grouplist=['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '6-2', '6-3', '6-4','6-5']
 
+
+## 다운로드 파일 개인파일로 먼저 옮기기
+making.move_attendance_file(["아이들 정보"])
+
+
 # 위의 파일 명과 데이터가 맞는지 확인할것.
 # 목장편성표 작성용코드
 
@@ -40,7 +45,7 @@ def load_data():
 
     Score= making.merge_sheets_to_dataframe(lastname+".xlsx")
     # 아이 이름과 정보
-    student_information = pd.read_excel(making.addressgibon+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
+    student_information = pd.read_excel(making.destination_folder+"아이들 정보.xlsx", sheet_name='시트1' , index_col=0)
     # print(student_information)
     print('중복이름:', making.find_duplicate_names(student_information.index))
 
@@ -156,6 +161,3 @@ making.SetName(False,file,filename)
 
 # 업로드하기
 making.upload_data_to_allsheets(file,[filename], next_group ,next_group )
-
-# 개인파일에 저장.
-making.move_attendance_file(["아이들 정보"])

@@ -9,11 +9,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 import time
 
 
-# 한글 폰트 설정
-font_path = "C:/Windows/Fonts/malgun.ttf"  # 원하는 한글 폰트 파일 경로로 변경
-font_prop = font_manager.FontProperties(fname=font_path)
-plt.rcParams["font.family"] = font_prop.get_name()
-
 
 pd.set_option('display.max_rows', None)  # 모든 행 출력
 pd.set_option('display.max_columns', None)  # 모든 열 출력

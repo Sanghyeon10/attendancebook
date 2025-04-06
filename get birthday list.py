@@ -8,6 +8,7 @@ import  openpyxl  as  op
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import time
+import re
 
 
 pd.set_option('display.max_rows', None)  # 모든 행 출력
@@ -38,9 +39,9 @@ def print_birthdays_by_month(file_path, sheet_name,attendance_dict):
 
 
             if not birthdays.empty:
-                print(f"{month}월:")
-                print(birthdays[['목장','이름','생일']].sort_values(by="목장"))
-                print(str(len(birthdays[['이름']])) + '명')
+                # print(f"{month}월:")
+                # print(birthdays[['목장','이름','생일']].sort_values(by="목장"))
+                # print(str(len(birthdays[['이름']])) + '명')
 
                 textprint= pd.concat([textprint, birthdays[['목장','이름','생일']].sort_values(by="목장")], ignore_index=True)
                 new_row = pd.DataFrame({'목장': month, '이름': "월",'생일': (str(len(birthdays[['이름']])) + '명') },index=["gijun"])
@@ -59,7 +60,7 @@ def print_birthdays_by_month(file_path, sheet_name,attendance_dict):
         print(f"'생일' 칼럼이 존재하지 않습니다.")
     except Exception as e:
         print(f"오류 발생: {e}")
-
+    # print(textprint)
     return textprint
 
 def getwherefarm(name, attendance_dict):
@@ -74,7 +75,7 @@ def getwherefarm(name, attendance_dict):
 
     if group_count > 1:  # 중복 여부 확인
         print(f"중복된 이름: '{name}', 그룹: {info.strip()}")
-    elif name in namedict.values() or name in ["선현자(음력)" ,"이정희(음력)" , "이성미(음력)"]:
+    elif isinstance(name, str) and (name in namedict.values() or re.search(r'\(음력\)$', name)):
         # print(f"'{name}'는 선생님." )
         info = info +"선생님"
 
@@ -84,6 +85,42 @@ def getwherefarm(name, attendance_dict):
     return info.strip()  # 이름이 속한 그룹 정보 반환
 
 
+def attadancestate(textprint):
+    tempdf = pd.read_excel(r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce), sheet_name=None)
+    all_group = making.all_group()
+    textprint['출석상태']=""
+
+    for i in range(len(all_group[:-1])): ##새신자는 제외
+        df = tempdf[all_group[i]]  # 해당하는 목장 정보 불러오기
+        # print(df)
+        df=df.fillna("")
+        df['날짜\\이름'] = pd.to_datetime(df['날짜\\이름'], errors='coerce')
+        # 인덱스를 날짜로 설정하고 시분초 제거
+        df.set_index('날짜\\이름', inplace=True)
+
+        # 시작일과 종료일 설정
+        start_date = (datetime.datetime.now() - datetime.timedelta(weeks=4)).date()
+        end_date = datetime.datetime.now().date()
+
+        # datetime.date → datetime64로 변환
+        start_date = pd.to_datetime(start_date)
+        end_date = pd.to_datetime(end_date)
+
+        # 날짜 범위로 슬라이싱 (정확한 일치 대신 범위로)
+        df_range = df.loc[start_date:end_date]
+
+        # 원하는 컬럼 선택 (예: 첫 번째 컬럼)
+        for name in df.columns:
+            selected_values = df_range.loc[:, name].astype(str).tolist()
+            # 문자열 결합
+            result = ''.join(selected_values)
+
+
+            for k in range(len(textprint)):
+                if textprint.loc[textprint.index[k],'이름']==name:
+                    textprint.loc[textprint.index[k],'출석상태'] = result
+            #
+            # print(name, result)
 
 attendance_file_path = 'farmnameAndkids.txt'
 attendance_dict= making.get_keyAndlist(attendance_file_path)
@@ -97,6 +134,7 @@ file_path = making.destination_folder+"아이들 정보.xlsx"  # 엑셀 파일 �
 sheet_name = "시트1"          # 시트 이름
 textprint = print_birthdays_by_month(file_path, sheet_name,attendance_dict)
 textprint['생일'] = textprint['생일'].apply(lambda x: x.strftime('%Y-%m-%d') if isinstance(x, datetime.datetime) else x)
+attadancestate(textprint)
 textprint.to_excel('생일자 리스트.xlsx')
 
 print(textprint)
