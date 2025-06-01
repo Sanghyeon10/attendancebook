@@ -26,15 +26,15 @@ print(snacksunsu)
 
 
 # 변수 설정
-start=3# int(input("시작월"))
-end=5# int(input("끝나는월"))
+start=4# int(input("시작월"))
+end=6# int(input("끝나는월"))
 
 startday= datetime.datetime(year=2024,month=1,day=7)
 specialday= []# [datetime.datetime(year=2025,month=1,day=5),datetime.datetime(year=2025,month=1,day=12),datetime.datetime(year=2025,month=1,day=19),datetime.datetime(year=2025,month=1,day=26)]
 
 # 기도 ['6-1', '6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '4-1', '4-2', '4-3', '4-4', '4-5']
 # 간식 ['6-5', '6-4', '6-3', '6-2', '6-1', '5-4', '5-3', '5-2', '5-1', '4-5', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
-realpraysunsu =   ['5-1', '5-2', '5-3', '5-4', '4-1', '4-2', '4-3', '4-4', '4-5']+praysunsu*10
+realpraysunsu =   [ '4-1', '4-2', '4-3', '4-4', '4-5']+praysunsu*10
 realsnacksunsu=['1부']*20# "홍세미선생님","이윤미 선생님","이성미 선생님","1번 예외"]*10 #+ snacksunsu*10
 
 
@@ -90,9 +90,9 @@ for day in daylist:
 
             text= "\n".join([A, B])
 
-        elif making.getdaydate(day)[1] ==2 : #3주차인경우
-            text="\n".join(["대표기도:장로님", "간식:"+realsnacksunsu[j]])
-            j += 1
+        # elif making.getdaydate(day)[1] ==2 : #3주차인경우
+        #     text="\n".join(["대표기도:장로님", "간식:"+realsnacksunsu[j]])
+        #     j += 1
 
         else: #그외 보통
             text= "\n".join(["대표기도,성경봉독:"+realpraysunsu[i], "간식:"+ realsnacksunsu[j]])

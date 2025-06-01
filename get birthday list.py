@@ -85,10 +85,33 @@ def getwherefarm(name, attendance_dict):
     return info.strip()  # 이름이 속한 그룹 정보 반환
 
 
+def update_attendance(row, full_name_list,attended):
+    name = row['이름']
+    if name not in full_name_list:
+        return row['출석상태']  # 명부에 없으면 그대로 유지
+    elif name in attended:
+        return row['출석상태'] + 'O'
+    else:
+        return row['출석상태'] + 'X'
+
 def attadancestate(textprint):
     tempdf = pd.read_excel(r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce), sheet_name=None)
     all_group = making.all_group()
     textprint['출석상태']=""
+
+    ## 오늘의 출석정보
+    attended=[]
+    full_name_list=[]
+    attendance_dict, __ = making.make_data_from_file("attendance.txt")
+    full_name_dict, ___ = making.make_data_from_file("farmnameAndkids.txt")
+
+    for key in attendance_dict.keys():
+        attended += attendance_dict[key]
+
+    for key in full_name_dict.keys():
+        full_name_list += full_name_dict[key]
+
+    # print(full_name_list)
 
     for i in range(len(all_group[:-1])): ##새신자는 제외
         df = tempdf[all_group[i]]  # 해당하는 목장 정보 불러오기
@@ -99,7 +122,7 @@ def attadancestate(textprint):
         df.set_index('날짜\\이름', inplace=True)
 
         # 시작일과 종료일 설정
-        start_date = (datetime.datetime.now() - datetime.timedelta(weeks=4)).date()
+        start_date = (datetime.datetime.now() - datetime.timedelta(weeks=6)).date()
         end_date = datetime.datetime.now().date()
 
         # datetime.date → datetime64로 변환
@@ -121,6 +144,13 @@ def attadancestate(textprint):
                     textprint.loc[textprint.index[k],'출석상태'] = result
             #
             # print(name, result)
+
+    textprint['출석상태'] = textprint.apply(
+        lambda row: update_attendance(row, full_name_list=full_name_list, attended=attended),
+        axis=1
+    )
+
+
 
 attendance_file_path = 'farmnameAndkids.txt'
 attendance_dict= making.get_keyAndlist(attendance_file_path)

@@ -117,7 +117,11 @@ while going:
 
 
 
-    going= int(input("0넣으면 종료"))
+    going= input("0넣으면 종료")
+    if going == 0 or going == '0':
+        going=0
+    else:
+        going=1
 
 
 # 결과 출력
