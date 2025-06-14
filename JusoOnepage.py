@@ -8,6 +8,58 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import time
 
+def getSchoolList(df):
+    text=""
+    # 초등학교 리스트 정의
+    초등학교_목록 = ['원묵초','중화초','새솔초', '면목초', "금성초", "묵현초", "불암초", "대광초", "봉화초", '갈매초', '장위초', "안평초", '태릉초',
+               "경희초"]  # 여기에 원하는 학교를 계속 추가
+
+    # 새로운 '초등학교' 칼럼 생성 및 초기화
+    df['초등학교'] = None
+
+    # 알 수 없는(리스트에 없는) 초등학교 비고 내용을 저장할 리스트
+    알수없는_학교_비고 = []
+
+    # 비고에서 초등학교 이름이 포함되어 있는지 확인
+    for idx in df.index:
+        비고내용 = str(df.loc[idx, '비고'])  # 비고 칼럼 값 문자열로 변환
+        학교_찾음 = False
+        for 학교 in 초등학교_목록:
+            if 학교 in 비고내용:
+                df.loc[idx, '초등학교'] = 학교
+                학교_찾음 = True
+                break  # 하나라도 찾으면 멈춤
+        # '초'가 포함되어 있고, 위 리스트에서 못 찾은 경우 출력용으로 저장
+        if not 학교_찾음 and '초' in 비고내용:
+            알수없는_학교_비고.append(비고내용)
+
+    # 리스트에 없는 초등학교 비고내용 출력
+    if 알수없는_학교_비고:
+        print("\n[초등학교 리스트에 없는 비고 내용들]:")
+        for 내용 in set(알수없는_학교_비고):  # 중복 제거
+            print("-", 내용)
+    else:
+        print("\n모든 '초' 포함 비고 내용이 목록에 있음.")
+
+    # 초등학교가 명시된 행만 필터링
+    초등학교_명단 = df[df['초등학교'].notna()]
+
+    # 결과 확인
+    # print("\n[초등학교 전체 명단]")
+    # print(초등학교_명단)
+
+    # 학교별 이름 명단 출력
+    # print("\n[학교별 이름 명단]")
+    for 학교 in 초등학교_목록:
+        학교_df = 초등학교_명단[초등학교_명단['초등학교'] == 학교]
+        if not 학교_df.empty:
+            # print(f"\n✅ {학교} ({len(학교_df)}명)")
+            # print(학교_df[['이름', '목장']])  # 원하는 칼럼만 출력
+            text = text + f"\n✅ {학교} ({len(학교_df)}명)\n" + 학교_df[['이름', '목장']].to_string(index=False) + "\n"
+
+
+    return text
+
 
 pd.set_option('display.max_rows', None)  # 모든 행 출력
 pd.set_option('display.max_columns', None)  # 모든 열 출력
@@ -37,6 +89,13 @@ for i in range(len(df)):
 df= df.dropna(subset=['목장'])
 df=df[["이름",'목장','비고']].sort_values(by="목장")
 # print(df)
+
+new_index = len(df)
+df.loc[new_index] = [None] * len(df.columns)  # 먼저 빈 행 추가
+df.at[new_index, '이름'] = getSchoolList(df)          # 첫 번째 열만 채움
+print(getSchoolList(df))
+
+# input("stop")
 
 df.to_excel('주소원페이지.xlsx')
 
