@@ -12,7 +12,7 @@ def getSchoolList(df):
     text=""
     # 초등학교 리스트 정의
     초등학교_목록 = ['원묵초','중화초','새솔초', '면목초', "금성초", "묵현초", "불암초", "대광초", "봉화초", '갈매초', '장위초', "안평초", '태릉초',
-               "경희초"]  # 여기에 원하는 학교를 계속 추가
+               "경희초",'신현초']  # 여기에 원하는 학교를 계속 추가
 
     # 새로운 '초등학교' 칼럼 생성 및 초기화
     df['초등학교'] = None
@@ -50,15 +50,16 @@ def getSchoolList(df):
 
     # 학교별 이름 명단 출력
     # print("\n[학교별 이름 명단]")
-    for 학교 in 초등학교_목록:
-        학교_df = 초등학교_명단[초등학교_명단['초등학교'] == 학교]
-        if not 학교_df.empty:
-            # print(f"\n✅ {학교} ({len(학교_df)}명)")
-            # print(학교_df[['이름', '목장']])  # 원하는 칼럼만 출력
-            text = text + f"\n✅ {학교} ({len(학교_df)}명)\n" + 학교_df[['이름', '목장']].to_string(index=False) + "\n"
 
+    # ✅ 학교별 인원 많은 순서대로 정렬
+    학교별_카운트 = 초등학교_명단['초등학교'].value_counts()
+
+    for 학교 in 학교별_카운트.index:
+        학교_df = 초등학교_명단[초등학교_명단['초등학교'] == 학교]
+        text += f"\n✅ {학교} ({len(학교_df)}명)\n" + 학교_df[['이름', '목장']].to_string(index=False) + "\n"
 
     return text
+
 
 
 pd.set_option('display.max_rows', None)  # 모든 행 출력
@@ -72,7 +73,7 @@ attendance_file_path = 'farmnameAndkids.txt' #기존 텍본파일과 다른것 �
 attendance_dict= making.get_nextyearinfo(attendance_file_path)
 
 
-
+making.move_attendance_file(["아이들 정보"]) #다운로드 파일부터 개인파일로 옮기기
 df = pd.read_excel(making.destination_folder+"아이들 정보.xlsx", sheet_name='시트1' ,index_col=0 )
 
 
