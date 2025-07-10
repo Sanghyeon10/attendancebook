@@ -43,7 +43,7 @@ def print_birthdays_by_month(file_path, sheet_name,attendance_dict):
                 # print(birthdays[['목장','이름','생일']].sort_values(by="목장"))
                 # print(str(len(birthdays[['이름']])) + '명')
 
-                textprint= pd.concat([textprint, birthdays[['목장','이름','생일']].sort_values(by="목장")], ignore_index=True)
+                textprint= pd.concat([textprint, birthdays[['목장','이름','생일']].sort_values(by="목장").fillna('')], ignore_index=True)
                 new_row = pd.DataFrame({'목장': month, '이름': "월",'생일': (str(len(birthdays[['이름']])) + '명') },index=["gijun"])
                 textprint = pd.concat([textprint,new_row] , ignore_index=True)
 
@@ -113,6 +113,16 @@ def attadancestate(textprint):
 
     # print(full_name_list)
 
+    # 시작일과 종료일 설정
+    start_date = (datetime.datetime.now() - datetime.timedelta(weeks=6) - datetime.timedelta(
+        days=datetime.datetime.now().weekday() + 1)).date()
+    print(start_date)
+    end_date = (datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().weekday() + 1)).date()
+    print(end_date)
+    # datetime.date → datetime64로 변환
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+
     for i in range(len(all_group[:-1])): ##새신자는 제외
         df = tempdf[all_group[i]]  # 해당하는 목장 정보 불러오기
         # print(df)
@@ -121,13 +131,6 @@ def attadancestate(textprint):
         # 인덱스를 날짜로 설정하고 시분초 제거
         df.set_index('날짜\\이름', inplace=True)
 
-        # 시작일과 종료일 설정
-        start_date = (datetime.datetime.now() - datetime.timedelta(weeks=6)).date()
-        end_date = datetime.datetime.now().date()
-
-        # datetime.date → datetime64로 변환
-        start_date = pd.to_datetime(start_date)
-        end_date = pd.to_datetime(end_date)
 
         # 날짜 범위로 슬라이싱 (정확한 일치 대신 범위로)
         df_range = df.loc[start_date:end_date]
