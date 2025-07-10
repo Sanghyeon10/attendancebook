@@ -613,3 +613,35 @@ def MakeCorrectLine(check,file,filename,startline):
     else:
         input('시트 개수가 모자라!')
         time.sleep(1000)
+
+
+def GetAttendaceScroe():
+
+    all_group = making.all_group()
+
+
+    namelist0 = ["0번 결석:"]
+    namelist1 = ["1,2번 결석:"]
+    # for문 돌리기
+    for i in range(len(all_group)):
+        df = pd.read_excel('{}.xlsx'.format(all_group[i]), sheet_name=None)
+        df=df['Sheet1']
+        df.set_index('날짜\이름',inplace=True)
+
+        if all_group[i] != '새신자':
+            for name in df.columns:
+                if name !='기타':
+                    x_count = df[name].astype(str).str.contains('X').sum()
+                    if x_count == 0:
+                        namelist0.append(name+"("+str(all_group[i]+")"))
+                    if x_count == 1 or x_count == 2 :
+                        namelist1.append(name+"("+str(all_group[i]+")"))
+
+                    x_count=""
+
+        else:  # 출석정보가 없는경우
+            pass
+
+    message= '\n'.join(namelist0)+'\n'+'\n'+'\n'.join(namelist1)
+    print(message)
+    return message

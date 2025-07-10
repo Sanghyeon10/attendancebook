@@ -91,11 +91,14 @@ df= df.dropna(subset=['목장'])
 df=df[["이름",'목장','비고']].sort_values(by="목장")
 # print(df)
 
+
+df = df.reset_index(drop=True)
 new_index = len(df)
 df.loc[new_index] = [None] * len(df.columns)  # 먼저 빈 행 추가
-df.at[new_index, '이름'] = getSchoolList(df)          # 첫 번째 열만 채움
-print(getSchoolList(df))
-
+df.at[new_index, df.columns[0]] = getSchoolList(df)          # 첫 번째 열만 채움
+df.at[new_index,df.columns[1]]= making.GetAttendaceScroe()
+# print(getSchoolList(df))
+# print(df)
 # input("stop")
 
 df.to_excel('주소원페이지.xlsx')

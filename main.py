@@ -22,7 +22,9 @@ if str(input) == "yes":
 subprocess.Popen([sys.executable, "upload.py"]).communicate() #구글 스프레드 시트에 업로드
 subprocess.Popen([sys.executable, "Onepageview.py"]).communicate()
 subprocess.Popen([sys.executable, "JusoOnepage.py"]).communicate()
+
 subprocess.Popen([sys.executable, "make kids list.py"]).communicate()
+
 subprocess.Popen([sys.executable, "get birthday list.py"]).communicate()
 
 making.move_attendance_file([making.ThisYearAttendnce,making.Newmembers]) # PC의 개인폴더에 백업하는 코드
