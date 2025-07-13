@@ -1,9 +1,16 @@
 import pandas as pd
 import making
 
+
+
+
+pd.set_option('display.max_rows', None)  # 모든 행 출력
+pd.set_option('display.max_columns', None)  # 모든 열 출력
+pd.set_option('display.width', 1000)  # 한 줄에 출력할 수 있는 최대 너비
+
 # 비교할 엑셀 파일의 경로
 file_path1 = r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce)
-file_path2 = r'{}2024 초등부 출석표의 사본.xlsx'.format(making.addressgibon)
+file_path2 = r'{}백업3.xlsx'.format(making.addressgibon)
 
 
 
@@ -26,7 +33,7 @@ for i in all_group:
 
 
     # 칼럼을 여러 조각으로 나누어 프린트하기
-    chunk_size = 3  # 각 조각의 크기를 설정, 짤려서 안 보이는게 없는게 기준
+    chunk_size = 20  # 각 조각의 크기를 설정, 짤려서 안 보이는게 없는게 기준
 
     num_chunks = len(diff.columns) // chunk_size + 1
 

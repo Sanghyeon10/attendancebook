@@ -13,7 +13,7 @@ import numpy as np
 
 ThisYearAttendnce="2025 초등부 출석표"
 
-nextYearAttendnce="2025 초등부 출석표"
+nextYearAttendnce="2026 초등부 출석표"
 
 Newmembers = "2025 새친구 관리엑셀표"
 
@@ -73,7 +73,7 @@ def next_group(): #그래도 새신자칸 넣어주기.
 
 def next_index():
     df=[]
-    year = 2025 #년도는 체크하기
+    year = 2026 #년도는 체크하기
 
     # 특정 년도의 첫 번째 날
     first_day = datetime.date(year, 1, 1)
@@ -444,7 +444,7 @@ def upload_data_to_sheets(file,givenlist):
         print(i)
         sheet = sh.worksheet('시트1')  # 구글 스프레드기준 찾기
 
-        tempdf = pd.read_excel(r'{}.xlsx'.format(i))  # 해당파일찾고 데이터 옮겨오기
+        tempdf = pd.read_excel(r'{}.xlsx'.format(judgmentInverse(i)))  # 해당파일찾고 데이터 옮겨오기
         tempdf = tempdf.fillna('')  # 이거 안해주면 업로드시 오류남
 
         sheet.clear()
@@ -452,6 +452,16 @@ def upload_data_to_sheets(file,givenlist):
                      values=[tempdf.columns.values.tolist()] + tempdf.values.tolist())  # 데이터 덧씌우기
 
         time.sleep(5)
+
+def judgmentInverse(name):
+
+    namebook = making.get_name()
+    inverse = {v: k for k, v in namebook.items()}
+
+    if name not in inverse: # 목장선생님 이름이 아니면 정상임
+        return name
+    else:
+        return inverse[name] # ex.4-1 처럼 표현이 되어야함.
 
 
 def upload_data_to_allsheets(file,givenlist,all_group,uploadlist):
