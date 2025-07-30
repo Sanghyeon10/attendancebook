@@ -28,12 +28,12 @@ def print_birthdays_by_month(file_path, sheet_name,attendance_dict):
         # "생일" 칼럼에서 날짜를 datetime 형식으로 변환
         df['생일'] = pd.to_datetime(df['생일'], format='%y.%m.%d', errors='coerce')  # 잘못된 날짜는 NaT로 처리
         df["목장"] = df['이름'].apply(lambda x: getwherefarm(x, attendance_dict))
-        df= df[df['목장']!=""]
+        # df= df[df['목장']!=""]
         # print(df)
 
         textprint = pd.DataFrame(columns=['목장','이름','생일'])
         # 월별로 그룹화하여 출력
-        for month in range(1, 13):  # 1월부터 12월까지
+        for month in range(1,13):  # 1월부터 12월까지
             print()
             birthdays = df[df['생일'].dt.month == month]
 
@@ -43,9 +43,11 @@ def print_birthdays_by_month(file_path, sheet_name,attendance_dict):
                 # print(birthdays[['목장','이름','생일']].sort_values(by="목장"))
                 # print(str(len(birthdays[['이름']])) + '명')
 
-                textprint= pd.concat([textprint, birthdays[['목장','이름','생일']].sort_values(by="목장").fillna('')], ignore_index=True)
+                # Beforetextprint= pd.concat([textprint, birthdays[['목장','이름','생일']].sort_values(by="목장").fillna('')], ignore_index=True)
+                Beforetextprint = birthdays[['목장', '이름', '생일']].sort_values(by="목장").fillna('')
                 new_row = pd.DataFrame({'목장': month, '이름': "월",'생일': (str(len(birthdays[['이름']])) + '명') },index=["gijun"])
-                textprint = pd.concat([textprint,new_row] , ignore_index=True)
+                temptemp = pd.concat([ new_row,Beforetextprint] , ignore_index=True)
+                textprint= pd.concat([textprint, temptemp] , ignore_index=True)
 
             else:
                 print(f"{month}월: 생일 없음")
