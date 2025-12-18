@@ -1,0 +1,33 @@
+function onOpen(e) {
+  const ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Dx0PT9o45XLuHcUW3H04Dyqv61NzNHroJ-oo8j6USY8/edit?gid=0#gid=0");
+  const sheet = ss.getSheetByName("시트1");
+
+  // A1부터 마지막 행까지 데이터를 가져와 전역 변수에 저장
+  data = sheet.getRange(`C2`).getValue();
+  console.log(data)
+
+
+  // 🔹 구글폼 열기
+  const form = FormApp.openByUrl("https://docs.google.com/forms/d/1LtvlWUZs8kY4k9f06GkOpcgETG7-nHPHZ1AvB0ezl2c/edit");
+
+  // 🔹 모든 문항 가져오기
+  const items = form.getItems();
+  // console.log(items)
+
+  // 🔹 2번째 문항 존재 여부 체크
+  if (items.length < 2) {
+    throw new Error('구글폼에 2번째 문항이 없습니다.');
+  }
+
+  // 🔹 2번째 문항 제목 변경
+  const secondItem = items[0];
+  
+  const now = new Date();
+
+  const today = `${now.getFullYear()} ${String(now.getMonth() + 1).padStart(2, '0')} ${String(now.getDate()).padStart(2, '0')}`;
+
+
+  secondItem.setTitle("기도봉독, 간식 순서표입니다.\n청년은 앱으로 주문해서 9시 전, 복지관 3층에 배달될 수 있도록 하면 됩니다. \n\n 성경암송 명단\n\n" + String(data)+ "\n\n"+ "업데이트 날짜:"+today);
+}
+
+
