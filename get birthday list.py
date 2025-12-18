@@ -170,7 +170,10 @@ sheet_name = "시트1"          # 시트 이름
 textprint = print_birthdays_by_month(file_path, sheet_name,attendance_dict)
 textprint['생일'] = textprint['생일'].apply(lambda x: x.strftime('%Y-%m-%d') if isinstance(x, datetime.datetime) else x)
 attadancestate(textprint)
-textprint.to_excel('생일자 리스트.xlsx')
+
+birthdaylist="생일자 리스트"
+
+textprint.to_excel(making.year +birthdaylist+'.xlsx')
 
 print(textprint)
 
@@ -184,4 +187,4 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 file = gspread.authorize(creds)
 
 
-making.upload_data_to_sheets(file,["생일자 리스트"])
+making.upload_data_to_sheets(file,[making.year +birthdaylist])

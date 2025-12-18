@@ -12,7 +12,7 @@ def getSchoolList(df):
     text=""
     # 초등학교 리스트 정의
     초등학교_목록 = ['원묵초','중화초','새솔초', '면목초', "금성초", "묵현초", "불암초", "대광초", "봉화초", '갈매초', '장위초', "안평초", '태릉초',
-               "경희초",'신현초',"샛별초","미사중앙초","서울동원초","회암초"]  # 여기에 원하는 학교를 계속 추가
+               "경희초",'신현초',"샛별초","미사중앙초","서울동원초","회암초", "화접초"]  # 여기에 원하는 학교를 계속 추가
 
     # 새로운 '초등학교' 칼럼 생성 및 초기화
     df['초등학교'] = None
@@ -101,7 +101,9 @@ df.at[new_index,df.columns[1]]= making.GetAttendaceScroe()
 # print(df)
 # input("stop")
 
-df.to_excel('주소원페이지.xlsx')
+JunsoOnepage="주소원페이지"
+
+df.to_excel(making.year + JunsoOnepage+'.xlsx')
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -111,5 +113,5 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 # 위json파일 주소는 위치바뀌면 수정해줄것.
 file = gspread.authorize(creds)
 
-making.upload_data_to_sheets(file,["주소원페이지"])
+making.upload_data_to_sheets(file,[making.year + JunsoOnepage])
 

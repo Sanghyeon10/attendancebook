@@ -29,9 +29,7 @@ subprocess.Popen([sys.executable, "get birthday list.py"]).communicate()
 
 making.move_attendance_file([making.ThisYearAttendnce,making.Newmembers]) # PC의 개인폴더에 백업하는 코드
 
-# file_path = r'{}{}.xlsx'.format(making.addressgibon, making.ThisYearAttendnce) #삭제안하면, 실수할수 있어서 자동삭제.
-# making.removingexcel(file_path)
-# file_path = r'{}{}.xlsx'.format(making.addressgibon, making.Newmembers)
-# making.removingexcel(file_path)
+# subprocess.Popen([sys.executable, "recite.py"]).communicate()
+
 
 print('구글폼 행숨기기하기, 구글폼 명단 개정해주기')

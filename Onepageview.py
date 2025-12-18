@@ -30,7 +30,9 @@ for i in range(len(all_group)):
 accumulatedDF['이번주 출석인원'] = accumulatedDF.apply(making.count_os, axis=1)
 accumulatedDF=accumulatedDF.T
 # print(accumulatedDF)
-accumulatedDF.to_excel('원페이지.xlsx')
+
+Onepage="원페이지"
+accumulatedDF.to_excel(making.year + Onepage+'.xlsx')
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -40,8 +42,8 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfil
 # 위json파일 주소는 위치바뀌면 수정해줄것.
 file = gspread.authorize(creds)
 
-making.upload_data_to_sheets(file,["원페이지"])
+making.upload_data_to_sheets(file,[making.year + Onepage])
 
-spreadsheet = file.open('원페이지')  # 수정하려는 스프레드시트 이름
+spreadsheet = file.open(making.year + Onepage)  # 수정하려는 스프레드시트 이름
 worksheet = spreadsheet.sheet1
 worksheet.update_acell('A1', '날짜\이름')

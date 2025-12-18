@@ -26,8 +26,8 @@ print(snacksunsu)
 
 
 # 변수 설정
-start=4# int(input("시작월"))
-end=6# int(input("끝나는월"))
+start=1# int(input("시작월"))
+end=3# int(input("끝나는월"))
 
 startday= datetime.datetime(year=2024,month=1,day=7)
 specialday= []# [datetime.datetime(year=2025,month=1,day=5),datetime.datetime(year=2025,month=1,day=12),datetime.datetime(year=2025,month=1,day=19),datetime.datetime(year=2025,month=1,day=26)]

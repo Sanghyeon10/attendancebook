@@ -11,11 +11,13 @@ from collections import Counter
 import numpy as np
 
 
-ThisYearAttendnce="2025 초등부 출석표"
+year = "2025 "
+
+ThisYearAttendnce= year + "초등부 출석표"
 
 nextYearAttendnce="2026 초등부 출석표"
 
-Newmembers = "2025 새친구 관리엑셀표"
+Newmembers = year + "새친구 관리엑셀표"
 
 addressgibon = 'C:\\Users\\captu\\Downloads\\'
 
@@ -23,6 +25,9 @@ destination_folder = "C:\\Users\\captu\\Desktop\\diary\\개인 파일\\"
 
 
 addrresOfjsonfile = r"C:\Users\captu\PycharmProjects\pythonProject\abiding-honor-375915-c16db88a8008.json"
+
+
+
 
 def index():
     df=[]
@@ -55,21 +60,6 @@ def index():
     df.append('비고') #비고에는 출석율 계산할것임.
     # print(df)
     return df
-
-
-
-
-def all_group(): #그룹리스트 가져오기
-    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
-
-    return A
-
-def next_group(): #그래도 새신자칸 넣어주기.
-    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
-    # A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
-
-    return A
-
 
 def next_index():
     df=[]
@@ -104,6 +94,21 @@ def next_index():
     return df
 
 
+def all_group(): #그룹리스트 가져오기
+    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+
+    return A
+
+def next_group(): #그래도 새신자칸 넣어주기.
+    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+    # A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+
+    return A
+
+
+
+
+
 
 def get_name(): #정보 부존재 목장의 선생님 이름 구하기
     B={}  # 빈 딕셔너리 생성
@@ -127,6 +132,7 @@ def get_newname(): #정보 부존재 목장의 선생님 이름 구하기
 
     return B
 
+# 여기까지 코드 봐야함.
 
 def get_nextyearinfo(attendance_file_path):
     # 목장 출석 정보를 저장할 딕셔너리를 생성합니다.

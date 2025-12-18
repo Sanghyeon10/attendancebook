@@ -12,7 +12,7 @@ next_group = making.next_group()
 # 출석 정보가 저장된 파일 경로를 입력합니다.
 attendance_file_path = 'farmnameAndkids.txt' #기존 텍본파일과 다른것 사용하기.
 
-makeline=False
+makeline= False
 setname=False
 backupsetname=False
 
