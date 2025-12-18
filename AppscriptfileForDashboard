@@ -1,0 +1,98 @@
+let attendanceData = []; // 두 함수 간 데이터를 공유하기 위한 전역 변수
+
+function onOpen(e) {
+  const ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Px-EvRw_TZJ5U8xIkPIwQ6mYd9_xJGa8UkO30LzCV7A/edit?gid=941893035#gid=941893035");
+  const sheet = ss.getSheetByName("설문지 응답 시트1");
+
+  // A1부터 마지막 행까지 데이터를 가져와 전역 변수에 저장
+  attendanceData = sheet.getRange(`A1:C${sheet.getLastRow()}`).getValues().slice(1);
+
+  if (!attendanceData.length) {
+    Logger.log("출석 데이터를 먼저 로드하세요.");
+    return;
+  }
+
+  const today = new Date(); // 오늘 날짜
+  today.setHours(0, 0, 0, 0); // 시간을 0으로 설정해 날짜만 비교
+
+  const classes = ['4-1', '4-2', '4-3', '4-4', '4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4', '6-5']; // 반 목록
+  const results = {}; // 최종 결과 저장용
+
+  // 담임 선생님 정보 (예시로 4-1 반 담임을 '김선생'으로 설정)
+  const teachers = {
+      '5-1' :'김미영',
+      '5-2' :'김서현',
+      '5-3' :"선현자",
+      '5-4' :"이성미",
+      '6-1' :"이윤미",
+      '6-2' :"정승호",
+      '6-3' :"김원직",
+      '6-4' :"이정희",
+      '6-5' :"김다혜",
+      '4-1' :"홍세미",
+      '4-2' :"김진희",
+      '4-3' :"심상현",
+      '4-4' :"고재우",
+      '4-5' :"전민경"
+  };
+
+  classes.forEach(cls => {
+    results[cls] = { attendedCount: 0, students: [] };
+  });
+
+  // 오늘 날짜와 같은 데이터만 필터링
+  const filteredData = attendanceData.filter(([date]) => {
+    const recordDate = new Date(date);
+    recordDate.setHours(0, 0, 0, 0); // 시간 제거
+    return recordDate.getTime() === today.getTime(); // 오늘과 같은 날짜만
+  });
+
+  // 데이터 처리
+  filteredData.forEach(([date, option, attendanceData]) => {
+    const className = option;
+
+    if (results[className]) {
+      const students = attendanceData.split(/\s+/); // 학생 명단
+      students.forEach(student => {
+        if (student.trim() && !results[className].students.includes(student)) {
+          results[className].students.push(student); // 중복 없이 학생 추가
+        }
+      });
+      results[className].students.push(`//`);
+
+      results[className].attendedCount += 1; // 출석 횟수 증가
+    }
+  });
+
+  // 구글 시트에 데이터 삽입
+  const sss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/19eAAyaXPanrrsrQBufxx3MYi37nB5G6lemgPrZew3-s/edit?gid=0#gid=0");
+  const outputSheet = sss.getSheetByName("시트1");
+  outputSheet.clear(); // 기존 데이터 삭제
+
+  // 데이터 배열로 정리하여 시트에 추가
+  const dataToInsert = Object.entries(results).map(([cls, { attendedCount, students }]) => {
+    const teacherName = teachers[cls] || '없음'; // 해당 반의 담임 이름
+    const attendance = attendedCount > 0 ? `+${attendedCount}` : '0'; // 출석 횟수
+    const studentList = students.length ? students.join(' ') : '없음'; // 학생 명단
+    return [cls, teacherName, attendance, studentList]; // [반 이름, 담임 이름, 출석 횟수, 학생 명단]
+  });
+
+  console.log(dataToInsert)
+
+  // 시트에 데이터 삽입 (첫 번째 행부터 삽입)
+  outputSheet.getRange(1, 1, dataToInsert.length, 4).setValues(dataToInsert); // 4열로 삽입 (반, 담임, 출석 횟수, 학생 명단)
+
+  // 마지막 행의 A열에 현재 시간 입력
+  outputSheet.getRange(dataToInsert.length + 1, 1).setValue(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`);
+
+
+  // 테두리로 시각화 도움
+  
+  var range1 = outputSheet.getRange('A5:G5'); // A열부터 Z열까지 범위 지정
+  range1.setBorder(false, false, true, false, false, false); // 상, 하, 좌, 우 테두리 추가
+
+  // 9번과 10번 행 사이에 테두리 추가 (9번째와 10번째 행 범위 선택)
+  var range2 = outputSheet.getRange('A9:G9'); // A열부터 Z열까지 범위 지정
+  range2.setBorder(false, false, true, false, false, false); // 상, 하, 좌, 우 테두리 추가
+}
+
