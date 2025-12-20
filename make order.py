@@ -2,6 +2,9 @@ import pandas as pd
 import making
 import numpy as np
 import datetime
+import re
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 attendance_dict, nocome_dict = making.make_data_from_file("attendance.txt")
 
@@ -111,6 +114,26 @@ for i in range(len(all_group)): #인덱스가 같은지 보기 (요류 방지용
 print("")
 print("")
 print(filtered_data)
+result = "복붙용 서식" +'\n'+'\n'+farmnameAndkids+ "불출석"+ '\n'+"등반자"
+result = re.sub(
+    r'((?:\d+-\d+|새신자))\s*(.*?)(?=\s(?:\d+-\d+|새신자)|$)',
+    r'\1\n\2\n',
+    result
+)
 
+# print(farmnameAndkids)
 with open('farmnameAndkids.txt', 'w', encoding='utf-8') as file:
     file.write(farmnameAndkids)
+
+
+##구글 시트에 업로드
+scopes = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/dirve'
+]
+creds = ServiceAccountCredentials.from_json_keyfile_name(making.addrresOfjsonfile)
+# 위json파일 주소는 위치바뀌면 수정해줄것.
+file = gspread.authorize(creds)
+sh = file.open("목장 아이들 리스트")
+sheet = sh.worksheet('시트1')
+sheet.update_acell('A1', result)

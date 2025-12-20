@@ -636,8 +636,9 @@ def GetAttendaceScroe():
     all_group = making.all_group()
 
 
-    namelist0 = ["0번 결석:"]
-    namelist1 = ["1,2번 결석:"]
+    namelist0 = ["✅ 0번 결석:"]
+    namelist1 = ["✅ 1번 결석:"]
+    namelist2 = ['✅ 2번 결석:']
     # for문 돌리기
     for i in range(len(all_group)):
         df = pd.read_excel('{}.xlsx'.format(all_group[i]), sheet_name=None)
@@ -650,14 +651,15 @@ def GetAttendaceScroe():
                     x_count = df[name].astype(str).str.contains('X').sum()
                     if x_count == 0:
                         namelist0.append(name+"("+str(all_group[i]+")"))
-                    if x_count == 1 or x_count == 2 :
+                    if x_count == 1:
                         namelist1.append(name+"("+str(all_group[i]+")"))
-
+                    if x_count == 2:
+                        namelist2.append(name+"("+str(all_group[i]+")"))
                     x_count=""
 
         else:  # 출석정보가 없는경우
             pass
 
-    message= '\n'.join(namelist0)+'\n'+'\n'+'\n'.join(namelist1)
+    message= '\n'.join(namelist0)+'\n'+'\n'+'\n'.join(namelist1)+'\n'+'\n'+'\n'.join(namelist2)
     print(message)
     return message

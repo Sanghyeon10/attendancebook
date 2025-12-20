@@ -92,13 +92,20 @@ df=df[["이름",'목장','비고']].sort_values(by="목장")
 # print(df)
 
 
+lines = [x.strip() for x in getSchoolList(df).split('\n') if x.strip() and "이름" not in x ]
+lines2= [x.strip() for x in making.GetAttendaceScroe().split('\n') if x.strip() ]
+new_index = max(len(df), len(lines),len(lines2))
 df = df.reset_index(drop=True)
-new_index = len(df)
-df.loc[new_index] = [None] * len(df.columns)  # 먼저 빈 행 추가
-df.at[new_index, df.columns[0]] = getSchoolList(df)          # 첫 번째 열만 채움
-df.at[new_index,df.columns[1]]= making.GetAttendaceScroe()
-# print(getSchoolList(df))
-# print(df)
+df["이름,목장"] = pd.Series(lines)
+df['개근,정근'] = pd.Series(lines2)
+
+# 예전 코드
+# df.loc[new_index] = [None] * len(df.columns)  # 먼저 빈 행 추가
+# df.at[new_index, df.columns[0]] = getSchoolList(df)          # 첫 번째 열만 채움
+# df.at[new_index,df.columns[1]]= making.GetAttendaceScroe()
+
+
+print(df)
 # input("stop")
 
 JunsoOnepage="주소원페이지"
