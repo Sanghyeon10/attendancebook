@@ -663,3 +663,84 @@ def GetAttendaceScroe():
     message= '\n'.join(namelist0)+'\n'+'\n'+'\n'.join(namelist1)+'\n'+'\n'+'\n'.join(namelist2)
     print(message)
     return message
+
+
+
+def GetAttendanceScoreYear():
+    all_group = making.all_group()
+
+    result = {
+        "연간_개근": ["🏆 연간 개근:"],
+        "연간_결석1": ["🟡 연간 1번 결석:"],
+        "연간_결석2": ["🔴 연간 2번 결석:"],
+
+        "상반기_개근": ["✅ 상반기 개근:"],
+        "상반기_결석1": ["🟡 상반기 1번 결석:"],
+        "상반기_결석2": ["🔴 상반기 2번 결석:"],
+
+        "하반기_개근": ["✅ 하반기 개근:"],
+        "하반기_결석1": ["🟡 하반기 1번 결석:"],
+        "하반기_결석2": ["🔴 하반기 2번 결석:"],
+    }
+
+    for group in all_group:
+        if group == '새신자':
+            continue
+
+        df = pd.read_excel(f"{group}.xlsx", sheet_name="Sheet1")
+        df.set_index('날짜\이름', inplace=True)
+
+        # 날짜 처리
+        df.index = pd.to_datetime(df.index, errors='coerce')
+
+        first_half = df[df.index.month <= 6]
+        second_half = df[df.index.month >= 7]
+
+        for name in df.columns:
+            if name == '기타':
+                continue
+
+            tag = f"{name}({group})"
+
+            fh = first_half[name].astype(str).str.contains('X').sum()
+            sh = second_half[name].astype(str).str.contains('X').sum()
+            year = fh + sh
+
+            # 연간
+            if year == 0:
+                result["연간_개근"].append(tag)
+            elif year == 1:
+                result["연간_결석1"].append(tag)
+            elif year == 2:
+                result["연간_결석2"].append(tag)
+
+            # 상반기
+            if fh == 0:
+                result["상반기_개근"].append(tag)
+            elif fh == 1:
+                result["상반기_결석1"].append(tag)
+            elif fh == 2:
+                result["상반기_결석2"].append(tag)
+
+            # 하반기
+            if sh == 0:
+                result["하반기_개근"].append(tag)
+            elif sh == 1:
+                result["하반기_결석1"].append(tag)
+            elif sh == 2:
+                result["하반기_결석2"].append(tag)
+
+    message = (
+        '\n'.join(result["연간_개근"]) + '\n\n' +
+        '\n'.join(result["연간_결석1"]) + '\n\n' +
+        '\n'.join(result["연간_결석2"]) + '\n\n' +
+        '\n'.join(result["상반기_개근"]) + '\n\n' +
+        '\n'.join(result["상반기_결석1"]) + '\n\n' +
+        '\n'.join(result["상반기_결석2"]) + '\n\n' +
+        '\n'.join(result["하반기_개근"]) + '\n\n' +
+        '\n'.join(result["하반기_결석1"]) + '\n\n' +
+        '\n'.join(result["하반기_결석2"])
+    )
+
+    print(message)
+    return message

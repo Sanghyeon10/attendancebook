@@ -93,9 +93,11 @@ df=df[["이름",'목장','비고']].sort_values(by="목장")
 
 
 lines = [x.strip() for x in getSchoolList(df).split('\n') if x.strip() and "이름" not in x ]
-lines2= [x.strip() for x in making.GetAttendaceScroe().split('\n') if x.strip() ]
-new_index = max(len(df), len(lines),len(lines2))
+lines2= [x.strip() for x in making.GetAttendanceScoreYear().split('\n') if x.strip() ]
+new_index = max(len(df), len(lines), len(lines2))
 df = df.reset_index(drop=True)
+df = df.reindex(range(new_index))
+
 df["이름,목장"] = pd.Series(lines)
 df['개근,정근'] = pd.Series(lines2)
 
