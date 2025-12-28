@@ -19,6 +19,7 @@ namedict = making.get_name()
 
 
 
+
 # 생일을 기준으로 월별 생일 리스트 출력하는 함수
 def print_birthdays_by_month(file_path, sheet_name,attendance_dict):
     try:
@@ -66,7 +67,7 @@ def print_birthdays_by_month(file_path, sheet_name,attendance_dict):
     return textprint
 
 def getwherefarm(name, attendance_dict):
-    group = making.next_group()  # 그룹 목록 생성
+    group = making.all_group()  # 그룹 목록 생성
     info = ""  # 이름이 속한 그룹 정보 저장
     group_count = 0  # 이름이 속한 그룹의 개수
 
@@ -77,7 +78,10 @@ def getwherefarm(name, attendance_dict):
 
     if group_count > 1:  # 중복 여부 확인
         print(f"중복된 이름: '{name}', 그룹: {info.strip()}")
-    elif isinstance(name, str) and (name in namedict.values() or re.search(r'\(음력\)$', name)):
+
+
+    # elif isinstance(name, str) and name in making.get_name().keys():
+    elif isinstance(name, str) and (name in making.get_name().keys()  or re.search(r'\(음력\)$', name)):
         # print(f"'{name}'는 선생님." )
         info = info +"선생님"
 
@@ -116,9 +120,17 @@ def attadancestate(textprint):
     # print(full_name_list)
 
     # 시작일과 종료일 설정
+
+    # 올해 첫 번째 일요일 계산
+    first_sunday = datetime.date(datetime.datetime.now().year, 1, 1) + datetime.timedelta(
+        days=(6 - datetime.date(datetime.datetime.now().year, 1, 1).weekday()) % 7
+    )
+
     start_date = (datetime.datetime.now() - datetime.timedelta(weeks=6) - datetime.timedelta(
         days=datetime.datetime.now().weekday() + 1)).date()
+    start_date = max(start_date, first_sunday)
     print(start_date)
+    ##첫번째 일요일보다 뒤로는 돌리지않는다.
     end_date = (datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().weekday() + 1)).date()
     print(end_date)
     # datetime.date → datetime64로 변환
@@ -164,6 +176,8 @@ attendance_dict= making.get_keyAndlist(attendance_file_path)
 
 
 
+## 다운로드 파일 개인파일로 먼저 옮기기
+making.move_attendance_file(["아이들 정보"])
 # 사용 예제
 file_path = making.destination_folder+"아이들 정보.xlsx"  # 엑셀 파일 경로
 sheet_name = "시트1"          # 시트 이름

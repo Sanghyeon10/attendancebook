@@ -8,7 +8,7 @@ import making
 
 
 
-teacherNameList =["홍세미","김원직","김다혜"]
+teacherNameList =["홍세미","김원직"]
 
 A= input('extrafile 업로드?  input')
 givenlist=[making.Newmembers ]+teacherNameList #엑셀파일이름과 구글스프레드시트 이름을 일치시킬것.

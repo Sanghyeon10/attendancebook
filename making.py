@@ -11,7 +11,7 @@ from collections import Counter
 import numpy as np
 
 
-year = "2025 "
+year = "2026 "
 
 ThisYearAttendnce= year + "초등부 출석표"
 
@@ -31,7 +31,7 @@ addrresOfjsonfile = r"C:\Users\captu\PycharmProjects\pythonProject\abiding-honor
 
 def index():
     df=[]
-    year = 2025 #년도는 체크하기
+    year = 2026 #년도는 체크하기
 
     # 특정 년도의 첫 번째 날
     first_day = datetime.date(year, 1, 1)
@@ -95,12 +95,12 @@ def next_index():
 
 
 def all_group(): #그룹리스트 가져오기
-    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '6-1', '6-2', '6-3', '6-4','새신자']
 
     return A
 
 def next_group(): #그래도 새신자칸 넣어주기.
-    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
+    A = ['4-1', '4-2', '4-3', '4-4','4-5', '5-1', '5-2', '5-3', '6-1', '6-2', '6-3', '6-4','새신자']
     # A = ['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4','5-5', '6-1', '6-2', '6-3', '6-4','6-5','새신자']
 
     return A
@@ -462,6 +462,7 @@ def upload_data_to_sheets(file,givenlist):
 def judgmentInverse(name):
 
     namebook = making.get_name()
+    # namebook = making.get_newname()
     inverse = {v: k for k, v in namebook.items()}
 
     if name not in inverse: # 목장선생님 이름이 아니면 정상임
@@ -630,39 +631,6 @@ def MakeCorrectLine(check,file,filename,startline):
         input('시트 개수가 모자라!')
         time.sleep(1000)
 
-
-def GetAttendaceScroe():
-
-    all_group = making.all_group()
-
-
-    namelist0 = ["✅ 0번 결석:"]
-    namelist1 = ["✅ 1번 결석:"]
-    namelist2 = ['✅ 2번 결석:']
-    # for문 돌리기
-    for i in range(len(all_group)):
-        df = pd.read_excel('{}.xlsx'.format(all_group[i]), sheet_name=None)
-        df=df['Sheet1']
-        df.set_index('날짜\이름',inplace=True)
-
-        if all_group[i] != '새신자':
-            for name in df.columns:
-                if name !='기타':
-                    x_count = df[name].astype(str).str.contains('X').sum()
-                    if x_count == 0:
-                        namelist0.append(name+"("+str(all_group[i]+")"))
-                    if x_count == 1:
-                        namelist1.append(name+"("+str(all_group[i]+")"))
-                    if x_count == 2:
-                        namelist2.append(name+"("+str(all_group[i]+")"))
-                    x_count=""
-
-        else:  # 출석정보가 없는경우
-            pass
-
-    message= '\n'.join(namelist0)+'\n'+'\n'+'\n'.join(namelist1)+'\n'+'\n'+'\n'.join(namelist2)
-    print(message)
-    return message
 
 
 

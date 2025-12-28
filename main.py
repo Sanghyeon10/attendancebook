@@ -29,7 +29,7 @@ subprocess.Popen([sys.executable, "get birthday list.py"]).communicate()
 
 making.move_attendance_file([making.ThisYearAttendnce,making.Newmembers]) # PC의 개인폴더에 백업하는 코드
 
-# subprocess.Popen([sys.executable, "recite.py"]).communicate()
+subprocess.Popen([sys.executable, "recite.py"]).communicate()
 
 
 print('구글폼 행숨기기하기, 구글폼 명단 개정해주기')

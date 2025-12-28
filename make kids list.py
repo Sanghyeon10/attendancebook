@@ -12,8 +12,9 @@ import os
 from  openpyxl.styles.fonts  import  Font
 from  openpyxl.styles  import  Border, Side
 
-# filename="2025년 초등2부 목장 편성표"
+# filename="2026 초등2부 목장 편성표"
 # lastname="2025 초등부 출석표"
+# 초등부 출석표는 출석율을 통한 A B C 판단
 filename = making.year + "초등2부 목장 편성표"
 lastname= making.ThisYearAttendnce
 # grouplist=['4-1', '4-2', '4-3', '4-4', '5-1', '5-2', '5-3', '5-4', '5-5', '6-1', '6-2', '6-3', '6-4','6-5']

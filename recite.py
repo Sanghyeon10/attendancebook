@@ -10,7 +10,7 @@ import time
 from collections import Counter
 
 text = making.year + "성경암송 명단"
-text = "2026 "+ "성경암송 명단"
+# text = "2026 "+ "성경암송 명단"
 
 scopes = [
     'https://www.googleapis.com/auth/spreadsheets',

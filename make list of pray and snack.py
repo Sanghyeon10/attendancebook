@@ -32,10 +32,10 @@ end=3# int(input("끝나는월"))
 startday= datetime.datetime(year=2024,month=1,day=7)
 specialday= []# [datetime.datetime(year=2025,month=1,day=5),datetime.datetime(year=2025,month=1,day=12),datetime.datetime(year=2025,month=1,day=19),datetime.datetime(year=2025,month=1,day=26)]
 
-# 기도 ['6-1', '6-2', '6-3', '6-4', '6-5', '5-1', '5-2', '5-3', '5-4', '4-1', '4-2', '4-3', '4-4', '4-5']
-# 간식 ['6-5', '6-4', '6-3', '6-2', '6-1', '5-4', '5-3', '5-2', '5-1', '4-5', '4-4', '4-3', '4-2', '4-1', '부장님', '총무님']
-realpraysunsu =   [ '4-1', '4-2', '4-3', '4-4', '4-5']+praysunsu*10
-realsnacksunsu=['1부']*20# "홍세미선생님","이윤미 선생님","이성미 선생님","1번 예외"]*10 #+ snacksunsu*10
+# 기도 ['6-1', '6-2', '6-3', '6-4', '5-1', '5-2', '5-3', '4-1', '4-2', '4-3', '4-4', '4-5']
+# 간식 ['6-4', '6-3', '6-2', '6-1', '5-3', '5-2', '5-1', '4-5', '4-4', '4-3', '4-2', '4-1', '부장님']
+realpraysunsu =   ['6-1', '6-2', '6-3', '6-4', '5-1', '5-2', '5-3', '4-1', '4-2', '4-3', '4-4', '4-5']+praysunsu*10
+realsnacksunsu=['6-4', '6-3', '6-2', '6-1', '5-3', '5-2', '4-5', '4-3', '4-2', '4-1', '부장님']*20# "홍세미선생님","이윤미 선생님","이성미 선생님","1번 예외"]*10 #+ snacksunsu*10
 
 
 
@@ -137,5 +137,5 @@ making.upload_data_to_sheets(file,givenlist)
 
 spreadsheet = file.open('snack')  # 수정하려는 스프레드시트 이름
 worksheet = spreadsheet.sheet1
-worksheet.update_acell('A1', '2025년')
+worksheet.update_acell('A1', making.year+'년')
 
