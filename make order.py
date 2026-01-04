@@ -121,9 +121,10 @@ result = re.sub(
     result
 )
 
-# print(farmnameAndkids)
-# with open('farmnameAndkids.txt', 'w', encoding='utf-8') as file:
-#     file.write(farmnameAndkids)
+# 텍스트 파일에 저장해야 다른 코딩작업일때도 사용함.
+print(farmnameAndkids)
+with open('farmnameAndkids.txt', 'w', encoding='utf-8') as file:
+    file.write(farmnameAndkids)
 
 
 ##구글 시트에 업로드
