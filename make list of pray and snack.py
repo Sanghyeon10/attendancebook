@@ -35,7 +35,7 @@ specialday= []# [datetime.datetime(year=2025,month=1,day=5),datetime.datetime(ye
 # 기도 ['6-1', '6-2', '6-3', '6-4', '5-1', '5-2', '5-3', '4-1', '4-2', '4-3', '4-4', '4-5']
 # 간식 ['6-4', '6-3', '6-2', '6-1', '5-3', '5-2', '5-1', '4-5', '4-4', '4-3', '4-2', '4-1', '부장님']
 realpraysunsu =   ['6-1', '6-2', '6-3', '6-4', '5-1', '5-2', '5-3', '4-1', '4-2', '4-3', '4-4', '4-5']+praysunsu*10
-realsnacksunsu=['6-4', '6-3', '6-2', '6-1', '5-3', '5-2', '4-5', '4-3', '4-2', '4-1', '부장님']*20# "홍세미선생님","이윤미 선생님","이성미 선생님","1번 예외"]*10 #+ snacksunsu*10
+realsnacksunsu=[""]+['부장님','6-4', '6-3', '6-2', '6-1', '5-3', '5-2', '4-5', '4-3', '4-2', '4-1', "심상현",'부장님']*20# "홍세미선생님","이윤미 선생님","이성미 선생님","1번 예외"]*10 #+ snacksunsu*10
 
 
 
@@ -61,6 +61,8 @@ df = pd.DataFrame(index=range(0, 5), columns=columns)
 
 # print( ["a","a"]+ [5,4,3]*10)
 
+namebook = making.get_name()
+# print(namebook)
 
 # 계산
 i=0 #기도순서 +1
@@ -84,7 +86,7 @@ for day in daylist:
             if pandan:
                 B="공란"
             else:
-                B="간식:"+realsnacksunsu[j]
+                B="간식:"+realsnacksunsu[j]+" "+namebook.get([realsnacksunsu[j]])
                 j +=1
 
 
@@ -95,7 +97,11 @@ for day in daylist:
         #     j += 1
 
         else: #그외 보통
-            text= "\n".join(["대표기도,성경봉독:"+realpraysunsu[i], "간식:"+ realsnacksunsu[j]])
+            # text= "\n".join(["대표기도,성경봉독:"+realpraysunsu[i], "간식:"+ realsnacksunsu[j],inverse.get([realsnacksunsu[j]]) ])
+            text = "\n".join([
+                "대표기도,성경봉독:" + realpraysunsu[i],
+                "간식: " + realsnacksunsu[j]+" ("+namebook.get(realsnacksunsu[j], "")+")"
+            ])
             i += 1
             j += 1
 

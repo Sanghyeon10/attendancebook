@@ -522,8 +522,10 @@ def getABCD(score):
         return "B"
     elif score>=25:
         return "C"
-    else:
+    elif score>=0:
         return "D"
+    else:
+        return "x"
 
 
 def merge_sheets_to_dataframe(file_name):
@@ -546,7 +548,7 @@ def merge_sheets_to_dataframe(file_name):
         if sheet_name != '새신자':
             for name in df.columns:
                 if name not in getscoredic.keys():
-                    getscoredic[name] = getABCD(int(df.loc[df.index[-1],name]))
+                    getscoredic[name] = getABCD(int(df.loc[df.index[-1],name])) if str(df.loc[df.index[-1],name]).isdigit() else None
                 else:
                     print("중복출석정보이름",name)
 

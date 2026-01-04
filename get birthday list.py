@@ -131,7 +131,16 @@ def attadancestate(textprint):
     start_date = max(start_date, first_sunday)
     print(start_date)
     ##첫번째 일요일보다 뒤로는 돌리지않는다.
+
+    # 지난주 일요일구하는 코드
     end_date = (datetime.datetime.now() - datetime.timedelta(days=datetime.datetime.now().weekday() + 1)).date()
+
+    today = datetime.date.today()
+    year_start = datetime.date(today.year, 1, 1)
+    first_sunday = year_start + datetime.timedelta(days=(6 - year_start.weekday()) % 7) # 올해 첫 일요일
+
+    if today == first_sunday:
+        end_date = first_sunday
     print(end_date)
     # datetime.date → datetime64로 변환
     start_date = pd.to_datetime(start_date)

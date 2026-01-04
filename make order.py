@@ -122,8 +122,8 @@ result = re.sub(
 )
 
 # print(farmnameAndkids)
-with open('farmnameAndkids.txt', 'w', encoding='utf-8') as file:
-    file.write(farmnameAndkids)
+# with open('farmnameAndkids.txt', 'w', encoding='utf-8') as file:
+#     file.write(farmnameAndkids)
 
 
 ##구글 시트에 업로드
